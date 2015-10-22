@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+build/
+=======
 # Compiled Lua sources
 luac.out
 
@@ -39,3 +42,4 @@ luac.out
 *.x86_64
 *.hex
 
+>>>>>>> e179ce9785221fb09ce27ef2c539958cb795ea55
