@@ -1,12 +1,12 @@
 #include "torch/utils.h"
-#include "THC.h"
+#include "THZC.h"
 #include "THFile.h"
 #include "luaT.h"
 
 /* everything is as the generic Storage.c, except few things (see below) */
 
 #define real float
-#define Real Cuda
+#define Real ZCuda
 
 #define torch_Storage_(NAME) TH_CONCAT_4(torch_,Real,Storage_,NAME)
 #define torch_Storage TH_CONCAT_STRING_3(torch.,Real,Storage)
@@ -20,30 +20,30 @@
 #undef real
 #undef Real
 
-/* now we overwrite some methods specific to CudaTensor */
-static int cutorch_CudaTensor_copy(lua_State *L)
+/* now we overwrite some methods specific to ZCudaTensor */
+static int cutorch_ZCudaTensor_copy(lua_State *L)
 {
   THCState *state = cutorch_getstate(L);
-  THCudaTensor *storage = luaT_checkudata(L, 1, "torch.CudaTensor");
+  THZCudaTensor *storage = luaT_checkudata(L, 1, "torch.ZCudaTensor");
   void *src;
-  if( (src = luaT_toudata(L, 2, "torch.CudaTensor")) )
-    THCudaTensor_copy(state, storage, src);
+  if( (src = luaT_toudata(L, 2, "torch.ZCudaTensor")) )
+    THZCudaTensor_copy(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.ByteTensor")) )
-    THCudaTensor_copyByte(state, storage, src);
+    THZCudaTensor_copyByte(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.CharTensor")) )
-    THCudaTensor_copyChar(state, storage, src);
+    THZCudaTensor_copyChar(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.ShortTensor")) )
-    THCudaTensor_copyShort(state, storage, src);
+    THZCudaTensor_copyShort(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.IntTensor")) )
-    THCudaTensor_copyInt(state, storage, src);
+    THZCudaTensor_copyInt(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.LongTensor")) )
-    THCudaTensor_copyLong(state, storage, src);
+    THZCudaTensor_copyLong(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.FloatTensor")) )
-    THCudaTensor_copyFloat(state, storage, src);
+    THZCudaTensor_copyFloat(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.DoubleTensor")) )
-    THCudaTensor_copyDouble(state, storage, src);
+    THZCudaTensor_copyDouble(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.CudaTensor")) )
-    THCudaTensor_copyCuda(state, storage, src);
+    THZCudaTensor_copyCuda(state, storage, src);
   else
     luaL_typerror(L, 2, "torch.*Tensor");
 
@@ -51,17 +51,17 @@ static int cutorch_CudaTensor_copy(lua_State *L)
   return 1;
 }
 
-static int cutorch_CudaTensor_copyAsync(lua_State *L)
+static int cutorch_ZCudaTensor_copyAsync(lua_State *L)
 {
   THCState *state = cutorch_getstate(L);
-  THCudaTensor *storage = luaT_checkudata(L, 1, "torch.CudaTensor");
+  THZCudaTensor *storage = luaT_checkudata(L, 1, "torch.ZCudaTensor");
   void *src;
-  if( (src = luaT_toudata(L, 2, "torch.CudaTensor")) )
-    THCudaTensor_copy(state, storage, src);
+  if( (src = luaT_toudata(L, 2, "torch.ZCudaTensor")) )
+    THZCudaTensor_copy(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.FloatTensor")) )
-    THCudaTensor_copyAsyncFloat(state, storage, src);
+    THZCudaTensor_copyAsyncFloat(state, storage, src);
   else
-    luaL_typerror(L, 2, "torch.FloatTensor or torch.CudaTensor");
+    luaL_typerror(L, 2, "torch.FloatTensor or torch.ZCudaTensor");
 
   lua_settop(L, 1);
   return 1;
@@ -203,8 +203,8 @@ static int cuda_FloatTensor_fakecopy(lua_State *L)
 }
 
 static int cutorch_CudaTensor_getDevice(lua_State *L) {
-  THCudaTensor *tensor = luaT_checkudata(L, 1, "torch.CudaTensor");
-  lua_pushinteger(L, THCudaTensor_getDevice(cutorch_getstate(L), tensor) + 1);
+  THZCudaTensor *tensor = luaT_checkudata(L, 1, "torch.CudaTensor");
+  lua_pushinteger(L, THZCudaTensor_getDevice(cutorch_getstate(L), tensor) + 1);
   return 1;
 }
 

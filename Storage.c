@@ -1,12 +1,12 @@
 #include "torch/utils.h"
-#include "THC.h"
+#include "THZC.h"
 #include "THFile.h"
 #include "luaT.h"
 
 /* everything is as the generic Storage.c, except few things (see below) */
 
 #define real float
-#define Real Cuda
+#define Real ZCuda
 #define TH_GENERIC_FILE "generic/Storage.c"
 
 #define torch_Storage_(NAME) TH_CONCAT_4(torch_,Real,Storage_,NAME)
@@ -15,14 +15,14 @@
   {                                                                     \
     float *fdata = (float*)THAlloc(sizeof(float)*size);                 \
     THFile_readFloatRaw(file, fdata, size);                             \
-    THCudaCheck(cudaMemcpy(data, fdata, size * sizeof(float), cudaMemcpyHostToDevice)); \
+    THZCudaCheck(cudaMemcpy(data, fdata, size * sizeof(float), cudaMemcpyHostToDevice)); \
     THFree(fdata);                                                      \
   }
 
 #define THFile_writeRealRaw(file, data, size)                           \
   {                                                                     \
     float *fdata = (float*)THAlloc(sizeof(float)*size);                 \
-    THCudaCheck(cudaMemcpy(fdata, data, size * sizeof(float), cudaMemcpyDeviceToHost)); \
+    THZCudaCheck(cudaMemcpy(fdata, data, size * sizeof(float), cudaMemcpyDeviceToHost)); \
     THFile_writeFloatRaw(file, fdata, size);                            \
     THFree(fdata);                                                      \
   }
@@ -40,26 +40,26 @@
 static int cutorch_CudaStorage_copy(lua_State *L)
 {
   THCState *state = cutorch_getstate(L);
-  THCudaStorage *storage = luaT_checkudata(L, 1, "torch.CudaStorage");
+  THZCudaStorage *storage = luaT_checkudata(L, 1, "torch.CudaStorage");
   void *src;
   if( (src = luaT_toudata(L, 2, "torch.CudaStorage")) )
-    THCudaStorage_copy(state, storage, src);
+    THZCudaStorage_copy(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.ByteStorage")) )
-    THCudaStorage_copyByte(state, storage, src);
+    THZCudaStorage_copyByte(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.CharStorage")) )
-    THCudaStorage_copyChar(state, storage, src);
+    THZCudaStorage_copyChar(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.ShortStorage")) )
-    THCudaStorage_copyShort(state, storage, src);
+    THZCudaStorage_copyShort(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.IntStorage")) )
-    THCudaStorage_copyInt(state, storage, src);
+    THZCudaStorage_copyInt(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.LongStorage")) )
-    THCudaStorage_copyLong(state, storage, src);
+    THZCudaStorage_copyLong(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.FloatStorage")) )
-    THCudaStorage_copyFloat(state, storage, src);
+    THZCudaStorage_copyFloat(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.DoubleStorage")) )
-    THCudaStorage_copyDouble(state, storage, src);
+    THZCudaStorage_copyDouble(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.CudaStorage")) )
-    THCudaStorage_copyCuda(state, storage, src);
+    THZCudaStorage_copyCuda(state, storage, src);
   else
     luaL_typerror(L, 2, "torch.*Storage");
 

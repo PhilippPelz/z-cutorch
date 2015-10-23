@@ -1,3 +1,5 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8 FATAL_ERROR)
+CMAKE_POLICY(VERSION 2.8)
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake ${CMAKE_MODULE_PATH})
 
 IF(NOT Torch_FOUND)
@@ -47,91 +49,91 @@ IF(USE_MAGMA)
   INCLUDE_DIRECTORIES(${MAGMA_INCLUDE_DIR})
 ENDIF(USE_MAGMA)
 
-IF(NOT THC_INSTALL_BIN_SUBDIR
-    OR NOT THC_INSTALL_LIB_SUBDIR
-    OR NOT THC_INSTALL_INCLUDE_SUBDIR
-    OR NOT THC_INSTALL_CMAKE_SUBDIR)
+IF(NOT THZC_INSTALL_BIN_SUBDIR
+    OR NOT THZC_INSTALL_LIB_SUBDIR
+    OR NOT THZC_INSTALL_INCLUDE_SUBDIR
+    OR NOT THZC_INSTALL_CMAKE_SUBDIR)
 
   INCLUDE_DIRECTORIES(${TH_INCLUDE_PATH} ${TH_INCLUDE_PATH}/TH)
   LINK_DIRECTORIES(${TH_LIB_PATH})
 
-  SET(THC_INSTALL_BIN_SUBDIR "bin" CACHE PATH "THC install binary subdirectory")
-  SET(THC_INSTALL_LIB_SUBDIR "lib" CACHE PATH "THC install library subdirectory")
-  SET(THC_INSTALL_INCLUDE_SUBDIR "include" CACHE PATH "THC install include subdirectory")
-  SET(THC_INSTALL_CMAKE_SUBDIR "share/cmake/THC" CACHE PATH "THC install cmake subdirectory")
+  SET(THZC_INSTALL_BIN_SUBDIR "bin" CACHE PATH "THZC install binary subdirectory")
+  SET(THZC_INSTALL_LIB_SUBDIR "lib" CACHE PATH "THZC install library subdirectory")
+  SET(THZC_INSTALL_INCLUDE_SUBDIR "include" CACHE PATH "THZC install include subdirectory")
+  SET(THZC_INSTALL_CMAKE_SUBDIR "share/cmake/THZC" CACHE PATH "THZC install cmake subdirectory")
 ELSE()
-  SET(THC_INSTALL_BIN_SUBDIR ${Torch_INSTALL_BIN_SUBDIR})
-  SET(THC_INSTALL_LIB_SUBDIR ${Torch_INSTALL_LIB_SUBDIR})
-  SET(THC_INSTALL_INCLUDE_SUBDIR ${Torch_INSTALL_INCLUDE_SUBDIR})
-  SET(THC_INSTALL_CMAKE_SUBDIR ${Torch_INSTALL_CMAKE_SUBDIR})
+  SET(THZC_INSTALL_BIN_SUBDIR ${Torch_INSTALL_BIN_SUBDIR})
+  SET(THZC_INSTALL_LIB_SUBDIR ${Torch_INSTALL_LIB_SUBDIR})
+  SET(THZC_INSTALL_INCLUDE_SUBDIR ${Torch_INSTALL_INCLUDE_SUBDIR})
+  SET(THZC_INSTALL_CMAKE_SUBDIR ${Torch_INSTALL_CMAKE_SUBDIR})
 ENDIF()
 
 INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
-CONFIGURE_FILE(THCGeneral.h.in "${CMAKE_CURRENT_BINARY_DIR}/THCGeneral.h")
+CONFIGURE_FILE(THZCGeneral.h.in "${CMAKE_CURRENT_BINARY_DIR}/THZCGeneral.h")
 
 SET(CMAKE_C_FLAGS "-std=c99")
 SET(src
-    THCGeneral.c THCAllocator.c THCStorage.c THCStorageCopy.c THCTensor.c THCTensorCopy.c)
+    THZCGeneral.c THZCAllocator.c THZCStorage.c THZCStorageCopy.c THZCTensor.c THZCTensorCopy.c)
 
 SET(src-cuda
-  THCReduceApplyUtils.cu
-  THCBlas.cu
-  THCStorage.cu
-  THCStorageCopy.cu
-  THCTensor.cu
-  THCTensorCopy.cu
-  THCTensorMath.cu
-  THCTensorMath2.cu
-  THCTensorMathBlas.cu
-  THCTensorMathCompare.cu
-  THCTensorMathCompareT.cu
-  THCTensorMathMagma.cu
-  THCTensorMathPairwise.cu
-  THCTensorMathPointwise.cu
-  THCTensorMathScan.cu
-  THCTensorMathTransformReduce.cu
-  THCTensorMasked.cu
-  THCTensorIndex.cu
-  THCTensorConv.cu
-  THCTensorRandom.cu
-  THCTensorScatterGather.cu
-  THCApply.cu
-  THCTensorSort.cu
+  THZCReduceApplyUtils.cu
+  THZCBlas.cu
+  THZCStorage.cu
+  THZCStorageCopy.cu
+  THZCTensor.cu
+  THZCTensorCopy.cu
+  THZCTensorMath.cu
+  THZCTensorMath2.cu
+  THZCTensorMathBlas.cu
+  THZCTensorMathCompare.cu
+  THZCTensorMathCompareT.cu
+  THZCTensorMathMagma.cu
+  THZCTensorMathPairwise.cu
+  THZCTensorMathPointwise.cu
+  THZCTensorMathScan.cu
+  THZCTensorMathTransformReduce.cu
+  THZCTensorMasked.cu
+  THZCTensorIndex.cu
+  THZCTensorConv.cu
+  THZCTensorRandom.cu
+  THZCTensorScatterGather.cu
+  THZCApply.cu
+  THZCTensorSort.cu
   )
 
-CUDA_ADD_LIBRARY(THC SHARED ${src} ${src-cuda})
-CUDA_ADD_CUBLAS_TO_TARGET(THC)
-TARGET_LINK_LIBRARIES(THC TH ${CUDA_curand_LIBRARY})
+CUDA_ADD_LIBRARY(THZC SHARED ${src} ${src-cuda})
+CUDA_ADD_CUBLAS_TO_TARGET(THZC)
+TARGET_LINK_LIBRARIES(THZC TH ${CUDA_curand_LIBRARY})
 
 IF(USE_MAGMA)
-  TARGET_LINK_LIBRARIES(THC ${MAGMA_LIBRARIES})
+  TARGET_LINK_LIBRARIES(THZC ${MAGMA_LIBRARIES})
 ENDIF(USE_MAGMA)
 
-INSTALL(TARGETS THC
-          RUNTIME DESTINATION "${THC_INSTALL_BIN_SUBDIR}"
-          LIBRARY DESTINATION "${THC_INSTALL_LIB_SUBDIR}"
-          ARCHIVE DESTINATION "${THC_INSTALL_LIB_SUBDIR}")
+INSTALL(TARGETS THZC
+          RUNTIME DESTINATION "${THZC_INSTALL_BIN_SUBDIR}"
+          LIBRARY DESTINATION "${THZC_INSTALL_LIB_SUBDIR}"
+          ARCHIVE DESTINATION "${THZC_INSTALL_LIB_SUBDIR}")
 
 INSTALL(FILES
-          THC.h
-          ${CMAKE_CURRENT_BINARY_DIR}/THCGeneral.h
-          THCBlas.h
-          THCStorage.h
-          THCStorageCopy.h
-          THCTensor.h
-          THCTensorCopy.h
-          THCTensorRandom.h
-          THCTensorMath.h
-          THCTensorConv.h
-          THCTensorSort.h
-          THCApply.cuh
-          THCReduce.cuh
-          THCReduceAll.cuh
-          THCReduceApplyUtils.cuh
-          THCAllocator.h
-          THCDeviceUtils.cuh
-          THCDeviceTensor.cuh
-          THCDeviceTensor-inl.cuh       
-          THCDeviceTensorUtils.cuh
-          THCDeviceTensorUtils-inl.cuh
-          DESTINATION "${THC_INSTALL_INCLUDE_SUBDIR}/THC")
+          THZC.h
+          ${CMAKE_CURRENT_BINARY_DIR}/THZCGeneral.h
+          THZCBlas.h
+          THZCStorage.h
+          THZCStorageCopy.h
+          THZCTensor.h
+          THZCTensorCopy.h
+          THZCTensorRandom.h
+          THZCTensorMath.h
+          THZCTensorConv.h
+          THZCTensorSort.h
+          THZCApply.cuh
+          THZCReduce.cuh
+          THZCReduceAll.cuh
+          THZCReduceApplyUtils.cuh
+          THZCAllocator.h
+          THZCDeviceUtils.cuh
+          THZCDeviceTensor.cuh
+          THZCDeviceTensor-inl.cuh
+          THZCDeviceTensorUtils.cuh
+          THZCDeviceTensorUtils-inl.cuh
+          DESTINATION "${THZC_INSTALL_INCLUDE_SUBDIR}/THZC")
