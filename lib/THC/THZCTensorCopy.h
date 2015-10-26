@@ -12,17 +12,12 @@ THZC_API void THZCudaTensor_copyInt(THCState *state, THZCudaTensor *self, THIntT
 THZC_API void THZCudaTensor_copyLong(THCState *state, THZCudaTensor *self, THLongTensor *src);
 THZC_API void THZCudaTensor_copyFloat(THCState *state, THZCudaTensor *self, THFloatTensor *src);
 THZC_API void THZCudaTensor_copyDouble(THCState *state, THZCudaTensor *self, THDoubleTensor *src);
+THZC_API void THZCudaTensor_copyZFloat(THCState *state, THZCudaTensor *self, THZFloatTensor *src);
 
-THZC_API void THByteTensor_copyCuda(THCState *state, THByteTensor *self, THZCudaTensor *src);
-THZC_API void THCharTensor_copyCuda(THCState *state, THCharTensor *self, THZCudaTensor *src);
-THZC_API void THShortTensor_copyCuda(THCState *state, THShortTensor *self, THZCudaTensor *src);
-THZC_API void THIntTensor_copyCuda(THCState *state, THIntTensor *self, THZCudaTensor *src);
-THZC_API void THLongTensor_copyCuda(THCState *state, THLongTensor *self, THZCudaTensor *src);
-THZC_API void THFloatTensor_copyCuda(THCState *state, THFloatTensor *self, THZCudaTensor *src);
-THZC_API void THDoubleTensor_copyCuda(THCState *state, THDoubleTensor *self, THZCudaTensor *src);
-THZC_API void THZCudaTensor_copyCuda(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
+THZC_API void THZFloatTensor_copyZCuda(THCState *state, THFloatTensor *self, THZCudaTensor *src);
+THZC_API void THZCudaTensor_copyZCuda(THCState *state, THFloatTensor *self, THZCudaTensor *src);
 
-THZC_API void THZCudaTensor_copyAsyncFloat(THCState *state, THZCudaTensor *self, THFloatTensor *src);
-THZC_API void THFloatTensor_copyAsyncCuda(THCState *state, THFloatTensor *self, THZCudaTensor *src);
+THZC_API void THZCudaTensor_copyAsyncZFloat(THCState *state, THZCudaTensor *self, THFloatTensor *src);
+THZC_API void THZFloatTensor_copyAsyncZCuda(THCState *state, THFloatTensor *self, THZCudaTensor *src);
 
 #endif

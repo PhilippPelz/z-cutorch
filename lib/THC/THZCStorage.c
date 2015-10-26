@@ -94,7 +94,7 @@ THZCudaStorage* THZCudaStorage_newWithMapping(THCState *state, const char *fileN
   return NULL;
 }
 
-THZCudaStorage* THZCudaStorage_newWithData(THCState *state, float *data, long size)
+THZCudaStorage* THZCudaStorage_newWithData(THCState *state, cuComplex *data, long size)
 {
   THZCudaStorage *storage = (THZCudaStorage*)THAlloc(sizeof(THZCudaStorage));
   storage->data = data;

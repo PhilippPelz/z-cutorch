@@ -8,9 +8,51 @@
 #include "THZCDeviceUtils.cuh"
 #include <algorithm> // for std::min
 
+
+#include <cusp/complex.h>
+
+typedef ::complex<float> cx;
+using namespace cusp;
+
 __global__ void THZCudaTensor_kernel_indexFill(
-   float *tensor, long* stride, float *index, long src_nDim,
+   cx *tensor, long* stride, float *index, long src_nDim,
    int dim, long idx_size, long tensor_size, long size_dim, float val
+)
+{
+  int thread_idx = blockIdx.x * blockDim.x * blockDim.y + threadIdx.y * blockDim.x + threadIdx.x;
+
+  long flat_size = tensor_size / idx_size;
+
+  if (thread_idx < flat_size)
+  {
+    long coeff = 0;
+    for (int i=0; i<idx_size; i++)
+    {
+      int leftover = thread_idx;
+      int srcIdx = 0;
+      for (int d=0; d<src_nDim; d++)
+      {
+        if (d < dim)
+        {
+          coeff = leftover / (stride[d] / size_dim);
+          leftover -= coeff * (stride[d] / size_dim);
+          srcIdx += coeff * stride[d];
+        }
+        else if (d > dim)
+        {
+          coeff = leftover / stride[d];
+          leftover -= coeff * stride[d];
+          srcIdx += coeff * stride[d];
+        }
+      }
+        tensor[srcIdx + (long)((index[i])-1)*stride[dim]] = cx(val,0);
+    }
+  }
+}
+
+__global__ void THZCudaTensor_kernel_indexFill(
+   cx *tensor, long* stride, float *index, long src_nDim,
+   int dim, long idx_size, long tensor_size, long size_dim, cx val
 )
 {
   int thread_idx = blockIdx.x * blockDim.x * blockDim.y + threadIdx.y * blockDim.x + threadIdx.x;
@@ -45,7 +87,7 @@ __global__ void THZCudaTensor_kernel_indexFill(
 }
 
 __global__ void THZCudaTensor_kernel_indexCopy(
-   float *res, float *src, long* res_stride, float *index,
+   cx *res, cx *src, long* res_stride, float *index,
    long res_nDim, int dim, long idx_size, long src_size, long size_dim
 )
 {
@@ -84,46 +126,6 @@ __global__ void THZCudaTensor_kernel_indexCopy(
   }
 }
 
-__global__ void THZCudaTensor_kernel_indexAdd(
-   float *res, float *src, long* res_stride, float *index,
-   long res_nDim, int dim, long idx_size, long src_size, long size_dim
-)
-{
-  int thread_idx = blockIdx.x * blockDim.x * blockDim.y + threadIdx.y * blockDim.x + threadIdx.x;
-
-  long flat_size = src_size / idx_size;
-
-  if (thread_idx < flat_size)
-  {
-    long coeff = 0;
-    for (int i=0; i<idx_size; i++)
-    {
-      int leftover = thread_idx;
-      int targetIdx = 0;
-      int resIdx = 0;
-      for (int d=0; d<res_nDim; d++)
-      {
-        if (d < dim)
-        {
-          long stride_d = res_stride[d] / size_dim;
-          coeff = leftover / stride_d;
-          leftover -= coeff * stride_d;
-          targetIdx += coeff * stride_d * idx_size;
-          resIdx += coeff * res_stride[d];
-        }
-        else if (d > dim)
-        {
-          coeff = leftover / res_stride[d];
-          leftover -= coeff * res_stride[d];
-          targetIdx += coeff * res_stride[d];
-          resIdx += coeff * res_stride[d];
-        }
-      }
-      atomicAdd(&res[resIdx + ((long)(index[i])-1)*res_stride[dim]], src[targetIdx + i*res_stride[dim]]);
-    }
-  }
-}
-
 void THZCudaTensor_indexCopy_long(THCState *state, THZCudaTensor *res_, int dim, THLongTensor *indices, THZCudaTensor *src)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, res_));
@@ -136,7 +138,7 @@ void THZCudaTensor_indexCopy_long(THCState *state, THZCudaTensor *res_, int dim,
   THZCudaTensor_free(state, indices_);
 }
 
-void THZCudaTensor_indexCopy(THCState *state, THZCudaTensor *res_, int dim, THZCudaTensor *indices, THZCudaTensor *src)
+void THZCudaTensor_indexCopy(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, THZCudaTensor *src)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, res_, src));
   long *stride_;
@@ -228,7 +230,7 @@ void THZCudaTensor_indexFill_long(THCState *state, THZCudaTensor *res_, int dim,
   THZCudaTensor_free(state, indices_);
 }
 
-void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *res_, int dim, THZCudaTensor *indices, float val)
+void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, float val)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, res_));
   long *stride_;
@@ -249,7 +251,36 @@ void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *res_, int dim, THZC
   THZCudaCheck(cudaMemcpy(stride_, res_->stride, res_->nDimension * sizeof(long), cudaMemcpyHostToDevice));
 
   THZCudaTensor_kernel_indexFill<<<nblocks, nthreads, 0, THCState_getCurrentStream(state)>>>(
-    THZCudaTensor_data(state, res_), stride_, THZCudaTensor_data(state, indices),
+    THZCudaTensor_data(state, res_), stride_, THCudaTensor_data(state, indices),
+    res_->nDimension, dim, nIndex, nRes, res_->size[dim], cx(val,0)
+  );
+
+  THZCudaCheck(THZCudaFree(state, stride_));
+  THZCudaTensor_free(state, indices);
+}
+
+void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, cx val)
+{
+  THAssert(THZCudaTensor_checkGPU(state, 1, res_));
+  long *stride_;
+  long nIndex = indices->size[0];
+  long nRes;
+
+  THArgCheck(indices->nDimension == 1, 3, "Index is supposed to be a vector");
+  THArgCheck(dim < res_->nDimension,4,"Indexing dim is out of bounds");
+  THArgCheck(res_->nDimension > 0, 2, "Source tensor is empty");
+
+  nRes = THZCudaTensor_nElement(state, res_) / res_->size[dim] * nIndex;
+  indices = THZCudaTensor_newContiguous(state, indices);
+
+  dim3 nthreads(16, 16);
+  dim3 nblocks(ceil((float)nRes / nIndex / (16*16)));
+
+  THZCudaCheck(THZCudaMalloc(state, (void**)&stride_, res_->nDimension * sizeof(long)));
+  THZCudaCheck(cudaMemcpy(stride_, res_->stride, res_->nDimension * sizeof(long), cudaMemcpyHostToDevice));
+
+  THZCudaTensor_kernel_indexFill<<<nblocks, nthreads, 0, THCState_getCurrentStream(state)>>>(
+    THZCudaTensor_data(state, res_), stride_, THCudaTensor_data(state, indices),
     res_->nDimension, dim, nIndex, nRes, res_->size[dim], val
   );
 
@@ -258,7 +289,7 @@ void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *res_, int dim, THZC
 }
 
 __global__ void THZCudaTensor_kernel_indexSelect_contiguous(
-  float *tensor, float *src, long stride, float *index, long idxSize)
+  cx *tensor, cx *src, long stride, float *index, long idxSize)
 {
   // In the typical case, each block of 128 threads handles a 4x128
   // section of the output with each warp handling a single 1x128 row.

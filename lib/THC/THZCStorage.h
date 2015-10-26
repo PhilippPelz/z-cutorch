@@ -3,6 +3,7 @@
 
 #include "THStorage.h"
 #include "THZCGeneral.h"
+#include "cuComplex.h"
 
 #define TH_STORAGE_REFCOUNTED 1
 #define TH_STORAGE_RESIZABLE  2
@@ -11,11 +12,11 @@
 
 typedef struct THZCudaStorage
 {
-    float *data;
+    cuComplex *data;
     long size;
     int refcount;
     char flag;
-    THAllocator *allocator;
+    THZAllocator *allocator;
     void *allocatorContext;
     struct THZCudaStorage *view;
 } THZCudaStorage;
@@ -37,13 +38,13 @@ THZC_API THZCudaStorage* THZCudaStorage_newWithSize4(THCState *state, float, flo
 THZC_API THZCudaStorage* THZCudaStorage_newWithMapping(THCState *state, const char *filename, long size, int shared);
 
 /* takes ownership of data */
-THZC_API THZCudaStorage* THZCudaStorage_newWithData(THCState *state, float *data, long size);
+THZC_API THZCudaStorage* THZCudaStorage_newWithData(THCState *state, cuComplex *data, long size);
 
 THZC_API THZCudaStorage* THZCudaStorage_newWithAllocator(THCState *state, long size,
                                                       THAllocator* allocator,
                                                       void *allocatorContext);
 THZC_API THZCudaStorage* THZCudaStorage_newWithDataAndAllocator(
-    THCState *state, float* data, long size, THAllocator* allocator, void *allocatorContext);
+    THCState *state, cuComplex* data, long size, THAllocator* allocator, void *allocatorContext);
 
 THZC_API void THZCudaStorage_setFlag(THCState *state, THZCudaStorage *storage, const char flag);
 THZC_API void THZCudaStorage_clearFlag(THCState *state, THZCudaStorage *storage, const char flag);

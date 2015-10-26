@@ -9,16 +9,48 @@
 #include <thrust/functional.h>
 
 struct TensorFillOp {
-  TensorFillOp(float v) : val(v) {}
-  __device__ __forceinline__ void operator()(float* v) { *v = val; }
+  TensorFillOp(cuComplex v) : val(v) {}
+  __device__ __forceinline__ void operator()(cuComplex* v) { *v = val; }
 
-  const float val;
+  const cuComplex val;
+};
+struct TensorFillReOp {
+  TensorFillOp(cuComplex v) : val(v) {}
+  __device__ __forceinline__ void operator()(cuComplex* v) { *v = make_cuComplex(val,cuCimagf(*v)); }
+
+  const cuComplex val;
+};
+struct TensorFillImOp {
+  TensorFillOp(cuComplex v) : val(v) {}
+  __device__ __forceinline__ void operator()(cuComplex* v) { *v = make_cuComplex(cuCrealf(*v),val); }
+
+  const cuComplex val;
 };
 
-void THZCudaTensor_fill(THCState* state, THZCudaTensor *self_, float value)
+void THZCudaTensor_fill(THCState* state, THZCudaTensor *self_, cuComplex value)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, self_));
   if (!THZCudaTensor_pointwiseApply1(state, self_, TensorFillOp(value))) {
+    THArgCheck(false, 1, CUTORCH_DIM_WARNING);
+  }
+
+  THZCudaCheck(cudaGetLastError());
+}
+
+void THZCudaTensor_fillim(THCState* state, THZCudaTensor *self_, float value)
+{
+  THAssert(THZCudaTensor_checkGPU(state, 1, self_));
+  if (!THZCudaTensor_pointwiseApply1(state, self_, TensorFillImOp(value))) {
+    THArgCheck(false, 1, CUTORCH_DIM_WARNING);
+  }
+
+  THZCudaCheck(cudaGetLastError());
+}
+
+void THZCudaTensor_fillre(THCState* state, THZCudaTensor *self_, float value)
+{
+  THAssert(THZCudaTensor_checkGPU(state, 1, self_));
+  if (!THZCudaTensor_pointwiseApply1(state, self_, TensorFillReOp(value))) {
     THArgCheck(false, 1, CUTORCH_DIM_WARNING);
   }
 
@@ -31,7 +63,7 @@ void THZCudaTensor_zero(THCState *state, THZCudaTensor *self_)
   if (THZCudaTensor_isContiguous(state, self_)) {
     THZCudaCheck(cudaMemsetAsync(THZCudaTensor_data(state, self_),
                                 0,
-                                sizeof(float) * THZCudaTensor_nElement(state, self_),
+                                sizeof(cuComplex) * THZCudaTensor_nElement(state, self_),
                                 THCState_getCurrentStream(state)));
   } else {
     if (!THZCudaTensor_pointwiseApply1(state, self_, TensorFillOp(0))) {
@@ -137,48 +169,15 @@ void THZCudaTensor_catArray(THCState *state, THZCudaTensor *result, THZCudaTenso
   }
 }
 
-struct TensorCPowOp {
-  __device__ __forceinline__ void operator()(float* out, float* in) {
-    *out = powf(*out, *in);
-  }
-
-  __device__ __forceinline__ void operator()(float* out, float* in1, float* in2) {
-    *out = powf(*in1, *in2);
-  }
-};
-
-void THZCudaTensor_cpow(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THZCudaTensor *src2)
-{
-  THAssert(THZCudaTensor_checkGPU(state, 3, self_, src1, src2));
-  THArgCheck(THZCudaTensor_nElement(state, src1) ==
-             THZCudaTensor_nElement(state, src2), 3, "sizes do not match");
-
-  if (self_ == src1) {
-    // self = pow(self, src2)
-    if (!THZCudaTensor_pointwiseApply2(state, self_, src2, TensorCPowOp())) {
-      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
-    }
-  } else {
-    THZCudaTensor_resizeAs(state, self_, src1);
-
-    // self = pow(src1, src2)
-    if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorCPowOp())) {
-      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
-    }
-  }
-
-  THZCudaCheck(cudaGetLastError());
-}
-
 struct TensorDivOp {
   __device__ __forceinline__ void
-  operator()(float* out, float* in) {
-    *out /= *in;
+  operator()(cuComplex* out, cuComplex* in) {
+    *out = cuCdivf(*out,*in);
   }
 
   __device__ __forceinline__ void
-  operator()(float* out, float* in1, float* in2) {
-    *out = *in1 / *in2;
+  operator()(cuComplex* out, cuComplex* in1, cuComplex* in2) {
+    *out = cuCdivf(*in1,*in2);
   }
 };
 
@@ -209,8 +208,8 @@ struct TensorAddCMulOp {
   TensorAddCMulOp(float v) : val(v) {}
 
   __device__ __forceinline__ void
-  operator()(float* out, float* in1, float* in2) {
-    *out += val * *in1 * *in2;
+  operator()(cuComplex* out, cuComplex* in1, cuComplex* in2) {
+    *out = cuCaddf(*out,cuCmulf(make_cuComplex(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
   }
 
   float val;
@@ -244,8 +243,8 @@ struct TensorAddCDivOp {
   TensorAddCDivOp(float v) : val(v) {}
 
   __device__ __forceinline__ void
-  operator()(float* out, float* in1, float* in2) {
-    *out += val * *in1 / *in2;
+  operator()(cuComplex* out, cuComplex* in1, cuComplex* in2) {
+    *out += cuCaddf(*out,cuCdivf(make_cuComplex(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
   }
 
   float val;
@@ -274,12 +273,31 @@ void THZCudaTensor_addcdiv(THCState *state, THZCudaTensor *self_, THZCudaTensor 
   THZCudaCheck(cudaGetLastError());
 }
 
+struct AbsOp {
+  AbsOp(){}
+
+  __device__ __forceinline__ void
+  operator()(cuComplex* out, cuComplex* in1, cuComplex* in2) {
+    *out += cuCaddf(*out,cuCdivf(make_cuComplex(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
+  }
+
+  float val;
+};
+
+template <typename T>
+struct AbsOp : public thrust::unary_function<T,T>{
+  __host__ __device__
+  float operator()(cuComplex v){
+    return cuCabsf(v);
+  }
+};
+
 float THZCudaTensor_minall(THCState *state, THZCudaTensor *self)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, self));
   float val = (float) THInf;
   if (!THZCudaTensor_reduceAll(state, self,
-                              thrust::identity<float>(),
+                              AbsOp(),
                               thrust::minimum<float>(),
                               (float) THInf, &val, 0)) {
     THArgCheck(false, 1, CUTORCH_DIM_WARNING);
@@ -294,7 +312,7 @@ float THZCudaTensor_maxall(THCState *state, THZCudaTensor *self)
   THAssert(THZCudaTensor_checkGPU(state, 1, self));
   float val = (float) -THInf;
   if (!THZCudaTensor_reduceAll(state, self,
-                              thrust::identity<float>(),
+                              AbsOp(),
                               thrust::maximum<float>(),
                               (float) -THInf, &val, 0)) {
     THArgCheck(false, 1, CUTORCH_DIM_WARNING);
@@ -303,14 +321,27 @@ float THZCudaTensor_maxall(THCState *state, THZCudaTensor *self)
   THZCudaCheck(cudaGetLastError());
   return val;
 }
-
+template <typename T>
+struct Plus : public thrust::binary_function<T,T>{
+  __host__ __device__
+  float operator()(const cuComplex& v1,const cuComplex& v2){
+    return cuCaddf(v1,v2);
+  }
+};
+template <typename T>
+struct Mul : public thrust::binary_function<T,T>{
+  __host__ __device__
+  float operator()(const cuComplex& v1,const cuComplex& v2){
+    return cuCmulf(v1,v2);
+  }
+};
 float THZCudaTensor_sumall(THCState *state, THZCudaTensor *self)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, self));
   float val = 0.0f;
   if (!THZCudaTensor_reduceAll(state, self,
                               thrust::identity<float>(),
-                              thrust::plus<float>(),
+                              Plus(),
                               0.0f, &val, 0)) {
     THArgCheck(false, 1, CUTORCH_DIM_WARNING);
   }
@@ -325,7 +356,7 @@ float THZCudaTensor_prodall(THCState *state, THZCudaTensor *self)
   float val = 1.0f;
   if (!THZCudaTensor_reduceAll(state, self,
                               thrust::identity<float>(),
-                              thrust::multiplies<float>(),
+                              Mul(),
                               1.0f, &val, 0)) {
     THArgCheck(false, 1, CUTORCH_DIM_WARNING);
   }
@@ -339,7 +370,7 @@ void THZCudaTensor_sum(THCState* state, THZCudaTensor *self, THZCudaTensor *src,
   THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
   if (!THZCudaTensor_reduceDim(
         state, self, src,
-        thrust::identity<float>(), thrust::plus<float>(), 0.0f, dimension)) {
+        thrust::identity<float>(), Plus(), 0.0f, dimension)) {
     THArgCheck(false, 2, CUTORCH_DIM_WARNING);
   }
 
@@ -351,7 +382,7 @@ void THZCudaTensor_prod(THCState* state, THZCudaTensor *self, THZCudaTensor *src
   THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
   if (!THZCudaTensor_reduceDim(
         state, self, src,
-        thrust::identity<float>(), thrust::multiplies<float>(), 1.0f, dimension)) {
+        thrust::identity<float>(), Mul(), 1.0f, dimension)) {
     THArgCheck(false, 2, CUTORCH_DIM_WARNING);
   }
 

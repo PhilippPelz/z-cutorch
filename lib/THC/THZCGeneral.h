@@ -124,7 +124,7 @@ THZC_API void __THZCublasCheck(cublasStatus_t status, const char *file, const in
 THZC_API cudaError_t THZCudaMalloc(THCState *state, void **ptr, size_t size);
 THZC_API cudaError_t THZCudaFree(THCState *state, void *ptr);
 THZC_API void THZCSetGCHandler(THCState *state,
-                             void (*torchGCHandlerFunction)(void *data), 
+                             void (*torchGCHandlerFunction)(void *data),
                              void *data );
 THZC_API void THZCHeapUpdate(THCState *state, long size);
 

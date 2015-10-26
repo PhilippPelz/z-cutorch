@@ -8,7 +8,7 @@
 #include "THZCStorageCopy.h"
 #include "THZCTensor.h"
 #include "THZCTensorCopy.h"
-#include "THZCTensorRandom.h"
+//#include "THZCTensorRandom.h"
 #include "THZCTensorMath.h"
 #include "THZCTensorConv.h"
 #include "THZCTensorSort.h"

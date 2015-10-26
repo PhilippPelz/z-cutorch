@@ -14,7 +14,7 @@ void THZCudaBlas_swap(THCState *state, long n, float *x, long incx, float *y, lo
     int i_n = (int)n;
     int i_incx = (int)incx;
     int i_incy = (int)incy;
-    THZCublasCheck(cublasSswap(THCState_getCurrentBlasHandle(state), i_n, x, i_incx, y, i_incy));
+    THZCublasCheck(cublasCswap(THCState_getCurrentBlasHandle(state), i_n, x, i_incx, y, i_incy));
     return;
   }
   THError("Cublas_swap only supports n, incx and"
@@ -30,7 +30,7 @@ void THZCudaBlas_scal(THCState *state, long n, float a, float *x, long incx)
   {
     int i_n = (int)n;
     int i_incx = (int)incx;
-    THZCublasCheck(cublasSscal(THCState_getCurrentBlasHandle(state), i_n, &a, x, i_incx));
+    THZCublasCheck(cublasCscal(THCState_getCurrentBlasHandle(state), i_n, &a, x, i_incx));
     return;
   }
   THError("Cublas_scal only supports n and incx "
@@ -50,7 +50,7 @@ void THZCudaBlas_copy(THCState *state, long n, float *x, long incx, float *y, lo
     int i_n = (int)n;
     int i_incx = (int)incx;
     int i_incy = (int)incy;
-    THZCublasCheck(cublasScopy(THCState_getCurrentBlasHandle(state), i_n, x, i_incx, y, i_incy));
+    THZCublasCheck(cublasCcopy(THCState_getCurrentBlasHandle(state), i_n, x, i_incx, y, i_incy));
     return;
   }
 
@@ -71,7 +71,7 @@ void THZCudaBlas_axpy(THCState *state, long n, float a, float *x, long incx, flo
     int i_n = (int)n;
     int i_incx = (int)incx;
     int i_incy = (int)incy;
-    THZCublasCheck(cublasSaxpy(THCState_getCurrentBlasHandle(state), i_n, &a, x, i_incx, y, i_incy));
+    THZCublasCheck(cublasCaxpy(THCState_getCurrentBlasHandle(state), i_n, &a, x, i_incx, y, i_incy));
     return;
   }
 
@@ -93,7 +93,7 @@ float THZCudaBlas_dot(THCState *state, long n, float *x, long incx, float *y, lo
     int i_incx = (int)incx;
     int i_incy = (int)incy;
     float result;
-    THZCublasCheck(cublasSdot(THCState_getCurrentBlasHandle(state), i_n, x, i_incx, y, i_incy, &result));
+    THZCublasCheck(cublasCdot(THCState_getCurrentBlasHandle(state), i_n, x, i_incx, y, i_incy, &result));
     cudaDeviceSynchronize();
     return result;
   }
@@ -124,7 +124,7 @@ void THZCudaBlas_gemv(THCState *state, char trans, long m, long n, float alpha, 
     int i_incx = (int)incx;
     int i_incy = (int)incy;
 
-    THZCublasCheck(cublasSgemv(THCState_getCurrentBlasHandle(state), op, i_m, i_n, &alpha, a, i_lda, x, i_incx, &beta, y, i_incy));
+    THZCublasCheck(cublasCgemv(THCState_getCurrentBlasHandle(state), op, i_m, i_n, &alpha, a, i_lda, x, i_incx, &beta, y, i_incy));
     return;
   }
   THError("Cublas_gemv only supports m, n, lda, incx, incy"
@@ -144,7 +144,7 @@ void THZCudaBlas_ger(THCState *state, long m, long n, float alpha, float *x, lon
       int i_incx = (int)incx;
       int i_incy = (int)incy;
 
-      THZCublasCheck(cublasSger(THCState_getCurrentBlasHandle(state), i_m, i_n, &alpha, x, i_incx, y, i_incy, a, i_lda));
+      THZCublasCheck(cublasCger(THCState_getCurrentBlasHandle(state), i_m, i_n, &alpha, x, i_incx, y, i_incy, a, i_lda));
       return;
     }
   THError("Cublas_ger only supports m, n, lda, incx, incy"
@@ -208,7 +208,7 @@ void THZCudaBlas_gemm(THCState *state, char transa, char transb, long m, long n,
     int i_ldb = (int)ldb;
     int i_ldc = (int)ldc;
 
-    THZCublasCheck(cublasSgemm(THCState_getCurrentBlasHandle(state), opa, opb, i_m, i_n, i_k, &alpha, a, i_lda, b, i_ldb, &beta, c, i_ldc));
+    THZCublasCheck(cublasCgemm(THCState_getCurrentBlasHandle(state), opa, opb, i_m, i_n, i_k, &alpha, a, i_lda, b, i_ldb, &beta, c, i_ldc));
     return;
   }
   THError("Cublas_gemm only supports m, n, k, lda, ldb, ldc"
@@ -229,7 +229,7 @@ void THZCudaBlas_gemmBatched(THCState *state, char transa, char transb, long m, 
   cublasOperation_t opa = convertTransToCublasOperation(transa);
   cublasOperation_t opb = convertTransToCublasOperation(transb);
 
-  THZCublasCheck(cublasSgemmBatched(THCState_getCurrentBlasHandle(state),
+  THZCublasCheck(cublasCgemmBatched(THCState_getCurrentBlasHandle(state),
                                    opa, opb, (int)m, (int)n, (int)k,
                                    &alpha, a, (int)lda, b, (int)ldb, &beta, c, (int)ldc,
                                    (int)batchCount));

@@ -45,7 +45,7 @@ THLongStorage *THZCudaTensor_newStrideOf(THCState *state, THZCudaTensor *self)
   return stride;
 }
 
-float *THZCudaTensor_data(THCState *state, const THZCudaTensor *self)
+cuComplex *THZCudaTensor_data(THCState *state, const THZCudaTensor *self)
 {
   if(self->storage)
     return (self->storage->data+self->storageOffset);
@@ -700,56 +700,56 @@ void THZCudaTensor_rawResize(THCState *state, THZCudaTensor *self, int nDimensio
     self->nDimension = 0;
 }
 
-void THZCudaTensor_set1d(THCState *state, THZCudaTensor *tensor, long x0, float value)
+void THZCudaTensor_set1d(THCState *state, THZCudaTensor *tensor, long x0, cuComplex value)
 {
   THArgCheck(tensor->nDimension == 1, 1, "tensor must have one dimension");
   THArgCheck( (x0 >= 0) && (x0 < tensor->size[0]), 2, "out of range");
   THZCudaStorage_set(state, tensor->storage, tensor->storageOffset+x0*tensor->stride[0], value);
 }
 
-float THZCudaTensor_get1d(THCState *state, const THZCudaTensor *tensor, long x0)
+cuComplex THZCudaTensor_get1d(THCState *state, const THZCudaTensor *tensor, long x0)
 {
   THArgCheck(tensor->nDimension == 1, 1, "tensor must have one dimension");
   THArgCheck( (x0 >= 0) && (x0 < tensor->size[0]), 2, "out of range");
   return THZCudaStorage_get(state, tensor->storage, tensor->storageOffset+x0*tensor->stride[0]);
 }
 
-void THZCudaTensor_set2d(THCState *state, THZCudaTensor *tensor, long x0, long x1, float value)
+void THZCudaTensor_set2d(THCState *state, THZCudaTensor *tensor, long x0, long x1, cuComplex value)
 {
   THArgCheck(tensor->nDimension == 2, 1, "tensor must have two dimensions");
   THArgCheck((x0 >= 0) && (x0 < tensor->size[0]) && (x1 >= 0) && (x1 < tensor->size[1]), 2, "out of range");
   THZCudaStorage_set(state, tensor->storage, tensor->storageOffset+x0*tensor->stride[0]+x1*tensor->stride[1], value);
 }
 
-float THZCudaTensor_get2d(THCState *state, const THZCudaTensor *tensor, long x0, long x1)
+cuComplex THZCudaTensor_get2d(THCState *state, const THZCudaTensor *tensor, long x0, long x1)
 {
   THArgCheck(tensor->nDimension == 2, 1, "tensor must have two dimensions");
   THArgCheck((x0 >= 0) && (x0 < tensor->size[0]) && (x1 >= 0) && (x1 < tensor->size[1]), 2, "out of range");
   return THZCudaStorage_get(state, tensor->storage, tensor->storageOffset+x0*tensor->stride[0]+x1*tensor->stride[1]);
 }
 
-void THZCudaTensor_set3d(THCState *state, THZCudaTensor *tensor, long x0, long x1, long x2, float value)
+void THZCudaTensor_set3d(THCState *state, THZCudaTensor *tensor, long x0, long x1, long x2, cuComplex value)
 {
   THArgCheck(tensor->nDimension == 3, 1, "tensor must have three dimensions");
   THArgCheck( (x0 >= 0) && (x0 < tensor->size[0]) && (x1 >= 0) && (x1 < tensor->size[1]) && (x2 >= 0) && (x2 < tensor->size[2]), 2, "out of range");
   THZCudaStorage_set(state, tensor->storage, tensor->storageOffset+x0*tensor->stride[0]+x1*tensor->stride[1]+x2*tensor->stride[2], value);
 }
 
-float THZCudaTensor_get3d(THCState *state, const THZCudaTensor *tensor, long x0, long x1, long x2)
+cuComplex THZCudaTensor_get3d(THCState *state, const THZCudaTensor *tensor, long x0, long x1, long x2)
 {
   THArgCheck(tensor->nDimension == 3, 1, "tensor must have three dimensions");
   THArgCheck( (x0 >= 0) && (x0 < tensor->size[0]) && (x1 >= 0) && (x1 < tensor->size[1]) && (x2 >= 0) && (x2 < tensor->size[2]), 2, "out of range");
   return THZCudaStorage_get(state, tensor->storage, tensor->storageOffset+x0*tensor->stride[0]+x1*tensor->stride[1]+x2*tensor->stride[2]);
 }
 
-void THZCudaTensor_set4d(THCState *state, THZCudaTensor *tensor, long x0, long x1, long x2, long x3, float value)
+void THZCudaTensor_set4d(THCState *state, THZCudaTensor *tensor, long x0, long x1, long x2, long x3, cuComplex value)
 {
   THArgCheck(tensor->nDimension == 4, 1, "tensor must have four dimensions");
   THArgCheck((x0 >= 0) && (x0 < tensor->size[0]) && (x1 >= 0) && (x1 < tensor->size[1]) && (x2 >= 0) && (x2 < tensor->size[2]) && (x3 >= 0) && (x3 < tensor->size[3]), 2, "out of range");
   THZCudaStorage_set(state, tensor->storage, tensor->storageOffset+x0*tensor->stride[0]+x1*tensor->stride[1]+x2*tensor->stride[2]+x3*tensor->stride[3], value);
 }
 
-float THZCudaTensor_get4d(THCState *state, const THZCudaTensor *tensor, long x0, long x1, long x2, long x3)
+cuComplex THZCudaTensor_get4d(THCState *state, const THZCudaTensor *tensor, long x0, long x1, long x2, long x3)
 {
   THArgCheck(tensor->nDimension == 4, 1, "tensor must have four dimensions");
   THArgCheck((x0 >= 0) && (x0 < tensor->size[0]) && (x1 >= 0) && (x1 < tensor->size[1]) && (x2 >= 0) && (x2 < tensor->size[2]) && (x3 >= 0) && (x3 < tensor->size[3]), 2, "out of range");

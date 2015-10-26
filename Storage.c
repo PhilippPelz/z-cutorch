@@ -36,8 +36,7 @@
 #undef TH_GENERIC_FILE
 
 /* now we overwrite some methods specific to CudaStorage */
-
-static int cutorch_CudaStorage_copy(lua_State *L)
+static int zcutorch_ZCudaStorage_copy(lua_State *L)
 {
   THCState *state = cutorch_getstate(L);
   THZCudaStorage *storage = luaT_checkudata(L, 1, "torch.CudaStorage");
@@ -68,7 +67,7 @@ static int cutorch_CudaStorage_copy(lua_State *L)
 }
 
 #define CUDA_IMPLEMENT_STORAGE_COPY(TYPEC)                              \
-  static int cutorch_##TYPEC##Storage_copy(lua_State *L)                \
+  static int zcutorch_##TYPEC##Storage_copy(lua_State *L)                \
   {                                                                     \
     TH##TYPEC##Storage *storage = luaT_checkudata(L, 1, "torch." #TYPEC "Storage"); \
     void *src;                                                          \
@@ -88,7 +87,7 @@ static int cutorch_CudaStorage_copy(lua_State *L)
       TH##TYPEC##Storage_copyFloat(storage, src);                       \
     else if( (src = luaT_toudata(L, 2, "torch.DoubleStorage")) )        \
       TH##TYPEC##Storage_copyDouble(storage, src);                      \
-    else if( (src = luaT_toudata(L, 2, "torch.CudaStorage")) )          \
+    else if( (src = luaT_toudata(L, 2, "torch.ZCudaStorage")) )          \
       TH##TYPEC##Storage_copyCuda(cutorch_getstate(L), storage, src);   \
     else                                                                \
       luaL_typerror(L, 2, "torch.*Storage");                            \
@@ -105,10 +104,10 @@ CUDA_IMPLEMENT_STORAGE_COPY(Long)
 CUDA_IMPLEMENT_STORAGE_COPY(Float)
 CUDA_IMPLEMENT_STORAGE_COPY(Double)
 
-void cutorch_CudaStorage_init(lua_State* L)
+void zcutorch_ZCudaStorage_init(lua_State* L)
 {
   /* the standard stuff */
-  torch_CudaStorage_init(L);
+  torch_ZCudaStorage_init(L);
 
   /* the copy methods */
   {
@@ -121,16 +120,17 @@ void cutorch_CudaStorage_init(lua_State* L)
                              "torch.LongStorage",
                              "torch.FloatStorage",
                              "torch.DoubleStorage",
+                             "torch.ZCudaStorage",
                              "torch.CudaStorage"};
 
-    static int (*funcs[8])(lua_State*) = {cutorch_ByteStorage_copy,
-                                          cutorch_CharStorage_copy,
-                                          cutorch_ShortStorage_copy,
-                                          cutorch_IntStorage_copy,
-                                          cutorch_LongStorage_copy,
-                                          cutorch_FloatStorage_copy,
-                                          cutorch_DoubleStorage_copy,
-                                          cutorch_CudaStorage_copy};
+    static int (*funcs[8])(lua_State*) = {zcutorch_ByteStorage_copy,
+                                          zcutorch_CharStorage_copy,
+                                          zcutorch_ShortStorage_copy,
+                                          zcutorch_IntStorage_copy,
+                                          zcutorch_LongStorage_copy,
+                                          zcutorch_FloatStorage_copy,
+                                          zcutorch_DoubleStorage_copy,
+                                          zcutorch_ZCudaStorage_copy};
 
     for(i = 0; i < 8; i++)
     {

@@ -21,7 +21,8 @@
 #undef Real
 
 /* now we overwrite some methods specific to ZCudaTensor */
-static int cutorch_ZCudaTensor_copy(lua_State *L)
+
+static int zcutorch_ZCudaTensor_copy(lua_State *L)
 {
   THCState *state = cutorch_getstate(L);
   THZCudaTensor *storage = luaT_checkudata(L, 1, "torch.ZCudaTensor");
@@ -51,7 +52,7 @@ static int cutorch_ZCudaTensor_copy(lua_State *L)
   return 1;
 }
 
-static int cutorch_ZCudaTensor_copyAsync(lua_State *L)
+static int zcutorch_ZCudaTensor_copyAsync(lua_State *L)
 {
   THCState *state = cutorch_getstate(L);
   THZCudaTensor *storage = luaT_checkudata(L, 1, "torch.ZCudaTensor");
@@ -68,7 +69,7 @@ static int cutorch_ZCudaTensor_copyAsync(lua_State *L)
 }
 
 #define CUDA_IMPLEMENT_TENSOR_COPY(TYPEC)                               \
-  static int cutorch_##TYPEC##Tensor_copy(lua_State *L)                 \
+  static int zcutorch_##TYPEC##Tensor_copy(lua_State *L)                 \
   {                                                                     \
     TH##TYPEC##Tensor *storage = luaT_checkudata(L, 1, "torch." #TYPEC "Tensor"); \
     void *src;                                                          \

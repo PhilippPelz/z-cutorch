@@ -9,6 +9,13 @@
 
 #include <thrust/device_ptr.h>
 #include <thrust/scan.h>
+
+#include "cuComplex.h"
+#include <cusp/complex.h>
+
+typedef ::complex<float> cx;
+using namespace cusp;
+
 #if CUDA_VERSION >= 7000
 #include <thrust/system/cuda/execution_policy.h>
 #endif
@@ -18,11 +25,22 @@ struct TensorMaskedFillOp {
   __device__ __forceinline__ void operator()(float* t, float* mask) {
     // Really mask should be `0` or `1` but we can't propagate errors here.
     if (*mask != 0.0f) {
-      *t = value;
+      *t = cx(value,0);
     }
   }
 
   float value;
+};
+struct cxTensorMaskedFillOp {
+  TensorMaskedFillOp(cx v) : value(v) {}
+  __device__ __forceinline__ void operator()(cx* t, float* mask) {
+    // Really mask should be `0` or `1` but we can't propagate errors here.
+    if (*mask != 0.0f) {
+      *t = value;
+    }
+  }
+
+  cx value;
 };
 
 void THZCudaTensor_maskedFill(THCState* state,
@@ -40,10 +58,25 @@ void THZCudaTensor_maskedFill(THCState* state,
   THZCudaCheck(cudaGetLastError());
 }
 
-struct TensorMaskedCopyOp {
-  TensorMaskedCopyOp(float* s) : src(s) {}
+void THZCudaTensor_maskedFill(THCState* state,
+                             THZCudaTensor *tensor, THZCudaTensor *mask, cuComplex value)
+{
+  THAssert(THZCudaTensor_checkGPU(state, 2, tensor, mask));
+  THArgCheck(THZCudaTensor_nElement(state, tensor) ==
+             THZCudaTensor_nElement(state, mask),
+             2, "sizes do not match");
 
-  __device__ __forceinline__ void operator()(float* out, float* mask, float* maskPrefixSum) {
+  if (!THZCudaTensor_pointwiseApply2(state, tensor, mask, cxTensorMaskedFillOp((cx)value))) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+
+  THZCudaCheck(cudaGetLastError());
+}
+
+struct TensorMaskedCopyOp {
+  TensorMaskedCopyOp(cx* s) : src(s) {}
+
+  __device__ __forceinline__ void operator()(cx* out, float* mask, float* maskPrefixSum) {
     // Really mask should be `0` or `1` but we can't propagate errors here.
     if (*mask != 0.0f) {
       // We've already checked that this offset is <= 2^24, so this is ok.
@@ -52,12 +85,12 @@ struct TensorMaskedCopyOp {
   }
 
   // Where we are copying from
-  float* src;
+  cx* src;
 };
 
 
 void THZCudaTensor_maskedCopy(THCState* state,
-                             THZCudaTensor *tensor, THZCudaTensor *mask, THZCudaTensor *src)
+                             THZCudaTensor *tensor, THCudaTensor *mask, THZCudaTensor *src)
 {
   THAssert(THZCudaTensor_checkGPU(state, 3, tensor, src, mask));
   long maskSize = THZCudaTensor_nElement(state, mask);
@@ -92,9 +125,9 @@ void THZCudaTensor_maskedCopy(THCState* state,
   // `maskPrefixSum`, so that should be made contiguous too
   THZCudaTensor* contigSrc = THZCudaTensor_newContiguous(state, src);
 
-  thrust::device_ptr<float>
+  thrust::device_ptr<cx>
     maskData(THZCudaTensor_data(state, contigMask));
-  thrust::device_ptr<float>
+  thrust::device_ptr<cx>
     maskPrefixSumData(THZCudaTensor_data(state, maskPrefixSum));
   thrust::exclusive_scan(
 #if CUDA_VERSION >= 7000
@@ -131,7 +164,7 @@ struct TensorMaskedSelectOp {
 };
 
 void THZCudaTensor_maskedSelect(THCState* state,
-                               THZCudaTensor *tensor, THZCudaTensor *src, THZCudaTensor *mask)
+                               THZCudaTensor *tensor, THZCudaTensor *src, THCudaTensor *mask)
 {
   THAssert(THZCudaTensor_checkGPU(state, 3, tensor, src, mask));
   THArgCheck(THZCudaTensor_nElement(state, mask) == THZCudaTensor_nElement(state, src),

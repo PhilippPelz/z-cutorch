@@ -77,7 +77,7 @@ set(CUDA_NVCC_FLAGS_MINSIZEREL  ; )
 set(CUDA_NVCC_FLAGS_RELEASE  ; )
 set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ; )
 set(nvcc_flags -m64;-DTHZC_EXPORTS) # list
-set(CUDA_NVCC_INCLUDE_ARGS "-I/usr/local/cuda/include;-I/home/philipp/torch/install/include;-I/home/philipp/torch/install/include/TH;-I/usr/local/cuda/include;-I/home/philipp/projects/zcutorch/lib/THC/CUDA_SDK_ROOT_DIR-NOTFOUND/common/inc;-I/usr/local/include;-I/TH;-I/home/philipp/projects/zcutorch/lib/THC") # list (needs to be in quotes to handle spaces properly).
+set(CUDA_NVCC_INCLUDE_ARGS "-I/usr/local/cuda/include;-I/home/philipp/torch/install/include;-I/home/philipp/torch/install/include/TH;-I/usr/local/cuda/include;-I/home/philipp/projects/zcutorch/lib/THC/CUDA_SDK_ROOT_DIR-NOTFOUND/common/inc;-I/usr/local/include;-I/home/philipp/projects/zcutorch/lib/THC") # list (needs to be in quotes to handle spaces properly).
 set(format_flag "-c") # string
 
 if(build_cubin AND NOT generated_cubin_file)
