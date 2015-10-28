@@ -24,9 +24,9 @@ SET(luasrc init.lua Tensor.lua FFI.lua test/test.lua)
 
 ADD_TORCH_WRAP(cudatensormathwrap TensorMath.lua)
 
-ADD_TORCH_PACKAGE(cutorch "${src}" "${luasrc}")
-TARGET_LINK_LIBRARIES(cutorch luaT THC)
+ADD_TORCH_PACKAGE(zcutorch "${src}" "${luasrc}")
+TARGET_LINK_LIBRARIES(zcutorch luaT THC)
 
 IF(LUALIB)
-  TARGET_LINK_LIBRARIES(cutorch ${LUALIB})
+  TARGET_LINK_LIBRARIES(zcutorch ${LUALIB})
 ENDIF()

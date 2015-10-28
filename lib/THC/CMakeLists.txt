@@ -95,10 +95,8 @@ SET(src-cuda
   THZCTensorMasked.cu
   THZCTensorIndex.cu
   THZCTensorConv.cu
-  THZCTensorRandom.cu
   THZCTensorScatterGather.cu
   THZCApply.cu
-  THZCTensorSort.cu
   )
 
 CUDA_ADD_LIBRARY(THZC SHARED ${src} ${src-cuda})
@@ -122,10 +120,8 @@ INSTALL(FILES
           THZCStorageCopy.h
           THZCTensor.h
           THZCTensorCopy.h
-          THZCTensorRandom.h
           THZCTensorMath.h
           THZCTensorConv.h
-          THZCTensorSort.h
           THZCApply.cuh
           THZCReduce.cuh
           THZCReduceAll.cuh

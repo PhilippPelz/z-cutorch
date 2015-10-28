@@ -59,12 +59,12 @@ THZCudaTensor_copy(THCState* state, THZCudaTensor* dst, THZCudaTensor* src) {
   if (memcpyEligible) {
     THZCudaCheck(cudaMemcpyAsync(THZCudaTensor_data(state, dst),
                                 THZCudaTensor_data(state, src),
-                                totalElements * sizeof(cuComplex),
+                                totalElements * sizeof(cx),
                                 cudaMemcpyDeviceToDevice,
                                 THCState_getCurrentStream(state)));
   } else {
       bool succ =
-        THZCudaTensor_pointwiseApply2(state, dst, src, CopyOp<cuComplex>());
+        THZCudaTensor_pointwiseApply2(state, dst, src, CopyOp<cx>());
       THArgCheck(succ, 2, CUTORCH_DIM_WARNING);
   }
 

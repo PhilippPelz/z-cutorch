@@ -10,11 +10,7 @@
 #include <thrust/device_ptr.h>
 #include <thrust/scan.h>
 
-#include "cuComplex.h"
-#include <cusp/complex.h>
 
-typedef ::complex<float> cx;
-using namespace cusp;
 
 #if CUDA_VERSION >= 7000
 #include <thrust/system/cuda/execution_policy.h>
@@ -59,7 +55,7 @@ void THZCudaTensor_maskedFill(THCState* state,
 }
 
 void THZCudaTensor_maskedFill(THCState* state,
-                             THZCudaTensor *tensor, THZCudaTensor *mask, cuComplex value)
+                             THZCudaTensor *tensor, THZCudaTensor *mask, cx value)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, tensor, mask));
   THArgCheck(THZCudaTensor_nElement(state, tensor) ==

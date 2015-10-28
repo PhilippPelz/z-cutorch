@@ -4,7 +4,6 @@
 #include "THTensor.h"
 #include "THZCStorage.h"
 #include "THZCGeneral.h"
-#include "cuComplex.h"
 
 #define TH_TENSOR_REFCOUNTED 1
 
@@ -31,7 +30,7 @@ THZC_API long THZCudaTensor_size(THCState *state, const THZCudaTensor *self, int
 THZC_API long THZCudaTensor_stride(THCState *state, const THZCudaTensor *self, int dim);
 THZC_API THLongStorage *THZCudaTensor_newSizeOf(THCState *state, THZCudaTensor *self);
 THZC_API THLongStorage *THZCudaTensor_newStrideOf(THCState *state, THZCudaTensor *self);
-THZC_API cuComplex *THZCudaTensor_data(THCState *state, const THZCudaTensor *self);
+THZC_API cx *THZCudaTensor_data(THCState *state, const THZCudaTensor *self);
 
 THZC_API void THZCudaTensor_setFlag(THCState *state, THZCudaTensor *self, const char flag);
 THZC_API void THZCudaTensor_clearFlag(THCState *state, THZCudaTensor *self, const char flag);
@@ -114,15 +113,15 @@ THZC_API void THZCudaTensor_free(THCState *state, THZCudaTensor *self);
 THZC_API void THZCudaTensor_freeCopyTo(THCState *state, THZCudaTensor *self, THZCudaTensor *dst);
 
 /* Slow access methods [check everything] */
-THZC_API void THZCudaTensor_set1d(THCState *state, THZCudaTensor *tensor, long x0, cuComplex value);
-THZC_API void THZCudaTensor_set2d(THCState *state, THZCudaTensor *tensor, long x0, long x1, cuComplex value);
-THZC_API void THZCudaTensor_set3d(THCState *state, THZCudaTensor *tensor, long x0, long x1, long x2, cuComplex value);
-THZC_API void THZCudaTensor_set4d(THCState *state, THZCudaTensor *tensor, long x0, long x1, long x2, long x3, cuComplex value);
+THZC_API void THZCudaTensor_set1d(THCState *state, THZCudaTensor *tensor, long x0, cx value);
+THZC_API void THZCudaTensor_set2d(THCState *state, THZCudaTensor *tensor, long x0, long x1, cx value);
+THZC_API void THZCudaTensor_set3d(THCState *state, THZCudaTensor *tensor, long x0, long x1, long x2, cx value);
+THZC_API void THZCudaTensor_set4d(THCState *state, THZCudaTensor *tensor, long x0, long x1, long x2, long x3, cx value);
 
-THZC_API cuComplex THZCudaTensor_get1d(THCState *state, const THZCudaTensor *tensor, long x0);
-THZC_API cuComplex THZCudaTensor_get2d(THCState *state, const THZCudaTensor *tensor, long x0, long x1);
-THZC_API cuComplex THZCudaTensor_get3d(THCState *state, const THZCudaTensor *tensor, long x0, long x1, long x2);
-THZC_API cuComplex THZCudaTensor_get4d(THCState *state, const THZCudaTensor *tensor, long x0, long x1, long x2, long x3);
+THZC_API cx THZCudaTensor_get1d(THCState *state, const THZCudaTensor *tensor, long x0);
+THZC_API cx THZCudaTensor_get2d(THCState *state, const THZCudaTensor *tensor, long x0, long x1);
+THZC_API cx THZCudaTensor_get3d(THCState *state, const THZCudaTensor *tensor, long x0, long x1, long x2);
+THZC_API cx THZCudaTensor_get4d(THCState *state, const THZCudaTensor *tensor, long x0, long x1, long x2, long x3);
 
 /* CUDA-specific functions */
 THZC_API cudaTextureObject_t THZCudaTensor_getTextureObject(THCState *state, THZCudaTensor *self);

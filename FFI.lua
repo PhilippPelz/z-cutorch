@@ -33,41 +33,41 @@ typedef struct THCState
 
 cudaStream_t THCState_getCurrentStream(THCState *state);
 
-typedef struct THCudaStorage
+typedef struct THZCudaStorage
 {
-    float *data;
+    cx *data;
     long size;
     int refcount;
     char flag;
     THAllocator *allocator;
     void *allocatorContext;
-    struct THCudaStorage *view;
-} THCudaStorage;
+    struct THZCudaStorage *view;
+} THZCudaStorage;
 
-typedef struct THCudaTensor
+typedef struct THZCudaTensor
 {
     long *size;
     long *stride;
     int nDimension;
 
-    THCudaStorage *storage;
+    THZCudaStorage *storage;
     long storageOffset;
     int refcount;
 
     char flag;
 
-} THCudaTensor;
+} THZCudaTensor;
 ]]
    ffi.cdef(cdefs)
 
-   local Storage = torch.getmetatable('torch.CudaStorage')
-   local Storage_tt = ffi.typeof('THCudaStorage**')
+   local Storage = torch.getmetatable('torch.ZCudaStorage')
+   local Storage_tt = ffi.typeof('THZCudaStorage**')
 
    rawset(Storage, "cdata", function(self) return Storage_tt(self)[0] end)
    rawset(Storage, "data", function(self) return Storage_tt(self)[0].data end)
    -- Tensor
-   local Tensor = torch.getmetatable('torch.CudaTensor')
-   local Tensor_tt = ffi.typeof('THCudaTensor**')
+   local Tensor = torch.getmetatable('torch.ZCudaTensor')
+   local Tensor_tt = ffi.typeof('THZCudaTensor**')
 
    rawset(Tensor, "cdata", function(self) return Tensor_tt(self)[0] end)
 

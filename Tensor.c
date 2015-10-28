@@ -59,8 +59,8 @@ static int zcutorch_ZCudaTensor_copyAsync(lua_State *L)
   void *src;
   if( (src = luaT_toudata(L, 2, "torch.ZCudaTensor")) )
     THZCudaTensor_copy(state, storage, src);
-  else if( (src = luaT_toudata(L, 2, "torch.FloatTensor")) )
-    THZCudaTensor_copyAsyncFloat(state, storage, src);
+  else if( (src = luaT_toudata(L, 2, "torch.ZFloatTensor")) )
+    THZCudaTensor_copyAsyncZFloat(state, storage, src);
   else
     luaL_typerror(L, 2, "torch.FloatTensor or torch.ZCudaTensor");
 
@@ -111,7 +111,7 @@ static int cutorch_FloatTensor_copyAsync(lua_State *L)
   THFloatTensor *storage = luaT_checkudata(L, 1, "torch.FloatTensor");
   void *src;
   if( (src = luaT_toudata(L, 2, "torch.CudaTensor")) )
-    THFloatTensor_copyAsyncCuda(cutorch_getstate(L), storage, src);
+    THZFloatTensor_copyAsyncZCuda(cutorch_getstate(L), storage, src);
   else
     luaL_typerror(L, 2, "torch.CudaTensor");
 
@@ -215,8 +215,8 @@ void cutorch_CudaTensor_init(lua_State* L)
   torch_CudaTensor_init(L);
 
   /* additional methods */
-  luaT_pushmetatable(L, "torch.FloatTensor");
-  lua_pushcfunction(L, cuda_FloatTensor_fakecopy);
+  luaT_pushmetatable(L, "torch.ZFloatTensor");
+  lua_pushcfunction(L, zcuda_ZFloatTensor_fakecopy);
   lua_setfield(L, -2, "fakecopy");
   lua_pop(L, 1);
 
@@ -251,19 +251,19 @@ void cutorch_CudaTensor_init(lua_State* L)
     }
 
     // Register async copy methods.
-    luaT_pushmetatable(L, "torch.CudaTensor");
-    lua_pushcfunction(L, cutorch_CudaTensor_copyAsync);
+    luaT_pushmetatable(L, "torch.ZCudaTensor");
+    lua_pushcfunction(L, zcutorch_ZCudaTensor_copyAsync);
     lua_setfield(L, -2, "copyAsync");
     lua_pop(L, 1);
 
-    luaT_pushmetatable(L, "torch.FloatTensor");
-    lua_pushcfunction(L, cutorch_FloatTensor_copyAsync);
+    luaT_pushmetatable(L, "torch.ZFloatTensor");
+    lua_pushcfunction(L, zcutorch_ZFloatTensor_copyAsync);
     lua_setfield(L, -2, "copyAsync");
     lua_pop(L, 1);
   }
 
-  luaT_pushmetatable(L, "torch.CudaTensor");
-  lua_pushcfunction(L, cutorch_CudaTensor_getDevice);
+  luaT_pushmetatable(L, "torch.ZCudaTensor");
+  lua_pushcfunction(L, zcutorch_ZCudaTensor_getDevice);
   lua_setfield(L, -2, "getDevice");
 
   lua_pop(L, 1);

@@ -8,12 +8,6 @@
 #include "THZCDeviceUtils.cuh"
 #include <algorithm> // for std::min
 
-
-#include <cusp/complex.h>
-
-typedef ::complex<float> cx;
-using namespace cusp;
-
 __global__ void THZCudaTensor_kernel_indexFill(
    cx *tensor, long* stride, float *index, long src_nDim,
    int dim, long idx_size, long tensor_size, long size_dim, float val

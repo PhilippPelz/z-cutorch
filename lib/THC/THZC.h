@@ -1,6 +1,8 @@
 #ifndef THZC_INC
 #define THZC_INC
 
+#include "THZ.h"
+
 #include "THZCGeneral.h"
 #include "THZCAllocator.h"
 #include "THZCBlas.h"
@@ -11,6 +13,6 @@
 //#include "THZCTensorRandom.h"
 #include "THZCTensorMath.h"
 #include "THZCTensorConv.h"
-#include "THZCTensorSort.h"
+// #include "THZCTensorSort.h"
 
 #endif

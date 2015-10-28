@@ -11,14 +11,9 @@
 #include <thrust/functional.h>
 #include <thrust/inner_product.h>
 
-#include <cusp/complex.h>
-
 #if CUDA_VERSION >= 7000
 #include <thrust/system/cuda/execution_policy.h>
 #endif
-
-typedef ::complex<float> cx;
-using namespace cusp;
 
 cx THZCudaTensor_meanall(THCState *state, THZCudaTensor *self)
 {

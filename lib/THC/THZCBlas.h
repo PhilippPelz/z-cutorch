@@ -8,7 +8,7 @@ THZC_API void THZCudaBlas_swap(THCState *state, long n, float *x, long incx, flo
 THZC_API void THZCudaBlas_scal(THCState *state, long n, float a, float *x, long incx);
 THZC_API void THZCudaBlas_copy(THCState *state, long n, float *x, long incx, float *y, long incy);
 THZC_API void THZCudaBlas_axpy(THCState *state, long n, float a, float *x, long incx, float *y, long incy);
-THZC_API float THZCudaBlas_dot(THCState *state, long n, float *x, long incx, float *y, long incy);
+THZC_API cx THZCudaBlas_dot(THCState *state, long n, float *x, long incx, float *y, long incy);
 
 /* Level 2 */
 THZC_API void THZCudaBlas_gemv(THCState *state, char trans, long m, long n, float alpha, float *a, long lda, float *x, long incx, float beta, float *y, long incy);

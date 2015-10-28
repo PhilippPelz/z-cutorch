@@ -1,6 +1,6 @@
 #include "torch/utils.h"
 #include "luaT.h"
-#include "THC.h"
+#include "THZC.h"
 
 static int cutorch_CudaTensorOperator___add__(lua_State *L)
 {
