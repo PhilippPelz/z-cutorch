@@ -127,11 +127,11 @@ THZC_API void  THZCudaTensor_norm(THCState *state, THZCudaTensor* self, THZCudaT
 THZC_API void  THZCudaTensor_renorm(THCState *state, THZCudaTensor* self, THZCudaTensor* src, float value, long dimension, float max_norm);
 THZC_API float THZCudaTensor_dist(THCState *state, THZCudaTensor *self, THZCudaTensor *src, float value);
 
-THZC_API void THZCudaTensor_indexCopy(THCState *state, THZCudaTensor *res_, int dim, THZCudaTensor *indices, THZCudaTensor *src);
-THZC_API void THZCudaTensor_indexAdd(THCState *state, THZCudaTensor *res_, int dim, THZCudaTensor *indices, THZCudaTensor *src);
+THZC_API void THZCudaTensor_indexCopy(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, THZCudaTensor *src);
+
 THZC_API void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *tensor, int dim, THCudaTensor *index, float val);
 THZC_API void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *tensor, int dim, THCudaTensor *index, cuComplex val);
-THZC_API void THZCudaTensor_indexSelect(THCState *state, THZCudaTensor *tensor, THZCudaTensor *src, int dim, THZCudaTensor *index);
+THZC_API void THZCudaTensor_indexSelect(THCState *state, THZCudaTensor *tensor, THZCudaTensor *src, int dim, THCudaTensor *index);
 
 THZC_API void THZCudaTensor_indexCopy_long(THCState *state, THZCudaTensor *res_, int dim, THLongTensor *indices, THZCudaTensor *src);
 THZC_API void THZCudaTensor_indexAdd_long(THCState *state, THZCudaTensor *res_, int dim, THLongTensor *indices, THZCudaTensor *src);
