@@ -11,6 +11,6 @@
 //#include "THZCTensorRandom.h"
 #include "THZCTensorMath.h"
 #include "THZCTensorConv.h"
-#include "THZCTensorSort.h"
+// #include "THZCTensorSort.h"
 
 #endif

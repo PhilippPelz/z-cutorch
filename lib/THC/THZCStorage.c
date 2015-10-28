@@ -2,17 +2,17 @@
 #include "THZCGeneral.h"
 #include "THAtomic.h"
 
-void THZCudaStorage_set(THCState *state, THZCudaStorage *self, long index, float value)
+void THZCudaStorage_set(THCState *state, THZCudaStorage *self, long index, cx value)
 {
   THArgCheck((index >= 0) && (index < self->size), 2, "index out of bounds");
-  THZCudaCheck(cudaMemcpy(self->data + index, &value, sizeof(float), cudaMemcpyHostToDevice));
+  THZCudaCheck(cudaMemcpy(self->data + index, &value, sizeof(cx), cudaMemcpyHostToDevice));
 }
 
-float THZCudaStorage_get(THCState *state, const THZCudaStorage *self, long index)
+cx THZCudaStorage_get(THCState *state, const THZCudaStorage *self, long index)
 {
-  float value;
+  cx value;
   THArgCheck((index >= 0) && (index < self->size), 2, "index out of bounds");
-  THZCudaCheck(cudaMemcpy(&value, self->data + index, sizeof(float), cudaMemcpyDeviceToHost));
+  THZCudaCheck(cudaMemcpy(&value, self->data + index, sizeof(cx), cudaMemcpyDeviceToHost));
   return value;
 }
 
@@ -35,11 +35,11 @@ THZCudaStorage* THZCudaStorage_newWithSize(THCState *state, long size)
     THZCudaStorage *storage = (THZCudaStorage*)THAlloc(sizeof(THZCudaStorage));
 
     // update heap *before* attempting malloc, to free space for the malloc
-    THZCHeapUpdate(state, size * sizeof(float));
+    THZCHeapUpdate(state, size * sizeof(cx));
     cudaError_t err =
-      THZCudaMalloc(state, (void**)&(storage->data), size * sizeof(float));
+      THZCudaMalloc(state, (void**)&(storage->data), size * sizeof(cx));
     if(err != cudaSuccess){
-      THZCHeapUpdate(state, -size * sizeof(float));
+      THZCHeapUpdate(state, -size * sizeof(cx));
     }
     THZCudaCheck(err);
 
@@ -94,7 +94,7 @@ THZCudaStorage* THZCudaStorage_newWithMapping(THCState *state, const char *fileN
   return NULL;
 }
 
-THZCudaStorage* THZCudaStorage_newWithData(THCState *state, cuComplex *data, long size)
+THZCudaStorage* THZCudaStorage_newWithData(THCState *state, cx *data, long size)
 {
   THZCudaStorage *storage = (THZCudaStorage*)THAlloc(sizeof(THZCudaStorage));
   storage->data = data;
@@ -118,7 +118,7 @@ void THZCudaStorage_free(THCState *state, THZCudaStorage *self)
   if (THAtomicDecrementRef(&self->refcount))
   {
     if(self->flag & TH_STORAGE_FREEMEM) {
-      THZCHeapUpdate(state, -self->size * sizeof(float));
+      THZCHeapUpdate(state, -self->size * sizeof(cx));
       THZCudaCheck(THZCudaFree(state, self->data));
     }
     THFree(self);

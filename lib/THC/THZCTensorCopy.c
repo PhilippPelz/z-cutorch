@@ -1,7 +1,6 @@
 #include "THZCTensorCopy.h"
 #include "THZCGeneral.h"
 #include "THZCTensor.h"
-#include "cuComplex.h"
 
 /* specific methods */
 
@@ -15,7 +14,7 @@ void THZCudaTensor_copyZFloat(THCState *state, THZCudaTensor *self, struct THZFl
 
     THZCudaCheck(cudaMemcpy(THZCudaTensor_data(state, selfc),
                            THZFloatTensor_data(src),
-                           THZFloatTensor_nElement(src) * sizeof(cuComplex),
+                           THZFloatTensor_nElement(src) * sizeof(cx),
                            cudaMemcpyHostToDevice));
 
     THZFloatTensor_free(src);
@@ -60,7 +59,7 @@ void THZFloatTensor_copyZCuda(THCState *state, THZFloatTensor *self, struct THZC
 
     THZCudaCheck(cudaMemcpy(THZFloatTensor_data(selfc),
                            THZCudaTensor_data(state, src),
-                           THZCudaTensor_nElement(state, src) * sizeof(cuComplex),
+                           THZCudaTensor_nElement(state, src) * sizeof(cx),
                            cudaMemcpyDeviceToHost));
 
     THZCudaTensor_free(state, src);
@@ -92,7 +91,7 @@ void THZCudaTensor_copyAsyncZFloat(THCState *state, THZCudaTensor *self, struct 
 
   THZCudaCheck(cudaMemcpyAsync(THZCudaTensor_data(state, self),
                               THZFloatTensor_data(src),
-                              THZFloatTensor_nElement(src) * sizeof(cuComplex),
+                              THZFloatTensor_nElement(src) * sizeof(cx),
                               cudaMemcpyHostToDevice,
                               THCState_getDeviceStream(state, tensorDevice,
                                                        THCState_getCurrentStreamIndex(state))));
@@ -121,7 +120,7 @@ void THZFloatTensor_copyAsyncZCuda(THCState *state, THZFloatTensor *self, struct
 
   THZCudaCheck(cudaMemcpyAsync(THZFloatTensor_data(self),
                               THZCudaTensor_data(state, src),
-                              THZCudaTensor_nElement(state, src) * sizeof(cuComplex),
+                              THZCudaTensor_nElement(state, src) * sizeof(cx),
                               cudaMemcpyDeviceToHost,
                               THCState_getDeviceStream(state, tensorDevice,
                                                        THCState_getCurrentStreamIndex(state))));

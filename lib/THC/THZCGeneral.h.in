@@ -9,6 +9,10 @@
 #include "cuda_runtime.h"
 #include "cublas_v2.h"
 
+#include <cusp/complex.h>
+using namespace cusp;
+typedef ::complex<float> cx;
+
 #cmakedefine USE_MAGMA
 
 #ifdef __cplusplus

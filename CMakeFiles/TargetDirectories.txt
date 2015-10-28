@@ -1,4 +1,0 @@
-/home/philipp/projects/zcutorch/lib/THC/CMakeFiles/THZC.dir
-/home/philipp/projects/zcutorch/CMakeFiles/cudatensormathwrap.dir
-/home/philipp/projects/zcutorch/CMakeFiles/cutorch.dir
-/home/philipp/projects/zcutorch/CMakeFiles/cutorch_static.dir

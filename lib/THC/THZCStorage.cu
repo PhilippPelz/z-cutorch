@@ -6,9 +6,9 @@
 #include <thrust/system/cuda/execution_policy.h>
 #endif
 
-void THZCudaStorage_fill(THCState *state, THZCudaStorage *self, float value)
+void THZCudaStorage_fill(THCState *state, THZCudaStorage *self, cx value)
 {
-  thrust::device_ptr<float> self_data(self->data);
+  thrust::device_ptr<cx> self_data(self->data);
   thrust::fill(
 #if CUDA_VERSION >= 7000
     thrust::cuda::par.on(THCState_getCurrentStream(state)),
@@ -27,30 +27,30 @@ void THZCudaStorage_resize(THCState *state, THZCudaStorage *self, long size)
   {
     if(self->flag & TH_STORAGE_FREEMEM) {
       THZCudaCheck(THZCudaFree(state, self->data));
-      THZCHeapUpdate(state, -self->size * sizeof(float));
+      THZCHeapUpdate(state, -self->size * sizeof(cx));
     }
     self->data = NULL;
     self->size = 0;
   }
   else
   {
-    float *data = NULL;
+    cx *data = NULL;
     // update heap *before* attempting malloc, to free space for the malloc
-    THZCHeapUpdate(state, size * sizeof(float));
-    cudaError_t err = THZCudaMalloc(state, (void**)(&data), size * sizeof(float));
+    THZCHeapUpdate(state, size * sizeof(cx));
+    cudaError_t err = THZCudaMalloc(state, (void**)(&data), size * sizeof(cx));
     if(err != cudaSuccess) {
-      THZCHeapUpdate(state, -size * sizeof(float));
+      THZCHeapUpdate(state, -size * sizeof(cx));
     }
     THZCudaCheck(err);
 
     if (self->data) {
       THZCudaCheck(cudaMemcpyAsync(data,
                                   self->data,
-                                  THMin(self->size, size) * sizeof(float),
+                                  THMin(self->size, size) * sizeof(cx),
                                   cudaMemcpyDeviceToDevice,
                                   THCState_getCurrentStream(state)));
       THZCudaCheck(THZCudaFree(state, self->data));
-      THZCHeapUpdate(state, -self->size * sizeof(float));
+      THZCHeapUpdate(state, -self->size * sizeof(cx));
     }
 
     self->data = data;

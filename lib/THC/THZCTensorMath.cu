@@ -9,25 +9,25 @@
 #include <thrust/functional.h>
 
 struct TensorFillOp {
-  TensorFillOp(cuComplex v) : val(v) {}
-  __device__ __forceinline__ void operator()(cuComplex* v) { *v = val; }
+  TensorFillOp(cx v) : val(v) {}
+  __device__ __forceinline__ void operator()(cx* v) { *v = val; }
 
-  const cuComplex val;
+  const cx val;
 };
 struct TensorFillReOp {
-  TensorFillOp(cuComplex v) : val(v) {}
-  __device__ __forceinline__ void operator()(cuComplex* v) { *v = make_cuComplex(val,cuCimagf(*v)); }
+  TensorFillOp(cx v) : val(v) {}
+  __device__ __forceinline__ void operator()(cx* v) { *v = cx(val,v.imag()); }
 
-  const cuComplex val;
+  const cx val;
 };
 struct TensorFillImOp {
-  TensorFillOp(cuComplex v) : val(v) {}
-  __device__ __forceinline__ void operator()(cuComplex* v) { *v = make_cuComplex(cuCrealf(*v),val); }
+  TensorFillOp(cx v) : val(v) {}
+  __device__ __forceinline__ void operator()(cx* v) { *v = cx(v.real,val); }
 
-  const cuComplex val;
+  const cx val;
 };
 
-void THZCudaTensor_fill(THCState* state, THZCudaTensor *self_, cuComplex value)
+void THZCudaTensor_fill(THCState* state, THZCudaTensor *self_, cx value)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, self_));
   if (!THZCudaTensor_pointwiseApply1(state, self_, TensorFillOp(value))) {
@@ -63,7 +63,7 @@ void THZCudaTensor_zero(THCState *state, THZCudaTensor *self_)
   if (THZCudaTensor_isContiguous(state, self_)) {
     THZCudaCheck(cudaMemsetAsync(THZCudaTensor_data(state, self_),
                                 0,
-                                sizeof(cuComplex) * THZCudaTensor_nElement(state, self_),
+                                sizeof(cx) * THZCudaTensor_nElement(state, self_),
                                 THCState_getCurrentStream(state)));
   } else {
     if (!THZCudaTensor_pointwiseApply1(state, self_, TensorFillOp(0))) {
@@ -171,12 +171,12 @@ void THZCudaTensor_catArray(THCState *state, THZCudaTensor *result, THZCudaTenso
 
 struct TensorDivOp {
   __device__ __forceinline__ void
-  operator()(cuComplex* out, cuComplex* in) {
+  operator()(cx* out, cx* in) {
     *out = cuCdivf(*out,*in);
   }
 
   __device__ __forceinline__ void
-  operator()(cuComplex* out, cuComplex* in1, cuComplex* in2) {
+  operator()(cx* out, cx* in1, cx* in2) {
     *out = cuCdivf(*in1,*in2);
   }
 };
@@ -208,8 +208,8 @@ struct TensorAddCMulOp {
   TensorAddCMulOp(float v) : val(v) {}
 
   __device__ __forceinline__ void
-  operator()(cuComplex* out, cuComplex* in1, cuComplex* in2) {
-    *out = cuCaddf(*out,cuCmulf(make_cuComplex(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
+  operator()(cx* out, cx* in1, cx* in2) {
+    *out = cuCaddf(*out,cuCmulf(make_cx(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
   }
 
   float val;
@@ -243,8 +243,8 @@ struct TensorAddCDivOp {
   TensorAddCDivOp(float v) : val(v) {}
 
   __device__ __forceinline__ void
-  operator()(cuComplex* out, cuComplex* in1, cuComplex* in2) {
-    *out += cuCaddf(*out,cuCdivf(make_cuComplex(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
+  operator()(cx* out, cx* in1, cx* in2) {
+    *out += cuCaddf(*out,cuCdivf(make_cx(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
   }
 
   float val;
@@ -277,8 +277,8 @@ struct AbsOp {
   AbsOp(){}
 
   __device__ __forceinline__ void
-  operator()(cuComplex* out, cuComplex* in1, cuComplex* in2) {
-    *out += cuCaddf(*out,cuCdivf(make_cuComplex(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
+  operator()(cx* out, cx* in1, cx* in2) {
+    *out += cuCaddf(*out,cuCdivf(make_cx(val*cuCrealf(*in1),val*cuCimagf(*in1)),*in2));
   }
 
   float val;
@@ -287,7 +287,7 @@ struct AbsOp {
 template <typename T>
 struct AbsOp : public thrust::unary_function<T,T>{
   __host__ __device__
-  float operator()(cuComplex v){
+  float operator()(cx v){
     return cuCabsf(v);
   }
 };
@@ -324,14 +324,14 @@ float THZCudaTensor_maxall(THCState *state, THZCudaTensor *self)
 template <typename T>
 struct Plus : public thrust::binary_function<T,T>{
   __host__ __device__
-  float operator()(const cuComplex& v1,const cuComplex& v2){
+  float operator()(const cx& v1,const cx& v2){
     return cuCaddf(v1,v2);
   }
 };
 template <typename T>
 struct Mul : public thrust::binary_function<T,T>{
   __host__ __device__
-  float operator()(const cuComplex& v1,const cuComplex& v2){
+  float operator()(const cx& v1,const cx& v2){
     return cuCmulf(v1,v2);
   }
 };

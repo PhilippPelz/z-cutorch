@@ -1,7 +1,6 @@
 #include "utils.h"
 #include "luaT.h"
-#include "THCGeneral.h"
-#include "THCTensorRandom.h"
+#include "THZCGeneral.h"
 
 extern void cutorch_CudaStorage_init(lua_State* L);
 extern void cutorch_CudaTensor_init(lua_State* L);
@@ -117,7 +116,7 @@ void createMultiDeviceEvents(lua_State *L, THCState *state, int arg,
   while (lua_next(L, -2)) {
     int device = (int) lua_tonumber(L, -2) - 1;
     THCudaCheck(cudaSetDevice(device));
-    events += createSingleDeviceEvents(L, state, -1, device, events);    
+    events += createSingleDeviceEvents(L, state, -1, device, events);
     ++gpu;
 
     lua_pop(L, 1);
@@ -138,7 +137,7 @@ void waitSingleDeviceEvents(lua_State *L, THCState *state, int arg,
   lua_pushnil(L);
   while (lua_next(L, -2)) {
     int streamId = (int) lua_tonumber(L, -1);
-    cudaStream_t stream = 
+    cudaStream_t stream =
       THCState_getDeviceStream(state, device, streamId);
     for (int i = 0; i < numEvents; i++) {
       THCudaCheck(cudaStreamWaitEvent(stream, event[i], 0));
@@ -374,7 +373,7 @@ static int cutorch_streamWaitFor(lua_State *L)
   }
   /* One-way dependency; streamWaiting will wait for the list of streams to
      wait on to complete execution of pending scheduled kernels/events */
-  cudaEvent_t * events = (cudaEvent_t*)malloc(sizeof(cudaEvent_t) * streams);  
+  cudaEvent_t * events = (cudaEvent_t*)malloc(sizeof(cudaEvent_t) * streams);
   createSingleDeviceEvents(L, state, 2, curDev, events);
   /* Then, wait on them */
   for (int i = 0; i < streams; i++) {
@@ -780,30 +779,30 @@ static const struct luaL_Reg cutorch_stuff__ [] = {
   {NULL, NULL}
 };
 
-LUA_EXTERNC DLL_EXPORT int luaopen_libcutorch(lua_State *L);
+LUA_EXTERNC DLL_EXPORT int luaopen_libzcutorch(lua_State *L);
 
-int luaopen_libcutorch(lua_State *L)
+int luaopen_libzcutorch(lua_State *L)
 {
   lua_newtable(L);
   luaL_setfuncs(L, cutorch_stuff__, 0);
 
   THCState* state = (THCState*)malloc(sizeof(THCState));
-  THCudaInit(state);
+  THZCudaInit(state);
 
   /* Register torch.CudaHostAllocator. */
   luaT_pushudata(L, state->cudaHostAllocator, "torch.Allocator");
   lua_setfield(L, -2, "CudaHostAllocator");
 
 #ifdef USE_MAGMA
-  THCMagma_init(state);
+  THZCMagma_init(state);
   lua_pushboolean(L, 1);
   lua_setfield(L, -2, "magma");
 #endif
 
-  cutorch_CudaStorage_init(L);
-  cutorch_CudaTensor_init(L);
-  cutorch_CudaTensorMath_init(L);
-  cutorch_CudaTensorOperator_init(L);
+  zcutorch_ZCudaStorage_init(L);
+  zcutorch_ZCudaTensor_init(L);
+  zcutorch_ZCudaTensorMath_init(L);
+  zcutorch_ZCudaTensorOperator_init(L);
 
   /* Store state in cutorch table. */
   lua_pushlightuserdata(L, state);

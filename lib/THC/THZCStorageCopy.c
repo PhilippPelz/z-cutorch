@@ -1,11 +1,11 @@
 #include "THZCStorageCopy.h"
 #include "THZCGeneral.h"
-#include "cuComplex.h"
+
 
 void THZCudaStorage_copyZFloat(THCState *state, THZCudaStorage *self, struct THZFloatStorage *src)
 {
   THArgCheck(self->size == src->size, 2, "size does not match");
-  THZCudaCheck(cudaMemcpy(self->data, src->data, self->size * sizeof(cuComplex), cudaMemcpyHostToDevice));
+  THZCudaCheck(cudaMemcpy(self->data, src->data, self->size * sizeof(cx), cudaMemcpyHostToDevice));
 }
 
 #define TH_CUDA_STORAGE_IMPLEMENT_COPY(TYPEC)                           \
@@ -29,5 +29,5 @@ TH_CUDA_STORAGE_IMPLEMENT_COPY(Double)
 void THZFloatStorage_copyZCuda(THCState *state, THZFloatStorage *self, struct THZCudaStorage *src)
 {
   THArgCheck(self->size == src->size, 2, "size does not match");
-  THZCudaCheck(cudaMemcpy(self->data, src->data, self->size * sizeof(cuComplex), cudaMemcpyDeviceToHost));
+  THZCudaCheck(cudaMemcpy(self->data, src->data, self->size * sizeof(cx), cudaMemcpyDeviceToHost));
 }
