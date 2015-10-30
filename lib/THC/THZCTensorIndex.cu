@@ -212,7 +212,7 @@ void THZCudaTensor_indexAdd(THCState *state, THZCudaTensor *res_, int dim, THZCu
   THZCudaTensor_free(state, src);
 }
 
-void THZCudaTensor_indexFill_long(THCState *state, THZCudaTensor *res_, int dim, THLongTensor *indices, float val)
+void THZCudaTensor_indexFill_long(THCState *state, THZCudaTensor *res_, int dim, THLongTensor *indices, cx val)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, res_));
 
@@ -224,7 +224,7 @@ void THZCudaTensor_indexFill_long(THCState *state, THZCudaTensor *res_, int dim,
   THZCudaTensor_free(state, indices_);
 }
 
-void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, float val)
+void THZCudaTensor_indexFillf(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, float val)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, res_));
   long *stride_;
@@ -369,7 +369,7 @@ void THZCudaTensor_indexSelect_long(THCState *state, THZCudaTensor *res_, THZCud
   THZCudaTensor_free(state, indices_);
 }
 
-void THZCudaTensor_indexSelect(THCState *state, THZCudaTensor *res, THZCudaTensor *src, int dim, THZCudaTensor *indices)
+void THZCudaTensor_indexSelect(THCState *state, THZCudaTensor *res, THZCudaTensor *src, int dim, THCudaTensor *indices)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, res, src));
 

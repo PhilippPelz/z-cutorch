@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/philipp/projects/zcutorch
+CMAKE_SOURCE_DIR = /home/philipp/projects/distro/extra/z-cutorch
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/philipp/projects/zcutorch/build
+CMAKE_BINARY_DIR = /home/philipp/projects/distro/extra/z-cutorch/build
 
 # Utility rule file for cudatensormathwrap.
 
@@ -48,9 +48,9 @@ include CMakeFiles/cudatensormathwrap.dir/progress.make
 CMakeFiles/cudatensormathwrap: TensorMath.c
 
 TensorMath.c: ../TensorMath.lua
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating TensorMath.c"
-	cd /home/philipp/projects/zcutorch && /home/philipp/torch/install/bin/luajit /home/philipp/projects/zcutorch/TensorMath.lua /home/philipp/projects/zcutorch/build/TensorMath.c
+	cd /home/philipp/projects/distro/extra/z-cutorch && /home/philipp/torch/install/bin/luajit /home/philipp/projects/distro/extra/z-cutorch/TensorMath.lua /home/philipp/projects/distro/extra/z-cutorch/build/TensorMath.c
 
 cudatensormathwrap: CMakeFiles/cudatensormathwrap
 cudatensormathwrap: TensorMath.c
@@ -66,6 +66,6 @@ CMakeFiles/cudatensormathwrap.dir/clean:
 .PHONY : CMakeFiles/cudatensormathwrap.dir/clean
 
 CMakeFiles/cudatensormathwrap.dir/depend:
-	cd /home/philipp/projects/zcutorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/philipp/projects/zcutorch /home/philipp/projects/zcutorch /home/philipp/projects/zcutorch/build /home/philipp/projects/zcutorch/build /home/philipp/projects/zcutorch/build/CMakeFiles/cudatensormathwrap.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/philipp/projects/distro/extra/z-cutorch /home/philipp/projects/distro/extra/z-cutorch /home/philipp/projects/distro/extra/z-cutorch/build /home/philipp/projects/distro/extra/z-cutorch/build /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles/cudatensormathwrap.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/cudatensormathwrap.dir/depend
 

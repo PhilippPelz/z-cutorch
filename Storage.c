@@ -5,7 +5,7 @@
 
 /* everything is as the generic Storage.c, except few things (see below) */
 
-#define real float
+#define real float complex
 #define Real ZCuda
 #define TH_GENERIC_FILE "generic/Storage.c"
 
@@ -41,7 +41,7 @@ static int zcutorch_ZCudaStorage_copy(lua_State *L)
   THCState *state = cutorch_getstate(L);
   THZCudaStorage *storage = luaT_checkudata(L, 1, "torch.CudaStorage");
   void *src;
-  if( (src = luaT_toudata(L, 2, "torch.CudaStorage")) )
+  if( (src = luaT_toudata(L, 2, "torch.ZCudaStorage")) )
     THZCudaStorage_copy(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.ByteStorage")) )
     THZCudaStorage_copyByte(state, storage, src);
@@ -58,7 +58,7 @@ static int zcutorch_ZCudaStorage_copy(lua_State *L)
   else if( (src = luaT_toudata(L, 2, "torch.DoubleStorage")) )
     THZCudaStorage_copyDouble(state, storage, src);
   else if( (src = luaT_toudata(L, 2, "torch.CudaStorage")) )
-    THZCudaStorage_copyCuda(state, storage, src);
+    THZCudaStorage_copyZCuda(state, storage, src);
   else
     luaL_typerror(L, 2, "torch.*Storage");
 
@@ -120,8 +120,7 @@ void zcutorch_ZCudaStorage_init(lua_State* L)
                              "torch.LongStorage",
                              "torch.FloatStorage",
                              "torch.DoubleStorage",
-                             "torch.ZCudaStorage",
-                             "torch.CudaStorage"};
+                             "torch.ZCudaStorage"};
 
     static int (*funcs[8])(lua_State*) = {zcutorch_ByteStorage_copy,
                                           zcutorch_CharStorage_copy,

@@ -4,8 +4,6 @@
 #include "THZCTensor.h"
 #include "THZCGeneral.h"
 
-#include "THZC.h"
-
 THZC_API void THZCudaTensor_copy(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
 THZC_API void THZCudaTensor_copyByte(THCState *state, THZCudaTensor *self, THByteTensor *src);
 THZC_API void THZCudaTensor_copyChar(THCState *state, THZCudaTensor *self, THCharTensor *src);
@@ -17,7 +15,7 @@ THZC_API void THZCudaTensor_copyDouble(THCState *state, THZCudaTensor *self, THD
 THZC_API void THZCudaTensor_copyZFloat(THCState *state, THZCudaTensor *self, THZFloatTensor *src);
 
 THZC_API void THZFloatTensor_copyZCuda(THCState *state, THZFloatTensor *self, THZCudaTensor *src);
-THZC_API void THZCudaTensor_copyZCuda(THCState *state, THZFloatTensor *self, THZCudaTensor *src);
+THZC_API void THZCudaTensor_copyZCuda(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
 
 THZC_API void THZCudaTensor_copyAsyncZFloat(THCState *state, THZCudaTensor *self, THZFloatTensor *src);
 THZC_API void THZFloatTensor_copyAsyncZCuda(THCState *state, THZFloatTensor *self, THZCudaTensor *src);

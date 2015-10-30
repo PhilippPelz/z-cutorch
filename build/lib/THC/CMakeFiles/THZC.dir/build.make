@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/philipp/projects/zcutorch
+CMAKE_SOURCE_DIR = /home/philipp/projects/distro/extra/z-cutorch
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/philipp/projects/zcutorch/build
+CMAKE_BINARY_DIR = /home/philipp/projects/distro/extra/z-cutorch/build
 
 # Include any dependencies generated for this target.
 include lib/THC/CMakeFiles/THZC.dir/depend.make
@@ -52,184 +52,168 @@ include lib/THC/CMakeFiles/THZC.dir/flags.make
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCReduceApplyUtils.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCReduceApplyUtils.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o: ../lib/THC/THZCReduceApplyUtils.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCReduceApplyUtils.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCReduceApplyUtils.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCReduceApplyUtils.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCReduceApplyUtils.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCReduceApplyUtils.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCReduceApplyUtils.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCReduceApplyUtils.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCBlas.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCBlas.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCBlas.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCBlas.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCBlas.cu.o: ../lib/THC/THZCBlas.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCBlas.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCBlas.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCBlas.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCBlas.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCBlas.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCBlas.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCBlas.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorage.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCStorage.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorage.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCStorage.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorage.cu.o: ../lib/THC/THZCStorage.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorage.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorage.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorage.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCStorage.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorage.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorage.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCStorage.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorageCopy.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCStorageCopy.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorageCopy.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCStorageCopy.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorageCopy.cu.o: ../lib/THC/THZCStorageCopy.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorageCopy.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorageCopy.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorageCopy.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCStorageCopy.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorageCopy.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCStorageCopy.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCStorageCopy.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensor.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensor.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensor.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensor.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensor.cu.o: ../lib/THC/THZCTensor.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensor.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensor.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensor.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensor.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensor.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensor.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensor.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorCopy.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorCopy.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorCopy.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorCopy.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorCopy.cu.o: ../lib/THC/THZCTensorCopy.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorCopy.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorCopy.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorCopy.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorCopy.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorCopy.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorCopy.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorCopy.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMath.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMath.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath.cu.o: ../lib/THC/THZCTensorMath.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_7)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMath.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMath.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath2.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMath2.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath2.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMath2.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath2.cu.o: ../lib/THC/THZCTensorMath2.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_8)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath2.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath2.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath2.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMath2.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath2.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMath2.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMath2.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathBlas.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathBlas.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathBlas.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathBlas.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathBlas.cu.o: ../lib/THC/THZCTensorMathBlas.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_9)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathBlas.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathBlas.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathBlas.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathBlas.cu.o.cmake
-
-lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompare.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathCompare.cu.o.depend
-lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompare.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathCompare.cu.o.cmake
-lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompare.cu.o: ../lib/THC/THZCTensorMathCompare.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_10)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathCompare.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathCompare.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathCompare.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathCompare.cu.o.cmake
-
-lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompareT.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathCompareT.cu.o.depend
-lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompareT.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathCompareT.cu.o.cmake
-lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompareT.cu.o: ../lib/THC/THZCTensorMathCompareT.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_11)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathCompareT.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathCompareT.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathCompareT.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathCompareT.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathBlas.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathBlas.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathBlas.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathMagma.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathMagma.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathMagma.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathMagma.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathMagma.cu.o: ../lib/THC/THZCTensorMathMagma.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_12)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathMagma.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathMagma.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathMagma.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathMagma.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathMagma.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathMagma.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathMagma.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPairwise.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathPairwise.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPairwise.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathPairwise.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPairwise.cu.o: ../lib/THC/THZCTensorMathPairwise.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_13)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_11)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPairwise.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPairwise.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPairwise.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathPairwise.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPairwise.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPairwise.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathPairwise.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPointwise.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathPointwise.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPointwise.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathPointwise.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPointwise.cu.o: ../lib/THC/THZCTensorMathPointwise.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_14)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_12)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPointwise.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPointwise.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPointwise.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathPointwise.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPointwise.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathPointwise.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathPointwise.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathScan.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathScan.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathScan.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathScan.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathScan.cu.o: ../lib/THC/THZCTensorMathScan.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_15)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_13)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathScan.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathScan.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathScan.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathScan.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathScan.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathScan.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathScan.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathTransformReduce.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathTransformReduce.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathTransformReduce.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMathTransformReduce.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathTransformReduce.cu.o: ../lib/THC/THZCTensorMathTransformReduce.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_16)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_14)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathTransformReduce.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathTransformReduce.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathTransformReduce.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathTransformReduce.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathTransformReduce.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMathTransformReduce.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMathTransformReduce.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMasked.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMasked.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMasked.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorMasked.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMasked.cu.o: ../lib/THC/THZCTensorMasked.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_17)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_15)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMasked.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMasked.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorIndex.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorIndex.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorIndex.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorIndex.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorIndex.cu.o: ../lib/THC/THZCTensorIndex.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_18)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_16)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorIndex.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorIndex.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorIndex.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorIndex.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorIndex.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorIndex.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorIndex.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorConv.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorConv.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorConv.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorConv.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorConv.cu.o: ../lib/THC/THZCTensorConv.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_19)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_17)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorConv.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorConv.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorConv.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorConv.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorConv.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorConv.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorConv.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorScatterGather.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorScatterGather.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorScatterGather.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCTensorScatterGather.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorScatterGather.cu.o: ../lib/THC/THZCTensorScatterGather.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_20)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_18)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorScatterGather.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorScatterGather.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorScatterGather.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorScatterGather.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorScatterGather.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorScatterGather.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorScatterGather.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCApply.cu.o.depend
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o: lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCApply.cu.o.cmake
 lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o: ../lib/THC/THZCApply.cu
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_21)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_19)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCApply.cu.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.
-	cd /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCApply.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCApply.cu.o.cubin.txt -P /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCApply.cu.o.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -E make_directory /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING=Release -D generated_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCApply.cu.o -D generated_cubin_file:STRING=/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCApply.cu.o.cubin.txt -P /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCApply.cu.o.cmake
 
 lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o: lib/THC/CMakeFiles/THZC.dir/flags.make
 lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o: ../lib/THC/THZCGeneral.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_22)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_20)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCGeneral.c.o   -c /home/philipp/projects/zcutorch/lib/THC/THZCGeneral.c
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCGeneral.c.o   -c /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.c
 
 lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/THZC.dir/THZCGeneral.c.i"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/lib/THC/THZCGeneral.c > CMakeFiles/THZC.dir/THZCGeneral.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.c > CMakeFiles/THZC.dir/THZCGeneral.c.i
 
 lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/THZC.dir/THZCGeneral.c.s"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/lib/THC/THZCGeneral.c -o CMakeFiles/THZC.dir/THZCGeneral.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.c -o CMakeFiles/THZC.dir/THZCGeneral.c.s
 
 lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o.requires:
 .PHONY : lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o.requires
@@ -242,17 +226,17 @@ lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o.provides.build: lib/THC/CMakeFiles/T
 
 lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o: lib/THC/CMakeFiles/THZC.dir/flags.make
 lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o: ../lib/THC/THZCAllocator.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_23)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_21)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCAllocator.c.o   -c /home/philipp/projects/zcutorch/lib/THC/THZCAllocator.c
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCAllocator.c.o   -c /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCAllocator.c
 
 lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/THZC.dir/THZCAllocator.c.i"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/lib/THC/THZCAllocator.c > CMakeFiles/THZC.dir/THZCAllocator.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCAllocator.c > CMakeFiles/THZC.dir/THZCAllocator.c.i
 
 lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/THZC.dir/THZCAllocator.c.s"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/lib/THC/THZCAllocator.c -o CMakeFiles/THZC.dir/THZCAllocator.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCAllocator.c -o CMakeFiles/THZC.dir/THZCAllocator.c.s
 
 lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o.requires:
 .PHONY : lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o.requires
@@ -265,17 +249,17 @@ lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o.provides.build: lib/THC/CMakeFiles
 
 lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o: lib/THC/CMakeFiles/THZC.dir/flags.make
 lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o: ../lib/THC/THZCStorage.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_24)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_22)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCStorage.c.o   -c /home/philipp/projects/zcutorch/lib/THC/THZCStorage.c
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCStorage.c.o   -c /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorage.c
 
 lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/THZC.dir/THZCStorage.c.i"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/lib/THC/THZCStorage.c > CMakeFiles/THZC.dir/THZCStorage.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorage.c > CMakeFiles/THZC.dir/THZCStorage.c.i
 
 lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/THZC.dir/THZCStorage.c.s"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/lib/THC/THZCStorage.c -o CMakeFiles/THZC.dir/THZCStorage.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorage.c -o CMakeFiles/THZC.dir/THZCStorage.c.s
 
 lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o.requires:
 .PHONY : lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o.requires
@@ -288,17 +272,17 @@ lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o.provides.build: lib/THC/CMakeFiles/T
 
 lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o: lib/THC/CMakeFiles/THZC.dir/flags.make
 lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o: ../lib/THC/THZCStorageCopy.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_25)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_23)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCStorageCopy.c.o   -c /home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.c
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCStorageCopy.c.o   -c /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorageCopy.c
 
 lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/THZC.dir/THZCStorageCopy.c.i"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.c > CMakeFiles/THZC.dir/THZCStorageCopy.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorageCopy.c > CMakeFiles/THZC.dir/THZCStorageCopy.c.i
 
 lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/THZC.dir/THZCStorageCopy.c.s"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.c -o CMakeFiles/THZC.dir/THZCStorageCopy.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorageCopy.c -o CMakeFiles/THZC.dir/THZCStorageCopy.c.s
 
 lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o.requires:
 .PHONY : lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o.requires
@@ -311,17 +295,17 @@ lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o.provides.build: lib/THC/CMakeFil
 
 lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o: lib/THC/CMakeFiles/THZC.dir/flags.make
 lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o: ../lib/THC/THZCTensor.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_26)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_24)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCTensor.c.o   -c /home/philipp/projects/zcutorch/lib/THC/THZCTensor.c
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCTensor.c.o   -c /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensor.c
 
 lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/THZC.dir/THZCTensor.c.i"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/lib/THC/THZCTensor.c > CMakeFiles/THZC.dir/THZCTensor.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensor.c > CMakeFiles/THZC.dir/THZCTensor.c.i
 
 lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/THZC.dir/THZCTensor.c.s"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/lib/THC/THZCTensor.c -o CMakeFiles/THZC.dir/THZCTensor.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensor.c -o CMakeFiles/THZC.dir/THZCTensor.c.s
 
 lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o.requires:
 .PHONY : lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o.requires
@@ -334,17 +318,17 @@ lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o.provides.build: lib/THC/CMakeFiles/TH
 
 lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o: lib/THC/CMakeFiles/THZC.dir/flags.make
 lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o: ../lib/THC/THZCTensorCopy.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_27)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_25)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCTensorCopy.c.o   -c /home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.c
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/THZC.dir/THZCTensorCopy.c.o   -c /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensorCopy.c
 
 lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/THZC.dir/THZCTensorCopy.c.i"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.c > CMakeFiles/THZC.dir/THZCTensorCopy.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensorCopy.c > CMakeFiles/THZC.dir/THZCTensorCopy.c.i
 
 lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/THZC.dir/THZCTensorCopy.c.s"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.c -o CMakeFiles/THZC.dir/THZCTensorCopy.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensorCopy.c -o CMakeFiles/THZC.dir/THZCTensorCopy.c.s
 
 lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o.requires:
 .PHONY : lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o.requires
@@ -366,27 +350,25 @@ THZC_OBJECTS = \
 
 # External object files for target THZC
 THZC_EXTERNAL_OBJECTS = \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCBlas.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorage.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorageCopy.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensor.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorCopy.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath2.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathBlas.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompare.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompareT.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathMagma.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPairwise.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPointwise.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathScan.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathTransformReduce.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMasked.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorIndex.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorConv.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorScatterGather.cu.o" \
-"/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o"
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCBlas.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorage.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCStorageCopy.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensor.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorCopy.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath2.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathBlas.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathMagma.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPairwise.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPointwise.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathScan.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathTransformReduce.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMasked.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorIndex.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorConv.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorScatterGather.cu.o" \
+"/home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o"
 
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o
@@ -403,8 +385,6 @@ lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorCopy.
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath.cu.o
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath2.cu.o
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathBlas.cu.o
-lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompare.cu.o
-lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompareT.cu.o
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathMagma.cu.o
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPairwise.cu.o
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPointwise.cu.o
@@ -420,11 +400,10 @@ lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcudart.so
 lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcublas.so
 lib/THC/libTHZC.so: /home/philipp/torch/install/lib/libTH.so
 lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcurand.so
-lib/THC/libTHZC.so: /usr/local/lib/libmagma.so
 lib/THC/libTHZC.so: /opt/OpenBLAS/lib/libopenblas.so
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX shared library libTHZC.so"
-	cd /home/philipp/projects/zcutorch/build/lib/THC && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/THZC.dir/link.txt --verbose=$(VERBOSE)
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/THZC.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 lib/THC/CMakeFiles/THZC.dir/build: lib/THC/libTHZC.so
@@ -439,7 +418,7 @@ lib/THC/CMakeFiles/THZC.dir/requires: lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy
 .PHONY : lib/THC/CMakeFiles/THZC.dir/requires
 
 lib/THC/CMakeFiles/THZC.dir/clean:
-	cd /home/philipp/projects/zcutorch/build/lib/THC && $(CMAKE_COMMAND) -P CMakeFiles/THZC.dir/cmake_clean.cmake
+	cd /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC && $(CMAKE_COMMAND) -P CMakeFiles/THZC.dir/cmake_clean.cmake
 .PHONY : lib/THC/CMakeFiles/THZC.dir/clean
 
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o
@@ -451,8 +430,6 @@ lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath.cu.o
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath2.cu.o
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathBlas.cu.o
-lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompare.cu.o
-lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompareT.cu.o
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathMagma.cu.o
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPairwise.cu.o
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPointwise.cu.o
@@ -463,6 +440,6 @@ lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorConv.cu.o
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCTensorScatterGather.cu.o
 lib/THC/CMakeFiles/THZC.dir/depend: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o
-	cd /home/philipp/projects/zcutorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/philipp/projects/zcutorch /home/philipp/projects/zcutorch/lib/THC /home/philipp/projects/zcutorch/build /home/philipp/projects/zcutorch/build/lib/THC /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/philipp/projects/distro/extra/z-cutorch /home/philipp/projects/distro/extra/z-cutorch/lib/THC /home/philipp/projects/distro/extra/z-cutorch/build /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : lib/THC/CMakeFiles/THZC.dir/depend
 

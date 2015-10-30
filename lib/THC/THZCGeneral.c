@@ -5,7 +5,7 @@
 #include "THZCAllocator.h"
 
 /* Size of scratch space available in global memory per each SM + stream */
-#define GLOBAL_SCRATCH_SPACE_PER_SM_STREAM 4 * sizeof(float)
+#define GLOBAL_SCRATCH_SPACE_PER_SM_STREAM 4 * sizeof(cx)
 
 THCCudaResourcesPerDevice* THCState_getDeviceResourcePtr(
   THCState *state, int device);

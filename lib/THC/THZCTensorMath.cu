@@ -8,6 +8,9 @@
 
 #include <thrust/functional.h>
 
+#include <cusp/complex.h>
+typedef cusp::complex<float> ccx;
+
 struct TensorFillOp {
   TensorFillOp(cx v) : val(v) {}
   __device__ __forceinline__ void operator()(cx* v) { *v = val; }
@@ -169,15 +172,53 @@ void THZCudaTensor_catArray(THCState *state, THZCudaTensor *result, THZCudaTenso
   }
 }
 
+struct TensorCPowOp {
+  __device__ __forceinline__ void operator()(cx* out, cx* in) {
+    *out = cusp::pow((ccx)*out, (ccx)*in);
+  }
+
+  __device__ __forceinline__ void operator()(cx* out, cx* in1, cx* in2) {
+    *out = cusp::pow((ccx)*in1, (ccx)*in2);
+  }
+};
+
+void THCudaTensor_cpow(THCState *state, THCudaTensor *self_, THCudaTensor *src1, THCudaTensor *src2)
+{
+  THAssert(THCudaTensor_checkGPU(state, 3, self_, src1, src2));
+  THArgCheck(THCudaTensor_nElement(state, src1) ==
+             THCudaTensor_nElement(state, src2), 3, "sizes do not match");
+
+  if (self_ == src1) {
+    // self = pow(self, src2)
+    if (!THCudaTensor_pointwiseApply2(state, self_, src2, TensorCPowOp())) {
+      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+    }
+  } else {
+    THCudaTensor_resizeAs(state, self_, src1);
+
+    // self = pow(src1, src2)
+    if (!THCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorCPowOp())) {
+      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+    }
+  }
+
+  THCudaCheck(cudaGetLastError());
+}
+
 struct TensorDivOp {
   __device__ __forceinline__ void
   operator()(cx* out, cx* in) {
-    *out = cuCdivf(*out,*in);
+    ccx* o = (ccx*)out;
+    ccx* i = (ccx*)in;
+    *o /= *i;
   }
 
   __device__ __forceinline__ void
   operator()(cx* out, cx* in1, cx* in2) {
-    *out = cuCdivf(*in1,*in2);
+    ccx* o = (ccx*)out;
+    ccx* i1 = (ccx*)in1;
+    ccx* i2 = (ccx*)in2;
+    *o = *i1 / *i2;
   }
 };
 
@@ -387,46 +428,4 @@ void THZCudaTensor_prod(THCState* state, THZCudaTensor *self, THZCudaTensor *src
   }
 
   THZCudaCheck(cudaGetLastError());
-}
-
-struct logicalall_functor
-{
-  __device__ inline float operator()(float x, float y) const
-  {
-    return x && y;
-  }
-};
-
-struct logicalany_functor
-{
-  __device__ float operator()(float x, float y) const
-  {
-    return x || y;
-  }
-};
-
-int THZCudaTensor_logicalall(THCState *state, THZCudaTensor *self) {
-  THAssert(THZCudaTensor_checkGPU(state, 1, self));
-  float result = 0.0f;
-  if (!THZCudaTensor_reduceAll(state, self,
-                              thrust::identity<float>(),
-                              logicalall_functor(),
-                              1.0f, &result, 0)) {
-    THArgCheck(false, 1, CUTORCH_DIM_WARNING);
-  }
-
-  return (int) result;
-}
-
-int THZCudaTensor_logicalany(THCState *state, THZCudaTensor *self) {
-  THAssert(THZCudaTensor_checkGPU(state, 1, self));
-  float result = 0.0f;
-  if (!THZCudaTensor_reduceAll(state, self,
-                              thrust::identity<float>(),
-                              logicalany_functor(),
-                              0.0f, &result, 0)) {
-    THArgCheck(false, 1, CUTORCH_DIM_WARNING);
-  }
-
-  return (int) result;
 }

@@ -1,8 +1,6 @@
 #ifndef THZC_INC
 #define THZC_INC
 
-#include "THZ.h"
-
 #include "THZCGeneral.h"
 #include "THZCAllocator.h"
 #include "THZCBlas.h"

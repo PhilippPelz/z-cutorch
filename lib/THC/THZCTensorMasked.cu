@@ -10,59 +10,33 @@
 #include <thrust/device_ptr.h>
 #include <thrust/scan.h>
 
-
+#include <cusp/complex.h>
+typedef cusp::complex<float> ccx;
 
 #if CUDA_VERSION >= 7000
 #include <thrust/system/cuda/execution_policy.h>
 #endif
 
-struct TensorMaskedFillOp {
-  TensorMaskedFillOp(float v) : value(v) {}
-  __device__ __forceinline__ void operator()(float* t, float* mask) {
-    // Really mask should be `0` or `1` but we can't propagate errors here.
-    if (*mask != 0.0f) {
-      *t = cx(value,0);
-    }
-  }
-
-  float value;
-};
 struct cxTensorMaskedFillOp {
-  TensorMaskedFillOp(cx v) : value(v) {}
-  __device__ __forceinline__ void operator()(cx* t, float* mask) {
+  TensorMaskedFillOp(ccx v) : value(v) {}
+  __device__ __forceinline__ void operator()(ccx* t, float* mask) {
     // Really mask should be `0` or `1` but we can't propagate errors here.
     if (*mask != 0.0f) {
       *t = value;
     }
   }
 
-  cx value;
+  ccx value;
 };
 
-void THZCudaTensor_maskedFill(THCState* state,
-                             THZCudaTensor *tensor, THZCudaTensor *mask, float value)
+void THZCudaTensor_maskedFill(THCState* state, THZCudaTensor *tensor, THZCudaTensor *mask, cx value)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, tensor, mask));
   THArgCheck(THZCudaTensor_nElement(state, tensor) ==
              THZCudaTensor_nElement(state, mask),
              2, "sizes do not match");
 
-  if (!THZCudaTensor_pointwiseApply2(state, tensor, mask, TensorMaskedFillOp(value))) {
-    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
-  }
-
-  THZCudaCheck(cudaGetLastError());
-}
-
-void THZCudaTensor_maskedFill(THCState* state,
-                             THZCudaTensor *tensor, THZCudaTensor *mask, cx value)
-{
-  THAssert(THZCudaTensor_checkGPU(state, 2, tensor, mask));
-  THArgCheck(THZCudaTensor_nElement(state, tensor) ==
-             THZCudaTensor_nElement(state, mask),
-             2, "sizes do not match");
-
-  if (!THZCudaTensor_pointwiseApply2(state, tensor, mask, cxTensorMaskedFillOp((cx)value))) {
+  if (!THZCudaTensor_pointwiseApply2(state, tensor, mask, cxTensorMaskedFillOp((ccx)value))) {
     THArgCheck(false, 2, CUTORCH_DIM_WARNING);
   }
 
@@ -70,9 +44,9 @@ void THZCudaTensor_maskedFill(THCState* state,
 }
 
 struct TensorMaskedCopyOp {
-  TensorMaskedCopyOp(cx* s) : src(s) {}
+  TensorMaskedCopyOp(ccx* s) : src(s) {}
 
-  __device__ __forceinline__ void operator()(cx* out, float* mask, float* maskPrefixSum) {
+  __device__ __forceinline__ void operator()(cux* out, float* mask, float* maskPrefixSum) {
     // Really mask should be `0` or `1` but we can't propagate errors here.
     if (*mask != 0.0f) {
       // We've already checked that this offset is <= 2^24, so this is ok.
@@ -81,12 +55,11 @@ struct TensorMaskedCopyOp {
   }
 
   // Where we are copying from
-  cx* src;
+  ccx* src;
 };
 
 
-void THZCudaTensor_maskedCopy(THCState* state,
-                             THZCudaTensor *tensor, THCudaTensor *mask, THZCudaTensor *src)
+void THZCudaTensor_maskedCopy(THCState* state, THZCudaTensor *tensor, THCudaTensor *mask, THZCudaTensor *src)
 {
   THAssert(THZCudaTensor_checkGPU(state, 3, tensor, src, mask));
   long maskSize = THZCudaTensor_nElement(state, mask);
@@ -103,41 +76,41 @@ void THZCudaTensor_maskedCopy(THCState* state,
   THArgCheck(maskSize == tensorSize, 2,
              "mask and tensor must have the same number of elements");
 
-  THZCudaTensor* contigMask = THZCudaTensor_newContiguous(state, mask);
-  long oneElements = (long) THZCudaTensor_sumall(state, contigMask);
+  THCudaTensor* contigMask = THCudaTensor_newContiguous(state, mask);
+  long oneElements = (long) THCudaTensor_sumall(state, contigMask);
 
   // The number of `1` elements present in the mask must be <= the
   // number of elements available in `src`
   if (oneElements > srcSize) {
-    THZCudaTensor_free(state, contigMask);
+    THCudaTensor_free(state, contigMask);
     THArgCheck(false, 2, "source nElements must be == mask `1` elements");
   }
 
   // Use a prefix sum to determine the copy locations of the masked elements
-  THZCudaTensor* maskPrefixSum = THZCudaTensor_new(state);
-  THZCudaTensor_resizeAs(state, maskPrefixSum, contigMask);
+  THCudaTensor* maskPrefixSum = THCudaTensor_new(state);
+  THCudaTensor_resizeAs(state, maskPrefixSum, contigMask);
 
   // We are getting elements from `src` based on an offset from
   // `maskPrefixSum`, so that should be made contiguous too
   THZCudaTensor* contigSrc = THZCudaTensor_newContiguous(state, src);
 
-  thrust::device_ptr<cx>
-    maskData(THZCudaTensor_data(state, contigMask));
-  thrust::device_ptr<cx>
+  thrust::device_ptr<ccx>
+    maskData(THCudaTensor_data(state, contigMask));
+  thrust::device_ptr<ccx>
     maskPrefixSumData(THZCudaTensor_data(state, maskPrefixSum));
   thrust::exclusive_scan(
 #if CUDA_VERSION >= 7000
     thrust::cuda::par.on(THCState_getCurrentStream(state)),
 #endif
-                         maskData,
-                         maskData + THZCudaTensor_nElement(state, contigMask),
-                         maskPrefixSumData);
+     maskData,
+     maskData + THZCudaTensor_nElement(state, contigMask),
+     maskPrefixSumData);
 
   // update `tensor` where `mask` == 1 but pull from `src` at
   // maskPrefixSum
   bool status = THZCudaTensor_pointwiseApply3(
     state, tensor, contigMask, maskPrefixSum,
-    TensorMaskedCopyOp(THZCudaTensor_data(state, contigSrc)));
+    TensorMaskedCopyOp((ccx*)THZCudaTensor_data(state, contigSrc)));
 
   THZCudaTensor_free(state, contigSrc);
   THZCudaTensor_free(state, maskPrefixSum);
@@ -148,15 +121,15 @@ void THZCudaTensor_maskedCopy(THCState* state,
 }
 
 struct TensorMaskedSelectOp {
-  TensorMaskedSelectOp(float* t) : out(t) {}
-  __device__ __forceinline__ void operator()(float* mask, float* maskPrefixSum, float* in) {
+  TensorMaskedSelectOp(ccx* t) : out(t) {}
+  __device__ __forceinline__ void operator()(float* mask, float* maskPrefixSum, ccx* in) {
     // Really mask should be `0` or `1` but we can't propagate errors here.
     if (*mask != 0.0f) {
       out[(int) *maskPrefixSum] = *in;
     }
   }
 
-  float* out;
+  ccx* out;
 };
 
 void THZCudaTensor_maskedSelect(THCState* state,
@@ -185,9 +158,9 @@ void THZCudaTensor_maskedSelect(THCState* state,
   THZCudaTensor* maskPrefixSum = THZCudaTensor_new(state);
   THZCudaTensor_resizeAs(state, maskPrefixSum, contigMask);
 
-  thrust::device_ptr<float>
+  thrust::device_ptr<ccx>
     maskData(THZCudaTensor_data(state, contigMask));
-  thrust::device_ptr<float>
+  thrust::device_ptr<ccx>
     maskPrefixSumData(THZCudaTensor_data(state, maskPrefixSum));
   thrust::exclusive_scan(
 #if CUDA_VERSION >= 7000
@@ -209,7 +182,7 @@ void THZCudaTensor_maskedSelect(THCState* state,
   THZCudaCheck(cudaGetLastError());
 }
 
-void THZCudaTensor_maskedFillByte(THCState* state, THZCudaTensor *tensor, THByteTensor *mask, float value)
+void THZCudaTensor_maskedFillByte(THCState* state, THZCudaTensor *tensor, THByteTensor *mask, ccx value)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, tensor));
   THLongStorage* maskSize = THByteTensor_newSizeOf(mask);

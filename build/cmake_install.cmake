@@ -1,4 +1,4 @@
-# Install script for directory: /home/philipp/projects/zcutorch
+# Install script for directory: /home/philipp/projects/distro/extra/z-cutorch
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -33,37 +33,37 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lib/libzcutorch.so" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lib/libzcutorch.so")
+  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so")
     file(RPATH_CHECK
-         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lib/libzcutorch.so"
+         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so"
          RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lib" TYPE MODULE FILES "/home/philipp/projects/zcutorch/build/libzcutorch.so")
-  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lib/libzcutorch.so" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lib/libzcutorch.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib" TYPE MODULE FILES "/home/philipp/projects/distro/extra/z-cutorch/build/libzcutorch.so")
+  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so")
     file(RPATH_CHANGE
-         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lib/libzcutorch.so"
+         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so"
          OLD_RPATH "/home/philipp/torch/install/lib:::::::::::::::"
          NEW_RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lib/libzcutorch.so")
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so")
     endif()
   endif()
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/cutorch/scm-1/lua/zcutorch" TYPE FILE FILES
-    "/home/philipp/projects/zcutorch/init.lua"
-    "/home/philipp/projects/zcutorch/Tensor.lua"
-    "/home/philipp/projects/zcutorch/FFI.lua"
-    "/home/philipp/projects/zcutorch/test/test.lua"
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lua/zcutorch" TYPE FILE FILES
+    "/home/philipp/projects/distro/extra/z-cutorch/init.lua"
+    "/home/philipp/projects/distro/extra/z-cutorch/Tensor.lua"
+    "/home/philipp/projects/distro/extra/z-cutorch/FFI.lua"
+    "/home/philipp/projects/distro/extra/z-cutorch/test/test.lua"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/philipp/projects/zcutorch/build/lib/cmake_install.cmake")
+  include("/home/philipp/projects/distro/extra/z-cutorch/build/lib/cmake_install.cmake")
 
 endif()
 
@@ -73,7 +73,7 @@ else()
   set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 endif()
 
-file(WRITE "/home/philipp/projects/zcutorch/build/${CMAKE_INSTALL_MANIFEST}" "")
+file(WRITE "/home/philipp/projects/distro/extra/z-cutorch/build/${CMAKE_INSTALL_MANIFEST}" "")
 foreach(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  file(APPEND "/home/philipp/projects/zcutorch/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  file(APPEND "/home/philipp/projects/distro/extra/z-cutorch/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 endforeach()

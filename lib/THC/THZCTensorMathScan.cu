@@ -7,6 +7,9 @@
 
 #include <thrust/functional.h>
 
+#include <cusp/complex.h>
+typedef cusp::complex<float> ccx;
+
 /* Perform an inclusive scan along an outer dimension of a tensor.
  *
  * - num_orows is the size of the flattened outer dimensions;
@@ -19,15 +22,15 @@
  * Each thread processes a single inner row at a time.
  */
 template<class BinaryOp>
-__global__ void THZCudaTensor_kernel_scanOuterDim(float *tgt_, float *src_,
+__global__ void THZCudaTensor_kernel_scanOuterDim(cx *tgt_, cx *src_,
                                                  unsigned num_orows, unsigned num_irows, unsigned row_size,
-                                                 float init, BinaryOp binary_op)
+                                                 cx init, BinaryOp binary_op)
 {
   for (unsigned orow = blockIdx.x; orow < num_orows; orow += gridDim.x) {
     for (unsigned irow = blockIdx.y * blockDim.x + threadIdx.x; irow < num_irows; irow += gridDim.y * blockDim.x) {
-      float *src = src_ + orow * row_size * num_irows + irow;
-      float *tgt = tgt_ + orow * row_size * num_irows + irow;
-      float acc = init;
+      cx *src = src_ + orow * row_size * num_irows + irow;
+      cx *tgt = tgt_ + orow * row_size * num_irows + irow;
+      cx acc = init;
 
       for (unsigned col = 0; col < row_size; ++col) {
         acc = binary_op(acc, *src);
@@ -42,7 +45,7 @@ __global__ void THZCudaTensor_kernel_scanOuterDim(float *tgt_, float *src_,
 
 template<class BinaryOp>
 __host__ void THZCudaTensor_scanOuterDim(THCState *state, THZCudaTensor *tgt, THZCudaTensor *src, long dimension,
-                                        float init, BinaryOp binary_op)
+                                        cx init, BinaryOp binary_op)
 {
   unsigned ndim = THZCudaTensor_nDimension(state, src);
   // Treat all outer dimensions (i.e. dim < dimension) as one.
@@ -81,22 +84,22 @@ __host__ void THZCudaTensor_scanOuterDim(THCState *state, THZCudaTensor *tgt, TH
  * per thread block is quicker than processing a single row, especially for short rows).
  */
 template<int num_threads_x, int num_threads_y, class BinaryFunction>
-__global__ void THZCudaTensor_kernel_scanInnermostDim(float *tgt_, float *src_,
+__global__ void THZCudaTensor_kernel_scanInnermostDim(cx *tgt_, cx *src_,
                                                      unsigned num_rows, unsigned row_size,
-                                                     float init, BinaryFunction binary_op)
+                                                     cx init, BinaryFunction binary_op)
 {
-  __shared__ float sbuf[num_threads_y][2 * num_threads_x];
+  __shared__ ccx sbuf[num_threads_y][2 * num_threads_x];
 
-  float* row_buf = sbuf[threadIdx.y];
+  ccx* row_buf = sbuf[threadIdx.y];
 
   for (unsigned block_row = blockIdx.x * blockDim.y;
        block_row < num_rows;
        block_row += blockDim.y * gridDim.x) {
     unsigned row = block_row + threadIdx.y;
-    float block_total = init;
+    ccx block_total = (ccx)init;
 
-    float *row_src = src_ + row * row_size;
-    float *row_tgt = tgt_ + row * row_size;
+    ccx *row_src = (ccx*)(src_ + row * row_size);
+    ccx *row_tgt = (ccx*)(tgt_ + row * row_size);
 
     // Perform scan on one block at a time, keeping track of the total value of
     // all blocks processed so far.
@@ -154,7 +157,7 @@ __global__ void THZCudaTensor_kernel_scanInnermostDim(float *tgt_, float *src_,
 }
 
 template<class BinaryFunction>
-__host__ void THZCudaTensor_scanInnermostDim(THCState *state, THZCudaTensor *tgt, THZCudaTensor *src, float init, BinaryFunction binary_op)
+__host__ void THZCudaTensor_scanInnermostDim(THCState *state, THZCudaTensor *tgt, THZCudaTensor *src, cx init, BinaryFunction binary_op)
 {
   unsigned ndim = THZCudaTensor_nDimension(state, src);
   // Treat all outer dimensions as a single dimension.
@@ -176,7 +179,7 @@ __host__ void THZCudaTensor_scanInnermostDim(THCState *state, THZCudaTensor *tgt
 }
 
 template<class BinaryFunction>
-void THZCudaTensor_scanDim(THCState *state, THZCudaTensor *self_, THZCudaTensor *src, long dimension, float init, BinaryFunction binary_op)
+void THZCudaTensor_scanDim(THCState *state, THZCudaTensor *self_, THZCudaTensor *src, long dimension, cx init, BinaryFunction binary_op)
 {
   THZCudaTensor_resizeAs(state, self_, src);
 
@@ -196,11 +199,11 @@ void THZCudaTensor_scanDim(THCState *state, THZCudaTensor *self_, THZCudaTensor 
 void THZCudaTensor_cumsum(THCState *state, THZCudaTensor *self, THZCudaTensor *src, long dimension)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
-  return THZCudaTensor_scanDim(state, self, src, dimension, 0.0f, thrust::plus<float>());
+  return THZCudaTensor_scanDim(state, self, src, dimension, 0.0f, thrust::plus<ccx>());
 }
 
 void THZCudaTensor_cumprod(THCState *state, THZCudaTensor *self, THZCudaTensor *src, long dimension)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
-  return THZCudaTensor_scanDim(state, self, src, dimension, 1.0f, thrust::multiplies<float>());
+  return THZCudaTensor_scanDim(state, self, src, dimension, 1.0f, thrust::multiplies<ccx>());
 }

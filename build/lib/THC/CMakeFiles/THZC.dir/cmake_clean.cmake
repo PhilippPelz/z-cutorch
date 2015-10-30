@@ -8,8 +8,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMath2.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathBlas.cu.o"
-  "CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompare.cu.o"
-  "CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathCompareT.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathMagma.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPairwise.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCTensorMathPointwise.cu.o"

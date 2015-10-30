@@ -4,7 +4,7 @@
 void THZCudaTensor_copyIgnoringOverlaps(THCState* state,
                                        THZCudaTensor* dst,
                                        THZCudaTensor* src) {
-  THZCudaTensor_pointwiseApply2(state, dst, src, CopyOp<float>(),
+  THZCudaTensor_pointwiseApply2(state, dst, src, CopyOp<ccx>(),
                                ReadOnly, // ignore overwrites
                                ReadOnly);
 }

@@ -68,6 +68,7 @@ ELSE()
   SET(THZC_INSTALL_CMAKE_SUBDIR ${Torch_INSTALL_CMAKE_SUBDIR})
 ENDIF()
 
+INCLUDE_DIRECTORIES("${THZC_INSTALL_INCLUDE_SUBDIR}/THC")
 INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
 CONFIGURE_FILE(THZCGeneral.h.in "${CMAKE_CURRENT_BINARY_DIR}/THZCGeneral.h")
 
@@ -85,8 +86,6 @@ SET(src-cuda
   THZCTensorMath.cu
   THZCTensorMath2.cu
   THZCTensorMathBlas.cu
-  THZCTensorMathCompare.cu
-  THZCTensorMathCompareT.cu
   THZCTensorMathMagma.cu
   THZCTensorMathPairwise.cu
   THZCTensorMathPointwise.cu
@@ -132,4 +131,4 @@ INSTALL(FILES
           THZCDeviceTensor-inl.cuh
           THZCDeviceTensorUtils.cuh
           THZCDeviceTensorUtils-inl.cuh
-          DESTINATION "${THZC_INSTALL_INCLUDE_SUBDIR}/THZC")
+          DESTINATION "${THZC_INSTALL_INCLUDE_SUBDIR}/THC")

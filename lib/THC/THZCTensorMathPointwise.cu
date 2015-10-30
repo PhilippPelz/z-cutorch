@@ -5,14 +5,20 @@
 #include "THZCApply.cuh"
 #include "THZCReduce.cuh"
 
+#include <cusp/complex.h>
+typedef cusp::complex<float> ccx;
+
 #define IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(NAME, CFUNC)                   \
   struct Tensor##NAME##Op {                                             \
-    __device__ __forceinline__ void operator()(float* out, float* in) const { \
-      *out = CFUNC(*in);                                                \
+    __device__ __forceinline__ void operator()(cx* out, cx* in) const { \
+      ccx *o = (ccx*)out;                                               \
+      ccx *i = (ccx*)in;                                                 \
+      *o = CFUNC(*i);                                                   \
     }                                                                   \
                                                                         \
-    __device__ __forceinline__ void operator()(float* v) const {        \
-      *v = CFUNC(*v);                                                   \
+    __device__ __forceinline__ void operator()(cx* v) const {        \
+      ccx *vc = (ccx*)v;                                                    \
+      *vc = CFUNC(*vc);                                                   \
     }                                                                   \
   };                                                                    \
                                                                         \
@@ -33,51 +39,61 @@
     THZCudaCheck(cudaGetLastError());                                    \
   }
 
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(log, log)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(log1p, log1p)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(exp, exp)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(cos, cos)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(acos, acos)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(cosh, cosh)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sin, sin)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(asin, asin)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sinh, sinh)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(tan, tan)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(atan, atan)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(tanh, tanh)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sqrt, sqrt)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(ceil, ceil)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(floor, floor)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(abs, fabs)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(round, roundf)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(log, cusp::log)
+// IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(log1p, log1p)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(exp, cusp::exp)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(cos, cusp::cos)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(acos, cusp::acos)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(cosh, cusp::cosh)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sin, cusp::sin)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(asin, cusp::asin)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sinh, cusp::sinh)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(tan, cusp::tan)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(atan, cusp::atan)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(tanh, cusp::tanh)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sqrt, cusp::sqrt)
+// IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(ceil, ceil)
+// IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(floor, floor)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(abs, cusp::abs)
+// IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(round, roundf)
 
 #undef IMPLEMENT_CUDA_TENSOR_BASIC_FUNC
 
 struct TensorAddOp {
-  __device__ __forceinline__ void operator()(float* out, float* in) {
-    *out += *in;
+  __device__ __forceinline__ void operator()(cx* out, cx* in) {
+    ccx *o = (ccx*)out;
+    ccx *i = (ccx*)in;
+    *o += *i;
   }
 
-  __device__ __forceinline__ void operator()(float* out, float* in1, float* in2) {
-    *out = *in1 + *in2;
+  __device__ __forceinline__ void operator()(cx* out, cx* in1, cx* in2) {
+    ccx *o = (ccx*)out;
+    ccx *i1 = (ccx*)in1;
+    ccx *i2 = (ccx*)in2;
+    *o = *i1 + *i2;
   }
 };
 
 struct TensorCAddOp {
-  TensorCAddOp(float v) : val(v) {}
+  TensorCAddOp(ccx v) : val(v) {}
 
   __device__ __forceinline__ void operator()(float* out, float* in) {
+    ccx *o = (ccx*)out;
+    ccx *i = (ccx*)in;
     *out += val * *in;
   }
 
   __device__ __forceinline__ void operator()(float* out, float* in1, float* in2) {
+    ccx *o = (ccx*)out;
+    ccx *i1 = (ccx*)in1;
+    ccx *i2 = (ccx*)in2;
     *out = *in1 + val * *in2;
   }
 
-  float val;
+  ccx val;
 };
 
-void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* src1, float value, THZCudaTensor *src2)
+void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* src1, cx value, THZCudaTensor *src2)
 {
   THAssert(THZCudaTensor_checkGPU(state, 3, self_, src1, src2));
   THArgCheck(THZCudaTensor_nElement(state, src1) ==
@@ -91,7 +107,7 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
       }
     } else {
       // self += value * src2
-      if (!THZCudaTensor_pointwiseApply2(state, self_, src2, TensorCAddOp(value))) {
+      if (!THZCudaTensor_pointwiseApply2(state, self_, src2, TensorCAddOp((ccx)value))) {
         THArgCheck(false, 2, CUTORCH_DIM_WARNING);
       }
     }
@@ -105,7 +121,7 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
       }
     } else {
       // self = src1 + value * src2
-      if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorCAddOp(value))) {
+      if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorCAddOp((ccx)value))) {
         THArgCheck(false, 2, CUTORCH_DIM_WARNING);
       }
     }
@@ -115,12 +131,12 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
 }
 
 struct TensorMulOp {
-  __device__ __forceinline__ void operator()(float* out, float* in) {
-    *out *= *in;
+  __device__ __forceinline__ void operator()(cx* out, cx* in) {
+    *out = cuCmulf(*out,*in);
   }
 
-  __device__ __forceinline__ void operator()(float* out, float* in1, float* in2) {
-    *out = *in1 * *in2;
+  __device__ __forceinline__ void operator()(cx* out, cx* in1, cx* in2) {
+    *out = cuCmulf(*in1,*in2);
   }
 };
 
@@ -148,12 +164,17 @@ void THZCudaTensor_cmul(THCState *state, THZCudaTensor *self_, THZCudaTensor *sr
 }
 
 struct TensorMaxOp {
-  __device__ __forceinline__ void operator()(float* out, float* in) {
-    *out = max(*out, *in);
+  __device__ __forceinline__ void operator()(cx* out, cx* in) {
+    ccx *o = (ccx*)out;
+    ccx *i = (ccx*)in;
+    *o = max(cusp::abs(*o), cusp::abs(*i));
   }
 
-  __device__ __forceinline__ void operator()(float* out, float* in1, float* in2) {
-    *out = max(*in1, *in2);
+  __device__ __forceinline__ void operator()(cx* out, cx* in1, cx* in2) {
+    ccx *o = (ccx*)out;
+    ccx *i1 = (ccx*)in1;
+    ccx *i2 = (ccx*)in2;
+    *o = max(cusp::abs(*i1), cusp::abs(*i2));
   }
 };
 
@@ -177,11 +198,16 @@ void THZCudaTensor_cmax(THCState *state, THZCudaTensor *self, THZCudaTensor *src
 
 struct TensorMinOp {
   __device__ __forceinline__ void operator()(float* out, float* in) {
-    *out = min(*out, *in);
+    ccx *o = (ccx*)out;
+    ccx *i = (ccx*)in;
+    *o = min(cusp::abs(*o), cusp::abs(*i));
   }
 
   __device__ __forceinline__ void operator()(float* out, float* in1, float* in2) {
-    *out = min(*in1, *in2);
+    ccx *o = (ccx*)out;
+    ccx *i1 = (ccx*)in1;
+    ccx *i2 = (ccx*)in2;
+    *o = min(cusp::abs(*i1), cusp::abs(*i2));
   }
 };
 
@@ -198,66 +224,6 @@ void THZCudaTensor_cmin(THCState *state, THZCudaTensor *self, THZCudaTensor *src
   } else {
     THZCudaTensor_resizeAs(state, self, src1);
     if (!THZCudaTensor_pointwiseApply3(state, self, src1, src2, TensorMinOp())) {
-      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
-    }
-  }
-}
-
-struct TensorMaxValueOp {
-  TensorMaxValueOp(float v) : val(v) {}
-
-  __device__ __forceinline__ void operator()(float* out) {
-    *out = max(*out, val);
-  }
-
-  __device__ __forceinline__ void operator()(float* out, float* in) {
-    *out = max(*in, val);
-  }
-
-  float val;
-};
-
-void THZCudaTensor_cmaxValue(THCState *state, THZCudaTensor *self, THZCudaTensor *src, float value)
-{
-  THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
-
-  if (self == src) {
-    if (!THZCudaTensor_pointwiseApply1(state, self, TensorMaxValueOp(value))) {
-      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
-    }
-  } else {
-    THZCudaTensor_resizeAs(state, self, src);
-    if (!THZCudaTensor_pointwiseApply2(state, self, src, TensorMaxValueOp(value))) {
-      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
-    }
-  }
-}
-
-struct TensorMinValueOp {
-  TensorMinValueOp(float v) : val(v) {}
-
-  __device__ __forceinline__ void operator()(float* out) {
-    *out = min(*out, val);
-  }
-
-  __device__ __forceinline__ void operator()(float* out, float* in) {
-    *out = min(*in, val);
-  }
-
-  float val;
-};
-
-void THZCudaTensor_cminValue(THCState *state, THZCudaTensor *self, THZCudaTensor *src, float value)
-{
-  THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
-
-  if (self == src) {
-    if (!THZCudaTensor_pointwiseApply1(state, self, TensorMinValueOp(value))) {
-      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
-    }
-  } else {
-    THZCudaTensor_resizeAs(state, self, src);
-    if (!THZCudaTensor_pointwiseApply2(state, self, src, TensorMinValueOp(value))) {
       THArgCheck(false, 2, CUTORCH_DIM_WARNING);
     }
   }

@@ -21,23 +21,23 @@ void THZCMagma_init(THCState *state)
 }
 
 #ifdef USE_MAGMA
-static inline cx* th_magma_cmalloc_pinned(size_t n)
+static inline cux* th_magma_cmalloc_pinned(size_t n)
 {
-  cx* ptr;
+  cux* ptr;
   if (MAGMA_SUCCESS != magma_cmalloc_pinned(&ptr, n))
     THError("$ Torch: not enough memory: you tried to allocate %dGB. Buy new RAM!", 2*n/268435456);
   return ptr;
 }
-static inline cx* th_magma_smalloc_pinned(size_t n)
+static inline cux* th_magma_smalloc_pinned(size_t n)
 {
-  cx* ptr;
+  cux* ptr;
   if (MAGMA_SUCCESS != magma_smalloc_pinned(&ptr, n))
     THError("$ Torch: not enough memory: you tried to allocate %dGB. Buy new RAM!", n/268435456);
   return ptr;
 }
-static inline cx* th_magma_dmalloc_pinned(size_t n)
+static inline cux* th_magma_dmalloc_pinned(size_t n)
 {
-  cx* ptr;
+  cux* ptr;
   if (MAGMA_SUCCESS != magma_dmalloc_pinned(&ptr, n))
     THError("$ Torch: not enough memory: you tried to allocate %dGB. Buy new RAM!", 2*n/268435456);
   return ptr;
@@ -50,28 +50,28 @@ static inline int* th_magma_imalloc_pinned(size_t n)
   return ptr;
 }
 
-static void THZCudaTensor_copyArray1d(THCState *state, THZCudaTensor *self, cx *src, int k)
+static void THZCudaTensor_copyArray1d(THCState *state, THZCudaTensor *self, cux *src, int k)
 {
   long size[1] = { k };
   long stride[1] = { 1 };
   THZCudaTensor_rawResize(state, self, 1, size, stride);
-  size_t len = k * sizeof(cx);
+  size_t len = k * sizeof(cux);
   THZCudaCheck(cudaMemcpy(self->storage->data + self->storageOffset, src, len, cudaMemcpyHostToDevice));
 }
 
-static void THZCudaTensor_copyArray2d(THCState *state, THZCudaTensor *self, cx *src, int m, int n)
+static void THZCudaTensor_copyArray2d(THCState *state, THZCudaTensor *self, cux *src, int m, int n)
 {
   long size[2] = { m, n };
   long stride[2] = { 1, m };
   THZCudaTensor_rawResize(state, self, 2, size, stride);
-  size_t len = m * n * sizeof(cx);
+  size_t len = m * n * sizeof(cux);
   THZCudaCheck(cudaMemcpy(self->storage->data + self->storageOffset, src, len, cudaMemcpyHostToDevice));
 }
 
-static void THZCudaTensor_copyTensor2d(THCState *state, cx *dst, THZCudaTensor *self)
+static void THZCudaTensor_copyTensor2d(THCState *state, cux *dst, THZCudaTensor *self)
 {
   THAssert(self->nDimension == 2);
-  size_t len = THZCudaTensor_nElement(state, self)*sizeof(cx);
+  size_t len = THZCudaTensor_nElement(state, self)*sizeof(cux);
   THZCudaTensor *temp = THZCudaTensor_newTranspose(state, self, 0, 1);
   THZCudaTensor *selfc = THZCudaTensor_newContiguous(state, temp);
   THZCudaCheck(cudaMemcpy(dst, selfc->storage->data + selfc->storageOffset, len, cudaMemcpyDeviceToHost));
@@ -115,13 +115,13 @@ void THZCudaTensor_gesv(THCState *state, THZCudaTensor *rb_, THZCudaTensor *ra_,
 
   THZCudaTensor *a = THZCudaTensor_newColumnMajor(state, ra_, a_);
   THZCudaTensor *b = THZCudaTensor_newColumnMajor(state, rb_, b_);
-  cx *a_data = THZCudaTensor_data(state, a);
-  cx *b_data = THZCudaTensor_data(state, b);
+  cux *a_data = THZCudaTensor_data(state, a);
+  cux *b_data = THZCudaTensor_data(state, b);
 
   int *ipiv = th_magma_imalloc_pinned(n);
 
   int info;
-  magma_sgesv_gpu(n, nrhs, a_data, n, ipiv, b_data, n, &info);
+  magma_cgesv_gpu(n, nrhs, a_data, n, ipiv, b_data, n, &info);
 
   if (info < 0)
     THError("MAGMA gesv : Argument %d : illegal value", -info);
@@ -146,8 +146,8 @@ void THZCudaTensor_gels(THCState *state, THZCudaTensor *rb_, THZCudaTensor *ra_,
 
   THZCudaTensor *a = THZCudaTensor_newColumnMajor(state, ra_, a_);
   THZCudaTensor *b = THZCudaTensor_newColumnMajor(state, rb_, b_);
-  cx *a_data = THZCudaTensor_data(state, a);
-  cx *b_data = THZCudaTensor_data(state, b);
+  cux *a_data = THZCudaTensor_data(state, a);
+  cux *b_data = THZCudaTensor_data(state, b);
 
   int m = a->size[0];
   int n = a->size[1];
@@ -157,7 +157,7 @@ void THZCudaTensor_gels(THCState *state, THZCudaTensor *rb_, THZCudaTensor *ra_,
   int info;
   magma_cgels_gpu(MagmaNoTrans, m, n, nrhs, a_data, m, b_data, m, &wkopt, -1, &info);
 
-  cx *hwork = th_magma_cmalloc_pinned((size_t)wkopt);
+  cux *hwork = th_magma_cmalloc_pinned((size_t)wkopt);
   magma_cgels_gpu(MagmaNoTrans, m, n, nrhs, a_data, m, b_data, m, hwork, (int)wkopt, &info);
   magma_free_pinned(hwork);
 
@@ -181,19 +181,19 @@ void THZCudaTensor_cheev(THCState *state, THZCudaTensor *re_, THZCudaTensor *rv_
   magma_vec_t jobz = jobzs[0] == 'N' ? MagmaNoVec : MagmaVec;
 
   THZCudaTensor *input = THZCudaTensor_newColumnMajor(state, rv_, a);
-  cx *input_data = THZCudaTensor_data(state, input);
+  cux *input_data = THZCudaTensor_data(state, input);
 
   // eigen values and workspace
   float *w = th_magma_smalloc_pinned(n);
-  cx *wA = th_magma_cmalloc_pinned(lda);
+  cux *wA = th_magma_cmalloc_pinned(lda);
 
   // compute optimal size of work array
   int info;
-  cx lwork;
+  cux lwork;
   int liwork;
   magma_cheevd_gpu(jobz, uplo, n, input_data, lda, w, wA, n, &lwork, -1, &liwork, -1, &info);
 
-  cx *work = th_magma_cmalloc_pinned((size_t)lwork);
+  cux *work = th_magma_cmalloc_pinned((size_t)lwork);
   int *iwork = th_magma_imalloc_pinned(liwork);
 
   // compute eigenvalues and, optionally, eigenvectors
@@ -229,12 +229,12 @@ void THZCudaTensor_geev(THCState *state, THZCudaTensor *re_, THZCudaTensor *rv_,
   magma_vec_t jobvr = jobvrs[0] == 'N' ? MagmaNoVec : MagmaVec;
   int n = a_->size[0];
 
-  cx *a_data = th_magma_cmalloc_pinned(n * n);
+  cux *a_data = th_magma_cmalloc_pinned(n * n);
   THZCudaTensor_copyTensor2d(state, a_data, a_);
 
-  cx *w = th_magma_cmalloc_pinned(n);
+  cux *w = th_magma_cmalloc_pinned(n);
 
-  cx *vr_data = NULL;
+  cux *vr_data = NULL;
   int ldvr = 1;
   if (jobvr == MagmaVec)
   {
@@ -248,7 +248,7 @@ void THZCudaTensor_geev(THCState *state, THZCudaTensor *re_, THZCudaTensor *rv_,
   magma_cgeev(MagmaNoVec, jobvr, n, a_data, n, w, NULL, 1, vr_data, ldvr, &wkopt, -1, &info);
 
   int lwork = (int) wkopt;
-  cx *work_data = th_magma_cmalloc_pinned(lwork);
+  cux *work_data = th_magma_cmalloc_pinned(lwork);
   float *rwork = th_magma_cmalloc_pinned(2*n);
 
   magma_cgeev(MagmaNoVec, jobvr, n, a_data, n, w, NULL, 1, vr_data, ldvr, work_data, lwork,rwork, &info);
@@ -261,8 +261,8 @@ void THZCudaTensor_geev(THCState *state, THZCudaTensor *re_, THZCudaTensor *rv_,
   {
     THZCudaTensor_resize2d(state, re_, 2, n);
     THZCudaTensor *re = THZCudaTensor_newContiguous(state, re_);
-    THZCudaCheck(cudaMemcpy(re->storage->data + re->storageOffset, wr, n*sizeof(cx), cudaMemcpyHostToDevice));
-    THZCudaCheck(cudaMemcpy(re->storage->data + re->storageOffset + n, wi, n*sizeof(cx), cudaMemcpyHostToDevice));
+    THZCudaCheck(cudaMemcpy(re->storage->data + re->storageOffset, wr, n*sizeof(cux), cudaMemcpyHostToDevice));
+    THZCudaCheck(cudaMemcpy(re->storage->data + re->storageOffset + n, wi, n*sizeof(cux), cudaMemcpyHostToDevice));
     THZCudaTensor_freeCopyTo(state, re, re_);
     THZCudaTensor_transpose(state, re_, NULL, 0, 1);
   }
@@ -305,19 +305,19 @@ void THZCudaTensor_gesvd2(THCState *state, THZCudaTensor *ru_, THZCudaTensor *rs
   int k = m < n ? m : n;
   int j = (jobu == MagmaAllVec) ? m : k;
 
-  cx *a_data = th_magma_cmalloc_pinned(m * n);
+  cux *a_data = th_magma_cmalloc_pinned(m * n);
   THZCudaTensor_copyTensor2d(state, a_data, a);
 
   float *rs_data = th_magma_smalloc_pinned(k);
-  cx *ru_data = th_magma_cmalloc_pinned(m * j);
-  cx *rv_data = th_magma_cmalloc_pinned(n * n);
+  cux *ru_data = th_magma_cmalloc_pinned(m * j);
+  cux *rv_data = th_magma_cmalloc_pinned(n * n);
 
   float wkopt, tmp;
   int info;
   magma_cgesvd(jobu, jobvt, m, n, a_data, m, rs_data, ru_data, m, rv_data, n, &wkopt, -1,&tmp, &info);
 
   int lwork = (int) wkopt;
-  cx *work_data = th_magma_cmalloc_pinned(lwork);
+  cux *work_data = th_magma_cmalloc_pinned(lwork);
   float* rwork = th_magma_smalloc_pinned(5*k);
 
   magma_sgesvd(jobu, jobvt, m, n, a_data, m, rs_data, ru_data, m, rv_data, n, work_data, lwork,rwork, &info);
@@ -355,12 +355,12 @@ void THZCudaTensor_getri(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a)
   int lwork = n * magma_get_sgetri_nb(n);
 
   THZCudaTensor *input = THZCudaTensor_newColumnMajor(state, ra_, a);
-  cx *input_data = THZCudaTensor_data(state, input);
+  cux *input_data = THZCudaTensor_data(state, input);
 
   int *ipiv = th_magma_imalloc_pinned(n);
 
   THZCudaTensor *work = THZCudaTensor_newWithSize1d(state, lwork);
-  cx *work_data = THZCudaTensor_data(state, work);
+  cux *work_data = THZCudaTensor_data(state, work);
 
   // Run LU
   magma_cgetrf_gpu(n, n, input_data, n, ipiv, &info);
@@ -384,7 +384,7 @@ void THZCudaTensor_getri(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a)
 #endif
 }
 
-__global__ void THZCudaTensor_copyUpperSymmetric(cx *input, int n, int len)
+__global__ void THZCudaTensor_copyUpperSymmetric(cux *input, int n, int len)
 {
   for (int idx = threadIdx.x + blockIdx.x * blockDim.x; idx < len; idx += 65535) {
     const int r = idx % n;
@@ -404,7 +404,7 @@ void THZCudaTensor_potri(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a)
   int n = a->size[0];
 
   THZCudaTensor *input = THZCudaTensor_newColumnMajor(state, ra_, a);
-  cx *input_data = THZCudaTensor_data(state, input);
+  cux *input_data = THZCudaTensor_data(state, input);
 
   int info;
   magma_cpotrf_gpu(MagmaUpper, n, input_data, n, &info);
@@ -440,7 +440,7 @@ void THZCudaTensor_potrf(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a)
   int n = a->size[0];
 
   THZCudaTensor *input = THZCudaTensor_newColumnMajor(state, ra_, a);
-  cx *input_data = THZCudaTensor_data(state, input);
+  cux *input_data = THZCudaTensor_data(state, input);
 
   int info;
   magma_cpotrf_gpu(MagmaUpper, n, input_data, n, &info);
@@ -469,11 +469,11 @@ void THZCudaTensor_qr(THCState *state, THZCudaTensor *rq_, THZCudaTensor *rr_, T
   int k = (m < n ? m : n);
   int nb = magma_get_cgeqrf_nb(m);
 
-  cx *a_data = THZCudaTensor_data(state, a);
-  cx *tau_data = th_magma_cmalloc_pinned(n*n);
+  cux *a_data = THZCudaTensor_data(state, a);
+  cux *tau_data = th_magma_cmalloc_pinned(n*n);
 
   THZCudaTensor *work = THZCudaTensor_newWithSize1d(state, (2*k + ((n+31)/32)*32)*nb);
-  cx *work_data = THZCudaTensor_data(state, work);
+  cux *work_data = THZCudaTensor_data(state, work);
 
   int info;
   magma_cgeqrf_gpu(m, n, a_data, m, tau_data, work_data, &info);
@@ -482,7 +482,7 @@ void THZCudaTensor_qr(THCState *state, THZCudaTensor *rq_, THZCudaTensor *rr_, T
     THError("MAGMA geqrf : Argument %d : illegal value.", -info);
 
   THZCudaTensor *q = THZCudaTensor_newColumnMajor(state, rq_, a);
-  cx *q_data = THZCudaTensor_data(state, q);
+  cux *q_data = THZCudaTensor_data(state, q);
 
   THZCudaTensor_narrow(state, a, a, 0, 0, k);
   THZCudaTensor_triu(state, rr_, a, 0);

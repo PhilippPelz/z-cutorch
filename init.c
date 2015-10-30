@@ -2,10 +2,10 @@
 #include "luaT.h"
 #include "THZCGeneral.h"
 
-extern void cutorch_ZCudaStorage_init(lua_State* L);
-extern void cutorch_ZCudaTensor_init(lua_State* L);
-extern void cutorch_ZCudaTensorMath_init(lua_State* L);
-extern void cutorch_ZCudaTensorOperator_init(lua_State* L);
+extern void zcutorch_ZCudaStorage_init(lua_State* L);
+extern void zcutorch_ZCudaTensor_init(lua_State* L);
+extern void zcutorch_ZCudaTensorMath_init(lua_State* L);
+extern void zcutorch_ZCudaTensorOperator_init(lua_State* L);
 
 /*
    Iteration utilities for lists of streams and lists of gpus with streams

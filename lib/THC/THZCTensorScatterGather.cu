@@ -293,7 +293,7 @@ template <typename IndexType, int Dims>
 __global__ void THZCudaTensor_scatterFillKernel(
     TensorInfo<IndexType> tensor,
     TensorInfo<IndexType> index,
-    float value,
+    ccx value,
     const int dim,
     const IndexType totalElements) {
   for (IndexType linearId = blockIdx.x * blockDim.x + threadIdx.x;
@@ -316,9 +316,9 @@ __global__ void THZCudaTensor_scatterFillKernel(
 #define RUN(TYPE, DIMS)                                            \
   THZCudaTensor_scatterFillKernel<TYPE, DIMS>                       \
       <<<grid, block, 0, THCState_getCurrentStream(state)>>>(      \
-          tensorInfo, indexInfo, value, dim, (TYPE)totalElements);
+          tensorInfo, indexInfo, (ccx)value, dim, (TYPE)totalElements);
 
-void THZCudaTensor_scatterFill(THCState* state, THZCudaTensor *tensor, int dim, THZCudaTensor *index, float value) {
+void THZCudaTensor_scatterFill(THCState* state, THZCudaTensor *tensor, int dim, THZCudaTensor *index, cx value) {
   THAssert(THZCudaTensor_checkGPU(state, 2, tensor, index));
 
   THArgCheck(dim >= 0 && dim < THZCudaTensor_nDimension(state, tensor), 2,

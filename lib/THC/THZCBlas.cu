@@ -1,8 +1,13 @@
+#include <cuComplex.h>
+#define cx float complex
+typedef cuComplex cux;
+
 #include "THZCBlas.h"
 #include "THZCGeneral.h"
-#include "cuComplex.h"
+#include "complex.h"
 
-void THZCudaBlas_swap(THCState *state, long n, cuComplex *x, long incx,  cuComplex  *y, long incy)
+
+void THZCudaBlas_swap(THCState *state, long n, cx *x, long incx,  cx  *y, long incy)
 {
   if(n == 1)
   {
@@ -15,14 +20,14 @@ void THZCudaBlas_swap(THCState *state, long n, cuComplex *x, long incx,  cuCompl
     int i_n = (int)n;
     int i_incx = (int)incx;
     int i_incy = (int)incy;
-    THZCublasCheck(cublasCswap(THCState_getCurrentBlasHandle(state), i_n, (cuComplex*)x, i_incx, (cuComplex*)y, i_incy));
+    THZCublasCheck(cublasCswap(THCState_getCurrentBlasHandle(state), i_n, (cux*)x, i_incx, (cux*)y, i_incy));
     return;
   }
   THError("Cublas_swap only supports n, incx and"
           " incy upto signed integer limits: %d", INT_MAX);
 }
 
-void THZCudaBlas_scal(THCState *state, long n,  cuComplex  a,  cuComplex  *x, long incx)
+void THZCudaBlas_scal(THCState *state, long n,  cx  a,  cx  *x, long incx)
 {
   if(n == 1)
     incx = 1;
@@ -31,14 +36,14 @@ void THZCudaBlas_scal(THCState *state, long n,  cuComplex  a,  cuComplex  *x, lo
   {
     int i_n = (int)n;
     int i_incx = (int)incx;
-    THZCublasCheck(cublasCscal(THCState_getCurrentBlasHandle(state), i_n, (cuComplex*)&a, (cuComplex*)x, i_incx));
+    THZCublasCheck(cublasCscal(THCState_getCurrentBlasHandle(state), i_n, (cux*)&a, (cux*)x, i_incx));
     return;
   }
   THError("Cublas_scal only supports n and incx "
           "upto signed integer limits: %d", INT_MAX);
 }
 
-void THZCudaBlas_copy(THCState *state, long n,  cuComplex  *x, long incx,  cuComplex  *y, long incy)
+void THZCudaBlas_copy(THCState *state, long n,  cx  *x, long incx,  cx  *y, long incy)
 {
   if(n == 1)
   {
@@ -51,7 +56,7 @@ void THZCudaBlas_copy(THCState *state, long n,  cuComplex  *x, long incx,  cuCom
     int i_n = (int)n;
     int i_incx = (int)incx;
     int i_incy = (int)incy;
-    THZCublasCheck(cublasCcopy(THCState_getCurrentBlasHandle(state), i_n, (cuComplex*)x, i_incx, (cuComplex*)y, i_incy));
+    THZCublasCheck(cublasCcopy(THCState_getCurrentBlasHandle(state), i_n, (cux*)x, i_incx, (cux*)y, i_incy));
     return;
   }
 
@@ -59,7 +64,7 @@ void THZCudaBlas_copy(THCState *state, long n,  cuComplex  *x, long incx,  cuCom
           "upto signed integer limits: %d", INT_MAX);
 }
 
-void THZCudaBlas_axpy(THCState *state, long n,  cuComplex  a,  cuComplex  *x, long incx,  cuComplex  *y, long incy)
+void THZCudaBlas_axpy(THCState *state, long n,  cx  a,  cx  *x, long incx,  cx  *y, long incy)
 {
     if(n == 1)
   {
@@ -72,7 +77,7 @@ void THZCudaBlas_axpy(THCState *state, long n,  cuComplex  a,  cuComplex  *x, lo
     int i_n = (int)n;
     int i_incx = (int)incx;
     int i_incy = (int)incy;
-    THZCublasCheck(cublasCaxpy(THCState_getCurrentBlasHandle(state), i_n, (cuComplex*)&a, (cuComplex*)x, i_incx, (cuComplex*)y, i_incy));
+    THZCublasCheck(cublasCaxpy(THCState_getCurrentBlasHandle(state), i_n, (cux*)&a, (cux*)x, i_incx, (cux*)y, i_incy));
     return;
   }
 
@@ -80,7 +85,7 @@ void THZCudaBlas_axpy(THCState *state, long n,  cuComplex  a,  cuComplex  *x, lo
           "upto signed integer limits: %d", INT_MAX);
 }
 
- cuComplex  THZCudaBlas_dot(THCState *state, long n,  cuComplex  *x, long incx,  cuComplex  *y, long incy)
+cx  THZCudaBlas_dot(THCState *state, long n, cx *x, long incx, cx *y, long incy)
 {
   if(n == 1)
   {
@@ -93,10 +98,11 @@ void THZCudaBlas_axpy(THCState *state, long n,  cuComplex  a,  cuComplex  *x, lo
     int i_n = (int)n;
     int i_incx = (int)incx;
     int i_incy = (int)incy;
-     cuComplex  result;
-    THZCublasCheck(cublasCdotu(THCState_getCurrentBlasHandle(state), i_n, (cuComplex*)x, i_incx, (cuComplex*)y, i_incy, &result));
+    cuComplex result;
+    THZCublasCheck(cublasCdotu(THCState_getCurrentBlasHandle(state), i_n, (cux*)x, i_incx, (cux*)y, i_incy, &result));
     cudaDeviceSynchronize();
-    return result;
+    cx tmp = cuCrealf(result) + cuCimagf(result) * I;
+    return tmp;
   }
   THError("Cublas_dot only supports n, incx and incy "
           "upto signed integer limits: %d", INT_MAX);
@@ -104,7 +110,7 @@ void THZCudaBlas_axpy(THCState *state, long n,  cuComplex  a,  cuComplex  *x, lo
 }
 
 /* Level 2 */
-void THZCudaBlas_gemv(THCState *state, char trans, long m, long n,  cuComplex  alpha,  cuComplex  *a, long lda,  cuComplex  *x, long incx,  cuComplex  beta,  cuComplex  *y, long incy)
+void THZCudaBlas_gemv(THCState *state, char trans, long m, long n,  cx  alpha,  cx  *a, long lda,  cx  *x, long incx,  cx  beta,  cx  *y, long incy)
 {
   if(n == 1)
     lda = m;
@@ -125,14 +131,14 @@ void THZCudaBlas_gemv(THCState *state, char trans, long m, long n,  cuComplex  a
     int i_incx = (int)incx;
     int i_incy = (int)incy;
 
-    THZCublasCheck(cublasCgemv(THCState_getCurrentBlasHandle(state), op, i_m, i_n, (cuComplex*)&alpha, (cuComplex*)a, i_lda, (cuComplex*)x, i_incx, (cuComplex*)&beta, (cuComplex*)y, i_incy));
+    THZCublasCheck(cublasCgemv(THCState_getCurrentBlasHandle(state), op, i_m, i_n, (cux*)&alpha, (cux*)a, i_lda, (cux*)x, i_incx, (cux*)&beta, (cux*)y, i_incy));
     return;
   }
   THError("Cublas_gemv only supports m, n, lda, incx, incy"
           "in the range 0 < [val] <= %d", INT_MAX);
 }
 
-void THZCudaBlas_ger(THCState *state, long m, long n,  cuComplex  alpha,  cuComplex  *x, long incx,  cuComplex  *y, long incy,  cuComplex  *a, long lda)
+void THZCudaBlas_ger(THCState *state, long m, long n,  cx  alpha,  cx  *x, long incx,  cx  *y, long incy,  cx  *a, long lda)
 {
   if(n == 1)
     lda = m;
@@ -145,7 +151,7 @@ void THZCudaBlas_ger(THCState *state, long m, long n,  cuComplex  alpha,  cuComp
       int i_incx = (int)incx;
       int i_incy = (int)incy;
 
-      THZCublasCheck(cublasCgeru(THCState_getCurrentBlasHandle(state), i_m, i_n, (cuComplex*)&alpha, (cuComplex*)x, i_incx, (cuComplex*)y, i_incy, (cuComplex*)a, i_lda));
+      THZCublasCheck(cublasCgeru(THCState_getCurrentBlasHandle(state), i_m, i_n, (cux*)&alpha, (cux*)x, i_incx, (cux*)y, i_incy, (cux*)a, i_lda));
       return;
     }
   THError("Cublas_ger only supports m, n, lda, incx, incy"
@@ -194,7 +200,7 @@ void adjustLd(char transa, char transb, long m, long n, long k, long *lda, long 
 }
 
 /* Level 3 */
-void THZCudaBlas_gemm(THCState *state, char transa, char transb, long m, long n, long k,  cuComplex  alpha,  cuComplex  *a, long lda,  cuComplex  *b, long ldb,  cuComplex  beta,  cuComplex  *c, long ldc)
+void THZCudaBlas_gemm(THCState *state, char transa, char transb, long m, long n, long k,  cx  alpha,  cx  *a, long lda,  cx  *b, long ldb,  cx  beta,  cx  *c, long ldc)
 {
   adjustLd(transa, transb, m, n, k, &lda, &ldb, &ldc);
   cublasOperation_t opa = convertTransToCublasOperation(transa);
@@ -209,7 +215,7 @@ void THZCudaBlas_gemm(THCState *state, char transa, char transb, long m, long n,
     int i_ldb = (int)ldb;
     int i_ldc = (int)ldc;
 
-    THZCublasCheck(cublasCgemm(THCState_getCurrentBlasHandle(state), opa, opb, i_m, i_n, i_k, (cuComplex*)&alpha, (cuComplex*)a, i_lda, (cuComplex*)b, i_ldb, (cuComplex*)&beta, (cuComplex*)c, i_ldc));
+    THZCublasCheck(cublasCgemm(THCState_getCurrentBlasHandle(state), opa, opb, i_m, i_n, i_k, (cux*)&alpha, (cux*)a, i_lda, (cux*)b, i_ldb, (cux*)&beta, (cux*)c, i_ldc));
     return;
   }
   THError("Cublas_gemm only supports m, n, k, lda, ldb, ldc"
@@ -217,8 +223,8 @@ void THZCudaBlas_gemm(THCState *state, char transa, char transb, long m, long n,
 }
 
 void THZCudaBlas_gemmBatched(THCState *state, char transa, char transb, long m, long n, long k,
-                             cuComplex  alpha, const  cuComplex  *a[], long lda, const  cuComplex  *b[], long ldb,
-                             cuComplex * beta, cuComplex  *c[], long ldc, long batchCount)
+                             cx  alpha, const  cx  *a[], long lda, const  cx  *b[], long ldb,
+                             cx * beta, cx  *c[], long ldc, long batchCount)
 {
   if( (m >= INT_MAX) || (n >= INT_MAX) || (k >= INT_MAX) || (lda >= INT_MAX)  || (ldb >= INT_MAX) || (ldc >= INT_MAX) || (batchCount >= INT_MAX) )
   {
@@ -232,6 +238,6 @@ void THZCudaBlas_gemmBatched(THCState *state, char transa, char transb, long m, 
 
   THZCublasCheck(cublasCgemmBatched(THCState_getCurrentBlasHandle(state),
                                    opa, opb, (int)m, (int)n, (int)k,
-                                   (cuComplex*)&alpha, (const cuComplex**)a, (int)lda, (const cuComplex**)b, (int)ldb, (cuComplex*)&beta, (const cuComplex**)c, (int)ldc,
+                                   (const cux*)&alpha, (const cux**)a, (int)lda, (const cux**)b, (int)ldb, (const cux*)&beta, (cux**)c, (int)ldc,
                                    (int)batchCount));
 }

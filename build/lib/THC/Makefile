@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/philipp/projects/zcutorch
+CMAKE_SOURCE_DIR = /home/philipp/projects/distro/extra/z-cutorch
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/philipp/projects/zcutorch/build
+CMAKE_BINARY_DIR = /home/philipp/projects/distro/extra/z-cutorch/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -114,14 +114,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/philipp/projects/zcutorch/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/philipp/projects/zcutorch/build/CMakeFiles /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/progress.marks
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/philipp/projects/zcutorch/build/CMakeFiles 0
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles /home/philipp/projects/distro/extra/z-cutorch/build/lib/THC/CMakeFiles/progress.marks
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/clean
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/clean
 .PHONY : clean
 
 # The main clean target
@@ -130,22 +130,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/preinstall
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/preinstall
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/philipp/projects/zcutorch/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 lib/THC/CMakeFiles/THZC.dir/rule:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/CMakeFiles/THZC.dir/rule
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f CMakeFiles/Makefile2 lib/THC/CMakeFiles/THZC.dir/rule
 .PHONY : lib/THC/CMakeFiles/THZC.dir/rule
 
 # Convenience name for target.
@@ -154,7 +154,7 @@ THZC: lib/THC/CMakeFiles/THZC.dir/rule
 
 # fast build rule for target.
 THZC/fast:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/build
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/build
 .PHONY : THZC/fast
 
 THZCAllocator.o: THZCAllocator.c.o
@@ -162,7 +162,7 @@ THZCAllocator.o: THZCAllocator.c.o
 
 # target to build an object file
 THZCAllocator.c.o:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o
 .PHONY : THZCAllocator.c.o
 
 THZCAllocator.i: THZCAllocator.c.i
@@ -170,7 +170,7 @@ THZCAllocator.i: THZCAllocator.c.i
 
 # target to preprocess a source file
 THZCAllocator.c.i:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.i
 .PHONY : THZCAllocator.c.i
 
 THZCAllocator.s: THZCAllocator.c.s
@@ -178,7 +178,7 @@ THZCAllocator.s: THZCAllocator.c.s
 
 # target to generate assembly for a file
 THZCAllocator.c.s:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.s
 .PHONY : THZCAllocator.c.s
 
 THZCGeneral.o: THZCGeneral.c.o
@@ -186,7 +186,7 @@ THZCGeneral.o: THZCGeneral.c.o
 
 # target to build an object file
 THZCGeneral.c.o:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o
 .PHONY : THZCGeneral.c.o
 
 THZCGeneral.i: THZCGeneral.c.i
@@ -194,7 +194,7 @@ THZCGeneral.i: THZCGeneral.c.i
 
 # target to preprocess a source file
 THZCGeneral.c.i:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.i
 .PHONY : THZCGeneral.c.i
 
 THZCGeneral.s: THZCGeneral.c.s
@@ -202,7 +202,7 @@ THZCGeneral.s: THZCGeneral.c.s
 
 # target to generate assembly for a file
 THZCGeneral.c.s:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.s
 .PHONY : THZCGeneral.c.s
 
 THZCStorage.o: THZCStorage.c.o
@@ -210,7 +210,7 @@ THZCStorage.o: THZCStorage.c.o
 
 # target to build an object file
 THZCStorage.c.o:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o
 .PHONY : THZCStorage.c.o
 
 THZCStorage.i: THZCStorage.c.i
@@ -218,7 +218,7 @@ THZCStorage.i: THZCStorage.c.i
 
 # target to preprocess a source file
 THZCStorage.c.i:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.i
 .PHONY : THZCStorage.c.i
 
 THZCStorage.s: THZCStorage.c.s
@@ -226,7 +226,7 @@ THZCStorage.s: THZCStorage.c.s
 
 # target to generate assembly for a file
 THZCStorage.c.s:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.s
 .PHONY : THZCStorage.c.s
 
 THZCStorageCopy.o: THZCStorageCopy.c.o
@@ -234,7 +234,7 @@ THZCStorageCopy.o: THZCStorageCopy.c.o
 
 # target to build an object file
 THZCStorageCopy.c.o:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o
 .PHONY : THZCStorageCopy.c.o
 
 THZCStorageCopy.i: THZCStorageCopy.c.i
@@ -242,7 +242,7 @@ THZCStorageCopy.i: THZCStorageCopy.c.i
 
 # target to preprocess a source file
 THZCStorageCopy.c.i:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.i
 .PHONY : THZCStorageCopy.c.i
 
 THZCStorageCopy.s: THZCStorageCopy.c.s
@@ -250,7 +250,7 @@ THZCStorageCopy.s: THZCStorageCopy.c.s
 
 # target to generate assembly for a file
 THZCStorageCopy.c.s:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.s
 .PHONY : THZCStorageCopy.c.s
 
 THZCTensor.o: THZCTensor.c.o
@@ -258,7 +258,7 @@ THZCTensor.o: THZCTensor.c.o
 
 # target to build an object file
 THZCTensor.c.o:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o
 .PHONY : THZCTensor.c.o
 
 THZCTensor.i: THZCTensor.c.i
@@ -266,7 +266,7 @@ THZCTensor.i: THZCTensor.c.i
 
 # target to preprocess a source file
 THZCTensor.c.i:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.i
 .PHONY : THZCTensor.c.i
 
 THZCTensor.s: THZCTensor.c.s
@@ -274,7 +274,7 @@ THZCTensor.s: THZCTensor.c.s
 
 # target to generate assembly for a file
 THZCTensor.c.s:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.s
 .PHONY : THZCTensor.c.s
 
 THZCTensorCopy.o: THZCTensorCopy.c.o
@@ -282,7 +282,7 @@ THZCTensorCopy.o: THZCTensorCopy.c.o
 
 # target to build an object file
 THZCTensorCopy.c.o:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o
 .PHONY : THZCTensorCopy.c.o
 
 THZCTensorCopy.i: THZCTensorCopy.c.i
@@ -290,7 +290,7 @@ THZCTensorCopy.i: THZCTensorCopy.c.i
 
 # target to preprocess a source file
 THZCTensorCopy.c.i:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.i
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.i
 .PHONY : THZCTensorCopy.c.i
 
 THZCTensorCopy.s: THZCTensorCopy.c.s
@@ -298,7 +298,7 @@ THZCTensorCopy.s: THZCTensorCopy.c.s
 
 # target to generate assembly for a file
 THZCTensorCopy.c.s:
-	cd /home/philipp/projects/zcutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.s
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(MAKE) -f lib/THC/CMakeFiles/THZC.dir/build.make lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.s
 .PHONY : THZCTensorCopy.c.s
 
 # Help Target
@@ -343,6 +343,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/philipp/projects/zcutorch/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

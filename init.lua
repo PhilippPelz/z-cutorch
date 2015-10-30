@@ -26,7 +26,7 @@ end
 
 -- Creates a FloatTensor using the CudaHostAllocator.
 -- Accepts either a LongStorage or a sequence of numbers.
-function zcutorch.createCudaHostTensor(...)
+function zcutorch.createZCudaHostTensor(...)
    local size
    if not ... then
       size = torch.LongTensor{0}

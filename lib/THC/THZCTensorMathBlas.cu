@@ -6,7 +6,9 @@
 #include "THZCApply.cuh"
 #include "THZCReduce.cuh"
 
-float THZCudaTensor_dot(THCState *state, THZCudaTensor *self, THZCudaTensor *src)
+
+
+cx THZCudaTensor_dot(THCState *state, THZCudaTensor *self, THZCudaTensor *src)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
   THArgCheck(THZCudaTensor_nElement(state, self) == THZCudaTensor_nElement(state, src), 2, "sizes do not match");
@@ -15,18 +17,18 @@ float THZCudaTensor_dot(THCState *state, THZCudaTensor *self, THZCudaTensor *src
     self = THZCudaTensor_newContiguous(state, self);
     src = THZCudaTensor_newContiguous(state, src);
 
-    float result = THZCudaBlas_dot(state,
+    cx result = THZCudaBlas_dot(state,
                                   THZCudaTensor_nElement(state, self),
                                   THZCudaTensor_data(state, self), 1,
                                   THZCudaTensor_data(state, src), 1);
     THZCudaTensor_free(state, src);
     THZCudaTensor_free(state, self);
 
-    return result;
+    cx result;
   }
 }
 
-void THZCudaTensor_addmv(THCState *state, THZCudaTensor *r_, float beta, THZCudaTensor *t, float alpha, THZCudaTensor *mat, THZCudaTensor *vec)
+void THZCudaTensor_addmv(THCState *state, THZCudaTensor *r_, cx beta, THZCudaTensor *t, cx alpha, THZCudaTensor *mat, THZCudaTensor *vec)
 {
   THAssert(THZCudaTensor_checkGPU(state, 4, r_, t, mat, vec));
   if( (mat->nDimension != 2) || (vec->nDimension != 1) )
@@ -327,10 +329,10 @@ void THZCudaTensor_baddbmm(THCState *state, THZCudaTensor *result, float beta, T
 
   // Compute pointers to matrices in each batch.
   long num_batches = result_->size[0];
-  size_t matrices_size = num_batches * sizeof(float*);
-  const float **matrices1 = (const float **)THAlloc(matrices_size);
-  const float **matrices2 = (const float **)THAlloc(matrices_size);
-  float **result_matrices = (float **)THAlloc(matrices_size);
+  size_t matrices_size = num_batches * sizeof(cx*);
+  const cx **matrices1 = (const cx **)THAlloc(matrices_size);
+  const cx **matrices2 = (const cx **)THAlloc(matrices_size);
+  cx **result_matrices = (cx **)THAlloc(matrices_size);
   for (int i = 0; i < num_batches; ++i)
   {
     matrices1[i] = THZCudaTensor_data(state, batch1_) + i * batch1_->stride[0];
@@ -339,8 +341,8 @@ void THZCudaTensor_baddbmm(THCState *state, THZCudaTensor *result, float beta, T
   }
 
   // Copy pointers to device.
-  const float **d_matrices1, **d_matrices2;
-  float **d_result_matrices;
+  const cx **d_matrices1, **d_matrices2;
+  cx **d_result_matrices;
   THZCudaCheck(THZCudaMalloc(state, (void**)&d_matrices1, matrices_size));
   THZCudaCheck(THZCudaMalloc(state, (void**)&d_matrices2, matrices_size));
   THZCudaCheck(THZCudaMalloc(state, (void**)&d_result_matrices, matrices_size));

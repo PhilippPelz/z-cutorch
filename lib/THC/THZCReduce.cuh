@@ -30,7 +30,7 @@ THZCudaTensor_reduceNoncontigDim(TensorInfo<IndexType> out,
                                 IndexType reductionStride,
                                 IndexType reductionSize,
                                 IndexType totalSlices,
-                                float init,
+                                cx init,
                                 ModifyOp modifyOp,
                                 ReduceOp reduceOp) {
   const IndexType sliceIndex = getReduceNoncontigDimSliceIndex<IndexType>();
@@ -48,7 +48,7 @@ THZCudaTensor_reduceNoncontigDim(TensorInfo<IndexType> out,
 
   // For each point in reductionSize, reduce into `r`
   IndexType inOffset = inBaseOffset;
-  float r = init;
+  cux r = (cux)init;
 
   for (IndexType i = 0; i < reductionSize; ++i) {
     r = reduceOp(r, modifyOp(in.data[inOffset]));
@@ -73,7 +73,7 @@ THZCudaTensor_reduceContigDim(TensorInfo<IndexType> out,
                              TensorInfo<IndexType> in,
                              IndexType reductionSize,
                              IndexType totalSlices,
-                             float init,
+                             cx init,
                              ModifyOp modifyOp,
                              ReduceOp reduceOp) {
   const IndexType sliceIndex = getReduceContigDimSliceIndex<IndexType>();
@@ -93,14 +93,14 @@ THZCudaTensor_reduceContigDim(TensorInfo<IndexType> out,
   // Each thread in the block will reduce some subset of elements in
   // the slice. The elements are guaranteed contiguous starting at
   // `inBaseOffset`.
-  float r = init;
+  cux r = (cux)init;
   for (IndexType i = threadIdx.x; i < reductionSize; i += blockDim.x) {
     r = reduceOp(r, modifyOp(in.data[inBaseOffset + i]));
   }
 
   // Reduce within the block
-  extern __shared__ float smem[];
-  r = reduceBlock<float, ReduceOp>(smem, blockDim.x, r, reduceOp, init);
+  extern __shared__ cux smem[];
+  r = reduceBlock<cux, ReduceOp>(smem, blockDim.x, r, reduceOp, init);
 
   if (threadIdx.x == 0) {
     // Write out reduced value
@@ -154,7 +154,7 @@ bool THZCudaTensor_reduceDim(THCState* state,
                             THZCudaTensor* in,
                             const ModifyOp& modifyOp,
                             const ReduceOp& reduceOp,
-                            float init,
+                            cx init,
                             int dim) {
   long inElements = THZCudaTensor_nElement(state, in);
 
@@ -185,7 +185,7 @@ bool THZCudaTensor_reduceDim(THCState* state,
     }
 
     block = getContigReduceBlock(outElements, reductionSize);
-    smemSize = sizeof(float) * block.x;
+    smemSize = sizeof(cx) * block.x;
   } else {
     if (!getNoncontigReduceGrid(outElements, grid)) {
       return false;

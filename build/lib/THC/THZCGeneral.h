@@ -3,6 +3,9 @@
 
 #include "THGeneral.h"
 #include "THAllocator.h"
+#include "THZ.h"
+#include "THC/THC.h"
+
 #undef log1p
 
 #include "cuda.h"
@@ -10,9 +13,10 @@
 #include "cublas_v2.h"
 
 #include <cuComplex.h>
-typedef cuComplex cx;
+#define cx float complex
+typedef cuComplex cux;
 
-#define USE_MAGMA
+/* #undef USE_MAGMA */
 
 #ifdef __cplusplus
 # define THZC_EXTERNC extern "C"
@@ -40,49 +44,6 @@ typedef cuComplex cx;
 #endif
 
 struct THCRNGState;  /* Random number generator state. */
-
-typedef struct _THCCudaResourcesPerDevice {
-  cudaStream_t* streams;
-  cublasHandle_t* blasHandles;
-  /* Size of scratch space per each stream on this device available */
-  size_t scratchSpacePerStream;
-  /* Device-resident scratch space per stream, used for global memory
-     reduction kernels. */
-  void** devScratchSpacePerStream;
-} THCCudaResourcesPerDevice;
-
-
-/* Global state to be held in the cutorch table. */
-typedef struct THCState
-{
-  struct THCRNGState* rngState;
-  struct cudaDeviceProp* deviceProperties;
-  /* Convenience reference to the current stream/handle in use */
-  cudaStream_t currentStream;
-  cublasHandle_t currentBlasHandle;
-  /* Set of all allocated resources. resourcePerDevice[dev]->streams[0] is NULL,
-     which specifies the per-device default stream. blasHandles do not have a
-     default and must be explicitly initialized. We always initialize 1
-     blasHandle but we can use more.
-  */
-  THCCudaResourcesPerDevice* resourcesPerDevice;
-  /* Captured number of devices upon startup; convenience for bounds checking */
-  int numDevices;
-  /* Number of Torch defined resources available, indices 1 ... numStreams */
-  int numUserStreams;
-  int numUserBlasHandles;
-  /* Index of the current selected per-device resource. Actual CUDA resource
-     changes based on the current device, since resources are per-device */
-  int currentPerDeviceStream;
-  int currentPerDeviceBlasHandle;
-  /* Allocator using cudaMallocHost. */
-  THAllocator* cudaHostAllocator;
-
-  void (*cutorchGCFunction)(void *data);
-  void *cutorchGCData;
-  long heapSoftmax;
-  long heapDelta;
-} THCState;
 
 THZC_API void THZCudaInit(THCState* state);
 THZC_API void THZCudaShutdown(THCState* state);

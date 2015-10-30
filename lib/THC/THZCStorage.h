@@ -11,7 +11,7 @@
 
 typedef struct THZCudaStorage
 {
-    cx *data;
+    cux *data;
     long size;
     int refcount;
     char flag;

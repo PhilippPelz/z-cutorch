@@ -8,24 +8,27 @@
 
 #include <thrust/functional.h>
 
+#include <cusp/complex.h>
+typedef cusp::complex<float> ccx;
+
 /* A set of reduction kernels that take in binary ops on thrust pairs (of value, index).
    These are useful when you not only have to do a reduction, but you might have
    to preserve the location of contention (for example min/max operations).
    The structure of the kernels follows the structure of the reduction kernels.
 */
 template<class BinaryFunction>
-__global__ void THZCudaTensor_kernel_transformReduceOuterDimIndex(float *tgt1, float *tgt2,
-                                                             float *src_,
+__global__ void THZCudaTensor_kernel_transformReduceOuterDimIndex(ccx *tgt1, ccx *tgt2,
+                                                             ccx *src_,
                                                              unsigned num_orows,
                                                              unsigned num_irows,
                                                              unsigned row_size,
-                                                             thrust::pair<float,float> init,
+                                                             thrust::pair<ccx,float> init,
                                                              BinaryFunction binary_op)
 {
   for (unsigned orow = blockIdx.x; orow < num_orows; orow += gridDim.x) {
     for (unsigned irow = blockIdx.y * blockDim.x + threadIdx.x; irow < num_irows; irow += gridDim.y * blockDim.x) {
-      float *src = src_ + orow * row_size * num_irows + irow;
-      thrust::pair<float,float> acc = init;
+      ccx *src = src_ + orow * row_size * num_irows + irow;
+      thrust::pair<ccx,float> acc = init;
 
       for (unsigned col = 0; col < row_size; ++col) {
         acc = binary_op(thrust::make_pair(*src, col+1), acc); // i+1 for 1-indexing
@@ -40,7 +43,7 @@ __global__ void THZCudaTensor_kernel_transformReduceOuterDimIndex(float *tgt1, f
 template<class BinaryFunction>
 __host__ void THZCudaTensor_transformReduceOuterDimIndex(THCState *state, THZCudaTensor *tgt1, THZCudaTensor *tgt2,
                                                    THZCudaTensor *src,
-                                                   long rdim, thrust::pair<float,float> init,
+                                                   long rdim, thrust::pair<ccx,float> init,
                                                    BinaryFunction binary_op)
 {
   unsigned ndim = THZCudaTensor_nDimension(state, src);
@@ -59,8 +62,8 @@ __host__ void THZCudaTensor_transformReduceOuterDimIndex(THCState *state, THZCud
   dim3 grid(min(maxGridDim, num_orows), min(maxGridDim, THZCCeilDiv(num_irows, threads.x)));
 
   THZCudaTensor_kernel_transformReduceOuterDimIndex<<<grid, threads, 0, THCState_getCurrentStream(state)>>>(
-    THZCudaTensor_data(state, tgt1), THZCudaTensor_data(state, tgt2),
-    THZCudaTensor_data(state, src), num_orows, num_irows, row_size, init, binary_op);
+    (ccx*)THZCudaTensor_data(state, tgt1), (ccx*)THZCudaTensor_data(state, tgt2),
+    (ccx*)THZCudaTensor_data(state, src), num_orows, num_irows, row_size, init, binary_op);
   cudaError errcode = cudaGetLastError();
   if(errcode != cudaSuccess) {
     THError(cudaGetErrorString(errcode));
@@ -79,18 +82,18 @@ __host__ void THZCudaTensor_transformReduceOuterDimIndex(THCState *state, THZCud
  */
 template<class BinaryFunction>
 __global__ void THZCudaTensor_kernel_transformReduceInnermostDimIndex(
-  float *tgt1, float* tgt2, float *src_,
+  ccx *tgt1, ccx* tgt2, ccx *src_,
   unsigned num_rows, unsigned row_size,
-  thrust::pair<float,float> init, BinaryFunction binary_op)
+  thrust::pair<ccx,float> init, BinaryFunction binary_op)
 {
-  __shared__ float sbuf[32][16];
+  __shared__ ccx sbuf[32][16];
   __shared__ float ibuf[32][16];
 
   for (unsigned block_row = blockIdx.x * blockDim.y; block_row < num_rows; block_row += blockDim.y * gridDim.x) {
     unsigned row = block_row + threadIdx.y;
     thrust::pair<float,float> acc = init;
     if (row < num_rows) {
-      float *src = src_ + row * row_size;
+      ccx *src = src_ + row * row_size;
       // Sequential reduction within a thread.
       for (unsigned col = threadIdx.x; col < row_size; col += blockDim.x) {
         acc = binary_op(thrust::make_pair(src[col], col+1), acc);
@@ -101,13 +104,13 @@ __global__ void THZCudaTensor_kernel_transformReduceInnermostDimIndex(
     ibuf[threadIdx.y][threadIdx.x] = acc.second;
 
     // Reduce intermediate values to single value.
-    float* sline = &sbuf[threadIdx.y][0];
+    ccx* sline = &sbuf[threadIdx.y][0];
     float* iline = &ibuf[threadIdx.y][0];
     for (unsigned s = 8; s > 0; s >>= 1) {
       if (row < num_rows && threadIdx.x < s) {
-        thrust::pair<float,float> arg1 = thrust::make_pair<float,float>(sline[threadIdx.x], iline[threadIdx.x]);
-        thrust::pair<float,float> arg2 = thrust::make_pair<float,float>(sline[threadIdx.x + s], iline[threadIdx.x + s]);
-        thrust::pair<float,float> res = binary_op(arg1, arg2);
+        thrust::pair<ccx,float> arg1 = thrust::make_pair<ccx,float>(sline[threadIdx.x], iline[threadIdx.x]);
+        thrust::pair<ccx,float> arg2 = thrust::make_pair<ccx,float>(sline[threadIdx.x + s], iline[threadIdx.x + s]);
+        thrust::pair<ccx,float> res = binary_op(arg1, arg2);
         sline[threadIdx.x] = res.first;
         iline[threadIdx.x] = res.second;
       }
@@ -125,7 +128,7 @@ __global__ void THZCudaTensor_kernel_transformReduceInnermostDimIndex(
 template<class BinaryFunction>
 __host__ void THZCudaTensor_transformReduceInnermostDimIndex(
   THCState *state, THZCudaTensor *tgt1, THZCudaTensor *tgt2, THZCudaTensor *src,
-  thrust::pair<float,float> init, BinaryFunction binary_op)
+  thrust::pair<ccx,float> init, BinaryFunction binary_op)
 {
   unsigned ndim = THZCudaTensor_nDimension(state, src);
   unsigned num_rows = 1;
@@ -138,8 +141,8 @@ __host__ void THZCudaTensor_transformReduceInnermostDimIndex(
   dim3 grid(min(1024, THZCCeilDiv(num_rows, threads.y)));
 
   THZCudaTensor_kernel_transformReduceInnermostDimIndex<<<grid, threads, 0, THCState_getCurrentStream(state)>>>(
-    THZCudaTensor_data(state, tgt1), THZCudaTensor_data(state, tgt2),
-    THZCudaTensor_data(state, src), num_rows, row_size, init, binary_op);
+    (ccx*)THZCudaTensor_data(state, tgt1), (ccx*)THZCudaTensor_data(state, tgt2),
+    (ccx*)THZCudaTensor_data(state, src), num_rows, row_size, init, binary_op);
   cudaError errcode = cudaGetLastError();
   if(errcode != cudaSuccess) {
     THError(cudaGetErrorString(errcode));
@@ -148,7 +151,7 @@ __host__ void THZCudaTensor_transformReduceInnermostDimIndex(
 
 template<class BinaryFunction>
 void THZCudaTensor_reduceDimIndex(THCState *state, THZCudaTensor *tgt1_, THZCudaTensor *tgt2_, THZCudaTensor *src,
-                             long dimension, thrust::pair<float,float> init,
+                             long dimension, thrust::pair<ccx,float> init,
                                      BinaryFunction binary_op)
 {
   THArgCheck(dimension >= 0 && dimension < THZCudaTensor_nDimension(state, src), 3, "dimension out of range");
@@ -176,10 +179,10 @@ void THZCudaTensor_reduceDimIndex(THCState *state, THZCudaTensor *tgt1_, THZCuda
 
 struct maxvalue_functor
 {
-  __host__ __device__ thrust::pair<float,float> operator()(const thrust::pair<float,float> &a,
-                                                            const thrust::pair<float,float> &b)
+  __host__ __device__ thrust::pair<ccx,float> operator()(const thrust::pair<ccx,float> &a,
+                                                            const thrust::pair<ccx,float> &b)
   {
-    if (a.first > b.first) return a;
+    if (cusp::abs(a.first) > cusp::abs(b.first)) return a;
     else return b;
   }
 };
@@ -188,7 +191,7 @@ void THZCudaTensor_max(THCState *state, THZCudaTensor *values, THZCudaTensor *in
 {
   THAssert(THZCudaTensor_checkGPU(state, 3, values, indices, src));
   const float minfloat32 = -3.402823466e+38f;
-  thrust::pair<float,float> init = thrust::make_pair<float,float>(minfloat32, -1);
+  thrust::pair<float,float> init = thrust::make_pair<ccx,float>(ccx(minfloat32,0), -1);
   return THZCudaTensor_reduceDimIndex(state, values, indices, src, dimension, init,
                                  maxvalue_functor());
 }

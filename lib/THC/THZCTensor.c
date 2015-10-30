@@ -45,7 +45,7 @@ THLongStorage *THZCudaTensor_newStrideOf(THCState *state, THZCudaTensor *self)
   return stride;
 }
 
-cx *THZCudaTensor_data(THCState *state, const THZCudaTensor *self)
+cux *THZCudaTensor_data(THCState *state, const THZCudaTensor *self)
 {
   if(self->storage)
     return (self->storage->data+self->storageOffset);

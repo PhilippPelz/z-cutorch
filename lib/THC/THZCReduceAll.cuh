@@ -22,20 +22,20 @@ template <typename ModifyOp, typename ReduceOp, typename IndexType, int ADims>
 __global__ void
 THZCudaTensor_reduceAll(TensorInfo<IndexType> in,
                        IndexType totalElements,
-                       float init,
+                       cx init,
                        ModifyOp modifyOp,
                        ReduceOp reduceOp,
-                       float* out) {
+                       cx* out) {
   // With a block-wide stride, have each thread perform its own reduction.
-  float r = init;
+  cux r = (cux)init;
   for (IndexType i = threadIdx.x; i < totalElements; i += blockDim.x) {
     const IndexType inOffset = IndexToOffset<IndexType, ADims>::get(i, in);
     r = reduceOp(r, modifyOp(in.data[inOffset]));
   }
 
   // Reduce within the block
-  extern __shared__ float smem[];
-  r = reduceBlock<float, ReduceOp>(smem, blockDim.x, r, reduceOp, init);
+  extern __shared__ cux smem[];
+  r = reduceBlock<cux, ReduceOp>(smem, blockDim.x, r, reduceOp, init);
 
   if (threadIdx.x == 0) {
     // Write out reduced value
@@ -60,23 +60,23 @@ template <typename ModifyOp, typename ReduceOp, typename IndexType, int ADims>
 __global__ void
 THZCudaTensor_reduceAllPass1(TensorInfo<IndexType> in,
                             IndexType totalElements,
-                            float init,
+                            cx init,
                             ModifyOp modifyOp,
                             ReduceOp reduceOp,
-                            float* scratchSpace) {
+                            cx* scratchSpace) {
   const IndexType startIndex = getStartIndex<IndexType>(totalElements);
   const IndexType endIndex = getEndIndex<IndexType>(totalElements);
 
   // With a block-wide stride, have each thread perform its own reduction.
-  float r = init;
+  cux r = (cux)init;
   for (IndexType i = startIndex + threadIdx.x; i < endIndex; i += blockDim.x) {
     const IndexType inOffset = IndexToOffset<IndexType, ADims>::get(i, in);
     r = reduceOp(r, modifyOp(in.data[inOffset]));
   }
 
   // Reduce within the block
-  extern __shared__ float smem[];
-  r = reduceBlock<float, ReduceOp>(smem, blockDim.x, r, reduceOp, init);
+  extern __shared__ cux smem[];
+  r = reduceBlock<cux, ReduceOp>(smem, blockDim.x, r, reduceOp, init);
 
   if (threadIdx.x == 0) {
     // Write out block-wide reduced value
@@ -87,18 +87,18 @@ THZCudaTensor_reduceAllPass1(TensorInfo<IndexType> in,
 template <typename ReduceOp, typename IndexType>
 __global__ void
 THZCudaTensor_reduceAllPass2(int numPass1Blocks,
-                            float init,
+                            cx init,
                             ReduceOp reduceOp,
-                            float* scratchSpace,
-                            float* out) {
-  float r = init;
+                            cx* scratchSpace,
+                            cx* out) {
+  cux cx r = (cux)init;
   if (threadIdx.x < numPass1Blocks) {
     r = scratchSpace[threadIdx.x];
   }
 
   // Reduce within the block
-  extern __shared__ float smem[];
-  r = reduceBlock<float, ReduceOp>(smem, numPass1Blocks, r, reduceOp, init);
+  extern __shared__ cux smem[];
+  r = reduceBlock<cux, ReduceOp>(smem, numPass1Blocks, r, reduceOp, init);
 
   if (threadIdx.x == 0) {
     *out = r;
@@ -116,7 +116,7 @@ inline long getTwoPassBlocks(THCState* state, long elements) {
 
   // We can only have as many blocks as there is scratch space
   long scratchSpace =
-    THCState_getCurrentDeviceScratchSpaceSize(state) / sizeof(float);
+    THCState_getCurrentDeviceScratchSpaceSize(state) / sizeof(cx);
   THAssert(scratchSpace > 0);
 
   if (numBlocks > scratchSpace) {
@@ -150,35 +150,35 @@ template <typename ModifyOp, typename ReduceOp, typename IndexType, int ADims>
 void callReduceAll(THCState* state,
                    const TensorInfo<IndexType>& in,
                    long totalElements,
-                   float init,
+                   cx init,
                    const ModifyOp& modifyOp,
                    const ReduceOp& reduceOp,
-                   float* devOut) {
+                   cx* devOut) {
   dim3 grid;
   dim3 block;
 
   if (isTwoPassReductionSize(totalElements)) {
     getPass1ReduceBlockGrid(state, totalElements, grid, block);
-    size_t smemSize = block.x * sizeof(float);
+    size_t smemSize = block.x * sizeof(cx);
 
     THZCudaTensor_reduceAllPass1<ModifyOp, ReduceOp, IndexType, ADims>
       <<<grid, block, smemSize, THCState_getCurrentStream(state)>>>(
         in, (IndexType) totalElements, init, modifyOp, reduceOp,
-        (float*) THCState_getCurrentDeviceScratchSpace(state));
+        (cx*) THCState_getCurrentDeviceScratchSpace(state));
 
     int numPass1Blocks = grid.x;
     getPass2ReduceBlockGrid(state, totalElements, grid, block);
-    smemSize = block.x * sizeof(float);
+    smemSize = block.x * sizeof(cx);
 
     THZCudaTensor_reduceAllPass2<ReduceOp, IndexType>
       <<<grid, block, smemSize, THCState_getCurrentStream(state)>>>(
         numPass1Blocks, init, reduceOp,
-        (float*) THCState_getCurrentDeviceScratchSpace(state),
+        (cx*) THCState_getCurrentDeviceScratchSpace(state),
         devOut);
 
   } else {
     getSinglePassReduceBlockGrid(totalElements, grid, block);
-    size_t smemSize = block.x * sizeof(float);
+    size_t smemSize = block.x * sizeof(cx);
 
     THZCudaTensor_reduceAll<ModifyOp, ReduceOp, IndexType, ADims>
       <<<grid, block, smemSize, THCState_getCurrentStream(state)>>>(
@@ -193,8 +193,8 @@ bool THZCudaTensor_reduceAll(THCState* state,
                             THZCudaTensor* in,
                             const ModifyOp& modifyOp,
                             const ReduceOp& reduceOp,
-                            float init,
-                            float* out,
+                            cx init,
+                            cx* out,
                             int outOnDevice) {
   long inElements = THZCudaTensor_nElement(state, in);
 
@@ -208,11 +208,11 @@ bool THZCudaTensor_reduceAll(THCState* state,
     return true;
   }
 
-  float* devOut = out;
+  cx* devOut = out;
   if (!outOnDevice) {
     // Use the stream-specific scratch space for the reduction kernel
     // to write out its value
-    devOut = (float*) THCState_getCurrentDeviceScratchSpace(state);
+    devOut = (cx*) THCState_getCurrentDeviceScratchSpace(state);
   }
 
   // It is possible that the tensor dimensions are able to be collapsed,
@@ -271,7 +271,7 @@ bool THZCudaTensor_reduceAll(THCState* state,
   // If our destination is not on the device, copy the value back to
   // the host (synchronous!)
   if (!outOnDevice) {
-    cudaMemcpy(out, devOut, sizeof(float), cudaMemcpyDeviceToHost);
+    cudaMemcpy(out, devOut, sizeof(cx), cudaMemcpyDeviceToHost);
   }
 
   return true;

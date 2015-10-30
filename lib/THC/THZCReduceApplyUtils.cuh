@@ -8,6 +8,9 @@
 #include "THZCTensor.h"
 #include "THZCDeviceUtils.cuh"
 
+#include <cusp/complex.h>
+typedef cusp::complex<float> ccx;
+
 // Maximum number of dimensions allowed for cutorch
 #define MAX_CUTORCH_DIMS 25
 
@@ -25,11 +28,11 @@ enum TensorArgType { ReadWrite, ReadOnly };
 template <typename T>
 struct CopyOp {
   __device__ __forceinline__ void operator()(T* dst, T* src) {
-#if __CUDA_ARCH__ >= 350
-    *dst = __ldg(src);
-#else
+// #if __CUDA_ARCH__ >= 350
+    // *dst = __ldg(src);
+// #else
     *dst = *src;
-#endif
+// #endif
   }
 };
 
@@ -55,7 +58,7 @@ struct TensorInfo {
     return (dims == 1 && strides[0] == 1);
   }
 
-  float* data;
+  ccx* data;
   IndexType sizes[MAX_CUTORCH_DIMS];
   IndexType strides[MAX_CUTORCH_DIMS];
   int dims;
@@ -70,7 +73,7 @@ TensorInfo<IndexType>::TensorInfo(THCState* state,
   assert(origDims <= MAX_CUTORCH_DIMS);
   assert(reduceDim < origDims);
 
-  data = THZCudaTensor_data(state, t);
+  data = (ccx*)THZCudaTensor_data(state, t);
 
   // Count the number of successive dimensions that can be collapsed, from
   // innermost to outermost.
@@ -169,7 +172,7 @@ template<typename IndexType>
 TensorInfo<IndexType>::TensorInfo(THCState* state,
                                   THZCudaTensor* t,
                                   NoCollapseMode) {
-  data = THZCudaTensor_data(state, t);
+  data = (ccx*)THZCudaTensor_data(state, t);
   dims = THZCudaTensor_nDimension(state, t);
   assert(dims <= MAX_CUTORCH_DIMS);
 

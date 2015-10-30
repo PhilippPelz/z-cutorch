@@ -15,6 +15,7 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/local/cuda/include"
   "../lib/THC"
   "../torch"
+  "../include/THC"
   "."
   ".."
   )
