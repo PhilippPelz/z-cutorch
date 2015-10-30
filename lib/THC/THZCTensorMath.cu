@@ -1,7 +1,7 @@
 #include "THZCTensorMath.h"
 #include "THZCGeneral.h"
 #include "THZCTensorCopy.h"
-#include "THZCTensorRandom.h"
+// #include "THZCTensorRandom.h"
 #include "THZCApply.cuh"
 #include "THZCReduce.cuh"
 #include "THZCReduceAll.cuh"

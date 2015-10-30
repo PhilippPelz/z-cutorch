@@ -31,7 +31,9 @@ struct CopyOp {
 // #if __CUDA_ARCH__ >= 350
     // *dst = __ldg(src);
 // #else
-    *dst = *src;
+    ccx* d = (ccx*)dst;
+    ccx* s = (ccx*)src;
+    *d = *s;
 // #endif
   }
 };

@@ -6,6 +6,7 @@
 #include "THZ.h"
 #include "THC/THC.h"
 
+
 #undef log1p
 
 #include "cuda.h"
@@ -13,10 +14,11 @@
 #include "cublas_v2.h"
 
 #include <cuComplex.h>
+#include <complex.h>
 #define cx float complex
 typedef cuComplex cux;
 
-/* #undef USE_MAGMA */
+#define USE_MAGMA
 
 #ifdef __cplusplus
 # define THZC_EXTERNC extern "C"

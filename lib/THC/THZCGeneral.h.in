@@ -6,6 +6,7 @@
 #include "THZ.h"
 #include "THC/THC.h"
 
+
 #undef log1p
 
 #include "cuda.h"
@@ -13,6 +14,7 @@
 #include "cublas_v2.h"
 
 #include <cuComplex.h>
+#include <complex.h>
 #define cx float complex
 typedef cuComplex cux;
 

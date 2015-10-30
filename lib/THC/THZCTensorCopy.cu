@@ -1,5 +1,8 @@
 #include "THZCApply.cuh"
 
+#include <cusp/complex.h>
+typedef cusp::complex<float> ccx;
+
 static inline int curGPU() {
   int curDev;
   THZCudaCheck(cudaGetDevice(&curDev));
@@ -59,12 +62,12 @@ THZCudaTensor_copy(THCState* state, THZCudaTensor* dst, THZCudaTensor* src) {
   if (memcpyEligible) {
     THZCudaCheck(cudaMemcpyAsync(THZCudaTensor_data(state, dst),
                                 THZCudaTensor_data(state, src),
-                                totalElements * sizeof(cx),
+                                totalElements * sizeof(cux),
                                 cudaMemcpyDeviceToDevice,
                                 THCState_getCurrentStream(state)));
   } else {
       bool succ =
-        THZCudaTensor_pointwiseApply2(state, dst, src, CopyOp<cx>());
+        THZCudaTensor_pointwiseApply2(state, dst, src, CopyOp<cux>());
       THArgCheck(succ, 2, CUTORCH_DIM_WARNING);
   }
 
