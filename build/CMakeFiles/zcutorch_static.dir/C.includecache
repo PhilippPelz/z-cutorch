@@ -55,14 +55,14 @@ THZCGeneral.h
 ../lib/THC/THZCGeneral.h
 
 ../lib/THC/THZCTensorConv.h
+THC/THCTensor.h
+../lib/THC/THC/THCTensor.h
 THZCTensor.h
 ../lib/THC/THZCTensor.h
 
 ../lib/THC/THZCTensorCopy.h
 THZCTensor.h
 ../lib/THC/THZCTensor.h
-THZCGeneral.h
-../lib/THC/THZCGeneral.h
 
 ../lib/THC/THZCTensorMath.h
 THZCTensor.h

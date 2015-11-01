@@ -1,8 +1,8 @@
 #include "THZCTensorMath.h"
-#include "THZCGeneral.h"
+// #include "THZCGeneral.h"
 #include "THZCBlas.h"
 #include "THZCTensorCopy.h"
-#include "THZCTensorRandom.h"
+// #include "THZCTensorRandom.h"
 #include "THZCApply.cuh"
 #include "THZCReduce.cuh"
 
@@ -11,18 +11,22 @@
 #include <thrust/functional.h>
 #include <thrust/inner_product.h>
 
-#include <cusp/complex.h>
-typedef cusp::complex<float> ccx;
+// #include <thrust/complex.h>
+// typedef thrust::complex<float> ccx;
 
 #if CUDA_VERSION >= 7000
 #include <thrust/system/cuda/execution_policy.h>
 #endif
 
+// ccx toCcx(cx val) {
+// 	return ccx(crealf(val), cimagf(val));
+// }
+
 cx THZCudaTensor_meanall(THCState *state, THZCudaTensor *self)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, self));
   THArgCheck(self->nDimension > 0, 1, "empty Tensor");
-  return (cx)THZCudaTensor_sumall(state, self)/THZCudaTensor_nElement(state, self);
+  return THZCudaTensor_sumall(state, self)/THZCudaTensor_nElement(state, self);
 }
 
 void
@@ -37,12 +41,12 @@ struct square_functor
 {
   const ccx mean;
 
-  square_functor(cx mean_) : mean((ccx)mean_) {}
+  square_functor(ccx mean_) : mean(mean) {}
 
-    __host__ __device__ float operator()(const cx& x) const
+    __host__ __device__ ccx operator()(const ccx& x) const
   {
-    float x = ::abs((ccx)x-mean);
-    return x*x;
+    float x1 = thrust::abs((ccx)x-mean);
+    return ccx(x1*x1,0);
   }
 };
 
@@ -51,21 +55,21 @@ float THZCudaTensor_varall(THCState *state, THZCudaTensor *self)
   THAssert(THZCudaTensor_checkGPU(state, 1, self));
   self = THZCudaTensor_newContiguous(state, self);
   long size = THZCudaTensor_nElement(state, self);
-  thrust::device_ptr<cx> self_data(THZCudaTensor_data(state, self));
+  thrust::device_ptr<ccx> self_data((ccx*)THZCudaTensor_data(state, self));
 
   cx mean = THZCudaTensor_meanall(state, self);
-  float result =
+  ccx result =
     thrust::transform_reduce(
 #if CUDA_VERSION >= 7000
       thrust::cuda::par.on(THCState_getCurrentStream(state)),
 #endif
-      self_data, self_data+size, square_functor(mean),
-      (ccx)0, thrust::plus<ccx>());
+      self_data, self_data+size, square_functor(toCcx(mean)),
+      ccx(0,0), thrust::plus<ccx>());
 
-  result = result/(THZCudaTensor_nElement(state, self)-1);
+  float res = result.real()/(float)(THZCudaTensor_nElement(state, self)-1);
 
   THZCudaTensor_free(state, self);
-  return result;
+  return res;
 }
 
 float THZCudaTensor_stdall(THCState *state, THZCudaTensor *self)
@@ -79,15 +83,14 @@ struct TensorNormOp
 {
   TensorNormOp(float exp) : exponent(exp) {}
 
-  __host__ __device__ float operator()(cx y) const {
-    ccx x = (ccx)y;
+  __host__ __device__ ccx operator()(ccx y) const {
     if (StaticExp == 1) {
-      return ::abs();
+      return ccx(thrust::abs(y),0);
     } else if (StaticExp == 2) {
-      float x = ::abs();
-      return x * x;
+      float x = thrust::abs(y);
+      return ccx(x * x,0);
     } else {
-      return powf(::abs(x), exponent);
+      return ccx(powf(thrust::abs(y), exponent),0);
     }
   }
 
@@ -97,7 +100,7 @@ struct TensorNormOp
 struct TensorNonZeroOp
 {
   TensorNonZeroOp() {}
-  __host__ __device__ bool operator()(float lhs) const { return lhs != 0.0f; }
+  __host__ __device__ ccx operator()(ccx lhs) const { return thrust::abs(lhs) != 0.0f ? ccx(1,0) : ccx(0,0); }
 };
 
 float THZCudaTensor_normall(THCState *state, THZCudaTensor *self, float value)
@@ -107,22 +110,23 @@ float THZCudaTensor_normall(THCState *state, THZCudaTensor *self, float value)
   long size = THZCudaTensor_nElement(state, self);
   thrust::device_ptr<ccx> self_data((ccx*)THZCudaTensor_data(state, self));
 
-  float result;
-
+  ccx result;
+	float res = 0;
   if (value == 0.0f) {
     result = thrust::transform_reduce(
 #if CUDA_VERSION >= 7000
       thrust::cuda::par.on(THCState_getCurrentStream(state)),
 #endif
       self_data, self_data+size, TensorNonZeroOp(),
-      0.0f, thrust::plus<ccx>());
+      ccx(0.0,0), thrust::plus<ccx>());
+			res = result.real();
   } else if (value == 1.0f) {
     result = thrust::transform_reduce(
 #if CUDA_VERSION >= 7000
       thrust::cuda::par.on(THCState_getCurrentStream(state)),
 #endif
       self_data, self_data+size, TensorNormOp<1>(value),
-      0.0f, thrust::plus<ccx>());
+      ccx(0.0,0), thrust::plus<ccx>());
 
   } else if (value == 2.0f) {
     result = thrust::transform_reduce(
@@ -130,8 +134,8 @@ float THZCudaTensor_normall(THCState *state, THZCudaTensor *self, float value)
       thrust::cuda::par.on(THCState_getCurrentStream(state)),
 #endif
       self_data, self_data+size, TensorNormOp<2>(value),
-      0.0f, thrust::plus<ccx>());
-    result = powf(result, 0.5f);
+      ccx(0.0,0), thrust::plus<ccx>());
+    res = powf(result.real(), 0.5f);
 
   } else {
     result = thrust::transform_reduce(
@@ -139,12 +143,12 @@ float THZCudaTensor_normall(THCState *state, THZCudaTensor *self, float value)
       thrust::cuda::par.on(THCState_getCurrentStream(state)),
 #endif
       self_data, self_data+size, TensorNormOp<-1>(value),
-      0.0f, thrust::plus<ccx>());
-    result = powf(result, 1.0f / value);
+      ccx(0.0,0), thrust::plus<ccx>());
+    res = powf(result.real(), 1.0f / value);
   }
 
   THZCudaTensor_free(state, self);
-  return result;
+  return res;
 }
 
 void THZCudaTensor_norm(THCState *state, THZCudaTensor* self, THZCudaTensor* src, float value, long dimension)
@@ -175,20 +179,20 @@ void THZCudaTensor_norm(THCState *state, THZCudaTensor* self, THZCudaTensor* src
   THZCudaCheck(cudaGetLastError());
 }
 
-__global__ void THZCudaTensor_kernel_renorm(cx *data, const float value, const long size, const float maxnorm)
+__global__ void THZCudaTensor_kernel_renorm(ccx *data, const float value, const long size, const float maxnorm)
 {
   __shared__ float buffer[32];
   long tx = threadIdx.x;
   long bx = blockIdx.x;
   long step = blockDim.x;
-  ccx *row = (ccx*)(data + size*bx);
+  ccx *row = data + size*bx;
 
   buffer[tx] = 0;
 
   // get norm of axis
   for (long i=tx; i<size; i+=step)
   {
-    buffer[tx] += powf(::abs(row[i]), value);
+    buffer[tx] += powf(thrust::abs(row[i]), value);
   }
   // add (reduce)
   for (unsigned int stride = blockDim.x >> 1; stride > 0; stride >>= 1)
@@ -226,7 +230,7 @@ void THZCudaTensor_renorm(THCState *state, THZCudaTensor* self, THZCudaTensor* s
   dim3 grid(data->size[0]);
   dim3 threads(32);
 
-  THZCudaTensor_kernel_renorm<<<grid, threads, 0, THCState_getCurrentStream(state)>>>(THZCudaTensor_data(state, data), value, size, maxnorm);
+  THZCudaTensor_kernel_renorm<<<grid, threads, 0, THCState_getCurrentStream(state)>>>((ccx*)THZCudaTensor_data(state, data), value, size, maxnorm);
 
   cudaError errcode = cudaGetLastError();
   if(errcode != cudaSuccess)
@@ -245,9 +249,9 @@ struct dist_functor
 
   dist_functor(float exponent_) : exponent(exponent_) {}
 
-  __host__ __device__ float operator()(const cx& x, const cx& y) const
+  __host__ __device__ ccx operator()(const ccx& x, const ccx& y) const
   {
-    return powf(::abs((ccx)x-(ccx)y), exponent);
+    return ccx(powf(thrust::abs(x-y), exponent),0);
   }
 };
 
@@ -257,18 +261,18 @@ float THZCudaTensor_dist(THCState *state, THZCudaTensor *self, THZCudaTensor *sr
   self = THZCudaTensor_newContiguous(state, self);
   long size = THZCudaTensor_nElement(state, self);
   src = THZCudaTensor_newContiguous(state, src);
-  thrust::device_ptr<cx> self_data(THZCudaTensor_data(state, self));
-  thrust::device_ptr<cx> src_data(THZCudaTensor_data(state, src));
-
-  float result = thrust::inner_product(
-#if CUDA_VERSION >= 7000
-    thrust::cuda::par.on(THCState_getCurrentStream(state)),
-#endif
-    self_data, self_data+size, src_data, (cx) 0,
-    Plus(), dist_functor(value));
+  thrust::device_ptr<ccx> self_data((ccx*)THZCudaTensor_data(state, self));
+  thrust::device_ptr<ccx> src_data((ccx*)THZCudaTensor_data(state, src));
+ ccx result;
+//   ccx result = thrust::inner_product(
+// #if CUDA_VERSION >= 7000
+//     thrust::cuda::par.on(THCState_getCurrentStream(state)),
+// #endif
+//     self_data, self_data+size, src_data, ccx(0,0),
+//     thrust::plus<ccx>, dist_functor(value));
 
   THZCudaTensor_free(state, src);
   THZCudaTensor_free(state, self);
 
-  return pow(result, (float)1.0/value);
+  return powf(result.real(), (float)1.0/value);
 }

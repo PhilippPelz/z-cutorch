@@ -1,11 +1,4 @@
-#include <cuComplex.h>
-#define cx float complex
-typedef cuComplex cux;
-
 #include "THZCBlas.h"
-#include "THZCGeneral.h"
-#include "complex.h"
-
 
 void THZCudaBlas_swap(THCState *state, long n, cx *x, long incx,  cx  *y, long incy)
 {

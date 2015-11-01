@@ -1,5 +1,6 @@
 #include "THZCTensorMath.h"
 #include "THZCGeneral.h"
+#include "THZCGeneral.cuh"
 #include "THZCBlas.h"
 #include "THZCTensorCopy.h"
 #include "THZCApply.cuh"
@@ -7,8 +8,12 @@
 
 #include <thrust/functional.h>
 
-#include <cusp/complex.h>
-typedef cusp::complex<float> ccx;
+// #include <thrust/complex.h>
+// typedef thrust::complex<float> ccx;
+
+// ccx toCcx(cx val) {
+// 	return ccx(crealf(val), cimagf(val));
+// }
 
 /* Perform an inclusive scan along an outer dimension of a tensor.
  *
@@ -22,15 +27,15 @@ typedef cusp::complex<float> ccx;
  * Each thread processes a single inner row at a time.
  */
 template<class BinaryOp>
-__global__ void THZCudaTensor_kernel_scanOuterDim(cx *tgt_, cx *src_,
+__global__ void THZCudaTensor_kernel_scanOuterDim(ccx *tgt_, ccx *src_,
                                                  unsigned num_orows, unsigned num_irows, unsigned row_size,
-                                                 cx init, BinaryOp binary_op)
+                                                 ccx init, BinaryOp binary_op)
 {
   for (unsigned orow = blockIdx.x; orow < num_orows; orow += gridDim.x) {
     for (unsigned irow = blockIdx.y * blockDim.x + threadIdx.x; irow < num_irows; irow += gridDim.y * blockDim.x) {
-      cx *src = src_ + orow * row_size * num_irows + irow;
-      cx *tgt = tgt_ + orow * row_size * num_irows + irow;
-      cx acc = init;
+      ccx *src = src_ + orow * row_size * num_irows + irow;
+      ccx *tgt = tgt_ + orow * row_size * num_irows + irow;
+      ccx acc = init;
 
       for (unsigned col = 0; col < row_size; ++col) {
         acc = binary_op(acc, *src);
@@ -65,7 +70,7 @@ __host__ void THZCudaTensor_scanOuterDim(THCState *state, THZCudaTensor *tgt, TH
   dim3 grid(min(maxGridDim, num_orows), min(maxGridDim, THZCCeilDiv(num_irows, threads.x)));
 
   THZCudaTensor_kernel_scanOuterDim<<<grid, threads, 0, THCState_getCurrentStream(state)>>>(
-      THZCudaTensor_data(state, tgt), THZCudaTensor_data(state, src), num_orows, num_irows, row_size, init, binary_op);
+      (ccx*)THZCudaTensor_data(state, tgt), (ccx*)THZCudaTensor_data(state, src), num_orows, num_irows, row_size, toCcx(init), binary_op);
   cudaError errcode = cudaGetLastError();
   if (errcode != cudaSuccess) {
     THError(cudaGetErrorString(errcode));
@@ -84,9 +89,9 @@ __host__ void THZCudaTensor_scanOuterDim(THCState *state, THZCudaTensor *tgt, TH
  * per thread block is quicker than processing a single row, especially for short rows).
  */
 template<int num_threads_x, int num_threads_y, class BinaryFunction>
-__global__ void THZCudaTensor_kernel_scanInnermostDim(cx *tgt_, cx *src_,
+__global__ void THZCudaTensor_kernel_scanInnermostDim(ccx *tgt_, ccx *src_,
                                                      unsigned num_rows, unsigned row_size,
-                                                     cx init, BinaryFunction binary_op)
+                                                     ccx init, BinaryFunction binary_op)
 {
   __shared__ ccx sbuf[num_threads_y][2 * num_threads_x];
 
@@ -171,7 +176,7 @@ __host__ void THZCudaTensor_scanInnermostDim(THCState *state, THZCudaTensor *tgt
   dim3 grid(min(1024, THZCCeilDiv(num_rows, threads.y)));
 
   THZCudaTensor_kernel_scanInnermostDim<16, 32><<<grid, threads, 0, THCState_getCurrentStream(state)>>>(
-      THZCudaTensor_data(state, tgt), THZCudaTensor_data(state, src), num_rows, row_size, init, binary_op);
+      (ccx*)THZCudaTensor_data(state, tgt), (ccx*)THZCudaTensor_data(state, src), num_rows, row_size, toCcx(init), binary_op);
   cudaError errcode = cudaGetLastError();
   if (errcode != cudaSuccess) {
     THError(cudaGetErrorString(errcode));

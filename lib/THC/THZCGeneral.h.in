@@ -15,8 +15,9 @@
 
 #include <cuComplex.h>
 #include <complex.h>
-#define cx float complex
-typedef cuComplex cux;
+
+#define cx float _Complex           // used in all public interfaces
+typedef cuComplex cux;              // used in ZCudaStorage
 
 #cmakedefine USE_MAGMA
 

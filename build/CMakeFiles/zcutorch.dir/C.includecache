@@ -55,14 +55,14 @@ THZCGeneral.h
 ../lib/THC/THZCGeneral.h
 
 ../lib/THC/THZCTensorConv.h
+THC/THCTensor.h
+../lib/THC/THC/THCTensor.h
 THZCTensor.h
 ../lib/THC/THZCTensor.h
 
 ../lib/THC/THZCTensorCopy.h
 THZCTensor.h
 ../lib/THC/THZCTensor.h
-THZCGeneral.h
-../lib/THC/THZCGeneral.h
 
 ../lib/THC/THZCTensorMath.h
 THZCTensor.h
@@ -139,6 +139,10 @@ luaT.h
 /home/philipp/projects/zcutorch/luaT.h
 THZCGeneral.h
 /home/philipp/projects/zcutorch/THZCGeneral.h
+
+/home/philipp/projects/zcutorch/torch/utils.c
+utils.h
+/home/philipp/projects/zcutorch/torch/utils.h
 
 /home/philipp/projects/zcutorch/torch/utils.h
 luaT.h

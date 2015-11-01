@@ -1,7 +1,7 @@
 #include "THZCApply.cuh"
 
-#include <cusp/complex.h>
-typedef cusp::complex<float> ccx;
+// #include <thrust/complex.h>
+// typedef thrust::complex<float> ccx;
 
 static inline int curGPU() {
   int curDev;
@@ -67,7 +67,7 @@ THZCudaTensor_copy(THCState* state, THZCudaTensor* dst, THZCudaTensor* src) {
                                 THCState_getCurrentStream(state)));
   } else {
       bool succ =
-        THZCudaTensor_pointwiseApply2(state, dst, src, CopyOp<cux>());
+        THZCudaTensor_pointwiseApply2(state, dst, src, ZCopyOp<ccx>());
       THArgCheck(succ, 2, CUTORCH_DIM_WARNING);
   }
 

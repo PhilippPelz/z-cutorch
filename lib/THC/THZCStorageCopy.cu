@@ -10,11 +10,11 @@ void THZCudaStorage_rawCopy(THCState *state, THZCudaStorage *self, cx *src)
 void THZCudaStorage_copy(THCState *state, THZCudaStorage *self, THZCudaStorage *src)
 {
   THArgCheck(self->size == src->size, 2, "size does not match");
-  THZCudaCheck(cudaMemcpyAsync(self->data, src->data, self->size * sizeof(cx), cudaMemcpyDeviceToDevice, THCState_getCurrentStream(state)));
+  THZCudaCheck(cudaMemcpyAsync(self->data, src->data, self->size * sizeof(cux), cudaMemcpyDeviceToDevice, THCState_getCurrentStream(state)));
 }
 
 void THZCudaStorage_copyZCuda(THCState *state, THZCudaStorage *self, THZCudaStorage *src)
 {
   THArgCheck(self->size == src->size, 2, "size does not match");
-  THZCudaCheck(cudaMemcpyAsync(self->data, src->data, self->size * sizeof(cx), cudaMemcpyDeviceToDevice, THCState_getCurrentStream(state)));
+  THZCudaCheck(cudaMemcpyAsync(self->data, src->data, self->size * sizeof(cux), cudaMemcpyDeviceToDevice, THCState_getCurrentStream(state)));
 }

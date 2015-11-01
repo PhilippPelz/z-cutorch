@@ -18,7 +18,7 @@ THZC_API void THZCudaStorage_copyInt(THCState *state, THZCudaStorage *storage, s
 THZC_API void THZCudaStorage_copyLong(THCState *state, THZCudaStorage *storage, struct THLongStorage *src);
 THZC_API void THZCudaStorage_copyFloat(THCState *state, THZCudaStorage *storage, struct THFloatStorage *src);
 THZC_API void THZCudaStorage_copyDouble(THCState *state, THZCudaStorage *storage, struct THDoubleStorage *src);
-THZC_API void THZCudaStorage_copyZFloat(THCState *state, THZCudaStorage *storage, struct THDoubleStorage *src);
+THZC_API void THZCudaStorage_copyZFloat(THCState *state, THZCudaStorage *storage, struct THZFloatStorage *src);
 
 THZC_API void THZFloatStorage_copyZCuda(THCState *state, THZFloatStorage *self, struct THZCudaStorage *src);
 

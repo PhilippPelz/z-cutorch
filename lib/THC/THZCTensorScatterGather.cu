@@ -1,8 +1,12 @@
 #include "THZCTensorMath.h"
 #include "THZCGeneral.h"
+#include "THZCGeneral.cuh"
 #include "THZCApply.cuh"
+#include "THC/THCReduceApplyUtils.cuh"
 
-
+// ccx toCcx(cx val) {
+// 	return ccx(crealf(val), cimagf(val));
+// }
 // Compute the offsets into the given tensors for a linear index. For the 't2'
 // tensor, dimension 'dim' is skipped. The tensors are assumed to have the same
 // size (with the exception of 't2' in dimension 'dim').
@@ -12,8 +16,8 @@ struct IndexToScatterGatherOffsets {
   static __device__ void compute(
       IndexType linearId, const int dim,
       const TensorInfo<IndexType>& index, IndexType* indexOffset,
-      const TensorInfo<IndexType>& t1, IndexType* t1Offset,
-      const TensorInfo<IndexType>& t2, IndexType* t2Offset) {
+      const ZTensorInfo<IndexType>& t1, IndexType* t1Offset,
+      const ZTensorInfo<IndexType>& t2, IndexType* t2Offset) {
     for (int d = Dims - 1; d >= 0; d--) {
       IndexType curDimIndex = linearId % index.sizes[d];
       *indexOffset += curDimIndex * index.strides[d];
@@ -28,7 +32,7 @@ struct IndexToScatterGatherOffsets {
   static __device__ void compute(
       IndexType linearId, const int dim,
       const TensorInfo<IndexType>& index, IndexType* indexOffset,
-      const TensorInfo<IndexType>& t2, IndexType* t2Offset) {
+      const ZTensorInfo<IndexType>& t2, IndexType* t2Offset) {
     for (int d = Dims - 1; d >= 0; d--) {
       IndexType curDimIndex = linearId % index.sizes[d];
       *indexOffset += curDimIndex * index.strides[d];
@@ -46,8 +50,8 @@ struct IndexToScatterGatherOffsets<IndexType, -1> {
   static __device__ void compute(
       IndexType linearId, const int dim,
       const TensorInfo<IndexType>& index, IndexType* indexOffset,
-      const TensorInfo<IndexType>& t1, IndexType* t1Offset,
-      const TensorInfo<IndexType>& t2, IndexType* t2Offset) {
+      const ZTensorInfo<IndexType>& t1, IndexType* t1Offset,
+      const ZTensorInfo<IndexType>& t2, IndexType* t2Offset) {
     for (int d = index.dims - 1; d >= 0; d--) {
       IndexType curDimIndex = linearId % index.sizes[d];
       *indexOffset += curDimIndex * index.strides[d];
@@ -62,7 +66,7 @@ struct IndexToScatterGatherOffsets<IndexType, -1> {
   static __device__ void compute(
       IndexType linearId, const int dim,
       const TensorInfo<IndexType>& index, IndexType* indexOffset,
-      const TensorInfo<IndexType>& t2, IndexType* t2Offset) {
+      const ZTensorInfo<IndexType>& t2, IndexType* t2Offset) {
     for (int d = index.dims - 1; d >= 0; d--) {
       IndexType curDimIndex = linearId % index.sizes[d];
       *indexOffset += curDimIndex * index.strides[d];
@@ -77,8 +81,8 @@ struct IndexToScatterGatherOffsets<IndexType, -1> {
 
 template <typename IndexType, int Dims>
 __global__ void THZCudaTensor_gatherKernel(
-    TensorInfo<IndexType> tensor,
-    TensorInfo<IndexType> src,
+    ZTensorInfo<IndexType> tensor,
+    ZTensorInfo<IndexType> src,
     TensorInfo<IndexType> index,
     const int dim,
     const IndexType totalElements) {
@@ -104,18 +108,18 @@ __global__ void THZCudaTensor_gatherKernel(
 #define RUN(TYPE, DIMS)                                              \
   THZCudaTensor_gatherKernel<TYPE, DIMS>                              \
       <<<grid, block, 0, THCState_getCurrentStream(state)>>>(        \
-          tensorInfo, srcInfo, indexInfo, dim, (TYPE)totalElements);
+          tensorinfo, srcInfo, indexInfo, dim, (TYPE)totalElements);
 
-void THZCudaTensor_gather(THCState* state, THZCudaTensor *tensor, THZCudaTensor *src, int dim, THZCudaTensor *index) {
+void THZCudaTensor_gather(THCState* state, THZCudaTensor *tensor, THZCudaTensor *src, int dim, THCudaTensor *index) {
   THAssert(THZCudaTensor_checkGPU(state, 3, tensor, src, index));
 
   THArgCheck(THZCudaTensor_nDimension(state, src) == THZCudaTensor_nDimension(state, tensor), 2,
              "Input tensor must have same dimensions as output tensor");
   THArgCheck(dim >= 0 && dim < THZCudaTensor_nDimension(state, tensor), 3,
              "Index dimension is out of bounds");
-  THArgCheck(THZCudaTensor_nDimension(state, index) == THZCudaTensor_nDimension(state, src), 4,
+  THArgCheck(THCudaTensor_nDimension(state, index) == THZCudaTensor_nDimension(state, src), 4,
              "Index tensor must have same dimensions as input tensor");
-  THArgCheck(THZCudaTensor_isSameSizeAs(state, tensor, index), 4,
+  THArgCheck(THZCudaTensor_isSameSizeAsZF(state, tensor, index), 4,
              "Index tensor must have the same size as output tensor.");
 
   for (int d = 0; d < THZCudaTensor_nDimension(state, tensor); d++) {
@@ -129,7 +133,7 @@ void THZCudaTensor_gather(THCState* state, THZCudaTensor *tensor, THZCudaTensor 
     return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
   }
 
-  const long totalElements = THZCudaTensor_nElement(state, index);
+  const long totalElements = THCudaTensor_nElement(state, index);
   const dim3 block = getApplyBlock();
   dim3 grid;
   if (!getApplyGrid(state, totalElements, grid)) {
@@ -144,9 +148,9 @@ void THZCudaTensor_gather(THCState* state, THZCudaTensor *tensor, THZCudaTensor 
 
   if (THZC_canUse32BitIndexMath(state, tensor) &&
       THZC_canUse32BitIndexMath(state, src) &&
-      THZC_canUse32BitIndexMath(state, index)) {
-    TensorInfo<unsigned int> tensorInfo(state, tensor, NoCollapseDims);
-    TensorInfo<unsigned int> srcInfo(state, src, NoCollapseDims);
+      THC_canUse32BitIndexMath(state, index)) {
+    ZTensorInfo<unsigned int> tensorinfo(state, tensor, NoCollapseDims);
+    ZTensorInfo<unsigned int> srcInfo(state, src, NoCollapseDims);
     TensorInfo<unsigned int> indexInfo(state, index, NoCollapseDims);
 
     // Specialize for a small number of dimensions.
@@ -165,8 +169,8 @@ void THZCudaTensor_gather(THCState* state, THZCudaTensor *tensor, THZCudaTensor 
         break;
     }
   } else {
-    TensorInfo<unsigned long> tensorInfo(state, tensor, NoCollapseDims);
-    TensorInfo<unsigned long> srcInfo(state, src, NoCollapseDims);
+    ZTensorInfo<unsigned long> tensorinfo(state, tensor, NoCollapseDims);
+    ZTensorInfo<unsigned long> srcInfo(state, src, NoCollapseDims);
     TensorInfo<unsigned long> indexInfo(state, index, NoCollapseDims);
 
     RUN(unsigned long, -1)
@@ -184,8 +188,8 @@ void THZCudaTensor_gather(THCState* state, THZCudaTensor *tensor, THZCudaTensor 
 
 template <typename IndexType, int Dims>
 __global__ void THZCudaTensor_scatterKernel(
-    TensorInfo<IndexType> tensor,
-    TensorInfo<IndexType> src,
+    ZTensorInfo<IndexType> tensor,
+    ZTensorInfo<IndexType> src,
     TensorInfo<IndexType> index,
     const int dim,
     const IndexType totalElements) {
@@ -211,18 +215,19 @@ __global__ void THZCudaTensor_scatterKernel(
 #define RUN(TYPE, DIMS)                                              \
   THZCudaTensor_scatterKernel<TYPE, DIMS>                             \
       <<<grid, block, 0, THCState_getCurrentStream(state)>>>(        \
-          tensorInfo, srcInfo, indexInfo, dim, (TYPE)totalElements);
+          tensorinfo, srcInfo, indexInfo, dim, (TYPE)totalElements);
 
-void THZCudaTensor_scatter(THCState* state, THZCudaTensor *tensor, int dim, THZCudaTensor *index, THZCudaTensor *src) {
-  THAssert(THZCudaTensor_checkGPU(state, 3, tensor, src, index));
+void THZCudaTensor_scatter(THCState* state, THZCudaTensor *tensor, int dim, THCudaTensor *index, THZCudaTensor *src) {
+  THAssert(THZCudaTensor_checkGPU(state, 3, tensor, src));
+  THAssert(THCudaTensor_checkGPU(state, 1, index));
 
   THArgCheck(dim >= 0 && dim < THZCudaTensor_nDimension(state, tensor), 2,
              "Index dimension is out of bounds");
-  THArgCheck(THZCudaTensor_nDimension(state, index) == THZCudaTensor_nDimension(state, src), 3,
+  THArgCheck(THCudaTensor_nDimension(state, index) == THZCudaTensor_nDimension(state, src), 3,
              "Index tensor must have same dimensions as input tensor");
   THArgCheck(THZCudaTensor_nDimension(state, src) == THZCudaTensor_nDimension(state, tensor), 4,
              "Input tensor must have same dimensions as output tensor");
-  THArgCheck(THZCudaTensor_isSameSizeAs(state, src, index), 3,
+  THArgCheck(THZCudaTensor_isSameSizeAsZF(state, src, index), 3,
              "Index tensor must have the same size as input tensor.");
 
   for (int d = 0; d < THZCudaTensor_nDimension(state, tensor); d++) {
@@ -236,7 +241,7 @@ void THZCudaTensor_scatter(THCState* state, THZCudaTensor *tensor, int dim, THZC
     return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
   }
 
-  const long totalElements = THZCudaTensor_nElement(state, index);
+  const long totalElements = THCudaTensor_nElement(state, index);
   const dim3 block = getApplyBlock();
   dim3 grid;
   if (!getApplyGrid(state, totalElements, grid)) {
@@ -251,9 +256,9 @@ void THZCudaTensor_scatter(THCState* state, THZCudaTensor *tensor, int dim, THZC
 
   if (THZC_canUse32BitIndexMath(state, tensor) &&
       THZC_canUse32BitIndexMath(state, src) &&
-      THZC_canUse32BitIndexMath(state, index)) {
-    TensorInfo<unsigned int> tensorInfo(state, tensor, NoCollapseDims);
-    TensorInfo<unsigned int> srcInfo(state, src, NoCollapseDims);
+      THC_canUse32BitIndexMath(state, index)) {
+    ZTensorInfo<unsigned int> tensorinfo(state, tensor, NoCollapseDims);
+    ZTensorInfo<unsigned int> srcInfo(state, src, NoCollapseDims);
     TensorInfo<unsigned int> indexInfo(state, index, NoCollapseDims);
 
     // Specialize for a small number of dimensions.
@@ -272,8 +277,8 @@ void THZCudaTensor_scatter(THCState* state, THZCudaTensor *tensor, int dim, THZC
         break;
     }
   } else {
-    TensorInfo<unsigned long> tensorInfo(state, tensor, NoCollapseDims);
-    TensorInfo<unsigned long> srcInfo(state, src, NoCollapseDims);
+    ZTensorInfo<unsigned long> tensorinfo(state, tensor, NoCollapseDims);
+    ZTensorInfo<unsigned long> srcInfo(state, src, NoCollapseDims);
     TensorInfo<unsigned long> indexInfo(state, index, NoCollapseDims);
 
     RUN(unsigned long, -1)
@@ -291,7 +296,7 @@ void THZCudaTensor_scatter(THCState* state, THZCudaTensor *tensor, int dim, THZC
 
 template <typename IndexType, int Dims>
 __global__ void THZCudaTensor_scatterFillKernel(
-    TensorInfo<IndexType> tensor,
+    ZTensorInfo<IndexType> tensor,
     TensorInfo<IndexType> index,
     ccx value,
     const int dim,
@@ -316,19 +321,20 @@ __global__ void THZCudaTensor_scatterFillKernel(
 #define RUN(TYPE, DIMS)                                            \
   THZCudaTensor_scatterFillKernel<TYPE, DIMS>                       \
       <<<grid, block, 0, THCState_getCurrentStream(state)>>>(      \
-          tensorInfo, indexInfo, (ccx)value, dim, (TYPE)totalElements);
+          tensorinfo, indexInfo, toCcx(value), dim, (TYPE)totalElements);
 
-void THZCudaTensor_scatterFill(THCState* state, THZCudaTensor *tensor, int dim, THZCudaTensor *index, cx value) {
-  THAssert(THZCudaTensor_checkGPU(state, 2, tensor, index));
+void THZCudaTensor_scatterFill(THCState* state, THZCudaTensor *tensor, int dim, THCudaTensor *index, cx value) {
+  THAssert(THZCudaTensor_checkGPU(state, 2, tensor));
+  THAssert(THCudaTensor_checkGPU(state, 2, index));
 
   THArgCheck(dim >= 0 && dim < THZCudaTensor_nDimension(state, tensor), 2,
              "Index dimension is out of bounds");
-  THArgCheck(THZCudaTensor_nDimension(state, index) == THZCudaTensor_nDimension(state, tensor), 3,
+  THArgCheck(THCudaTensor_nDimension(state, index) == THZCudaTensor_nDimension(state, tensor), 3,
              "Index tensor must have same dimensions as output tensor");
 
   for (int d = 0; d < THZCudaTensor_nDimension(state, tensor); d++) {
     if (d != dim) {
-      THArgCheck(THZCudaTensor_size(state, tensor, d) == THZCudaTensor_size(state, index, d), 4,
+      THArgCheck(THZCudaTensor_size(state, tensor, d) == THCudaTensor_size(state, index, d), 4,
                  "Index tensor must have same size as output tensor apart from the specified dimension");
     }
   }
@@ -337,7 +343,7 @@ void THZCudaTensor_scatterFill(THCState* state, THZCudaTensor *tensor, int dim, 
     return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
   }
 
-  const long totalElements = THZCudaTensor_nElement(state, index);
+  const long totalElements = THCudaTensor_nElement(state, index);
   const dim3 block = getApplyBlock();
   dim3 grid;
   if (!getApplyGrid(state, totalElements, grid)) {
@@ -351,8 +357,8 @@ void THZCudaTensor_scatterFill(THCState* state, THZCudaTensor *tensor, int dim, 
   }
 
   if (THZC_canUse32BitIndexMath(state, tensor) &&
-      THZC_canUse32BitIndexMath(state, index)) {
-    TensorInfo<unsigned int> tensorInfo(state, tensor, NoCollapseDims);
+      THC_canUse32BitIndexMath(state, index)) {
+    ZTensorInfo<unsigned int> tensorinfo(state, tensor, NoCollapseDims);
     TensorInfo<unsigned int> indexInfo(state, index, NoCollapseDims);
 
     // Specialize for a small number of dimensions.
@@ -371,7 +377,7 @@ void THZCudaTensor_scatterFill(THCState* state, THZCudaTensor *tensor, int dim, 
         break;
     }
   } else {
-    TensorInfo<unsigned long> tensorInfo(state, tensor, NoCollapseDims);
+    ZTensorInfo<unsigned long> tensorinfo(state, tensor, NoCollapseDims);
     TensorInfo<unsigned long> indexInfo(state, index, NoCollapseDims);
 
     RUN(unsigned long, -1);

@@ -1,6 +1,7 @@
 #include "THZCGeneral.h"
 #include "THZCTensorMath.h"
 #include "THZCTensorCopy.h"
+#include "THZCTensor.h"
 #include <algorithm>
 
 #ifdef USE_MAGMA
@@ -115,8 +116,8 @@ void THZCudaTensor_gesv(THCState *state, THZCudaTensor *rb_, THZCudaTensor *ra_,
 
   THZCudaTensor *a = THZCudaTensor_newColumnMajor(state, ra_, a_);
   THZCudaTensor *b = THZCudaTensor_newColumnMajor(state, rb_, b_);
-  cux *a_data = THZCudaTensor_data(state, a);
-  cux *b_data = THZCudaTensor_data(state, b);
+  cux *a_data = THZCudaTensor_dataCu(state, a);
+  cux *b_data = THZCudaTensor_dataCu(state, b);
 
   int *ipiv = th_magma_imalloc_pinned(n);
 
@@ -146,8 +147,8 @@ void THZCudaTensor_gels(THCState *state, THZCudaTensor *rb_, THZCudaTensor *ra_,
 
   THZCudaTensor *a = THZCudaTensor_newColumnMajor(state, ra_, a_);
   THZCudaTensor *b = THZCudaTensor_newColumnMajor(state, rb_, b_);
-  cux *a_data = THZCudaTensor_data(state, a);
-  cux *b_data = THZCudaTensor_data(state, b);
+  cux *a_data = THZCudaTensor_dataCu(state, a);
+  cux *b_data = THZCudaTensor_dataCu(state, b);
 
   int m = a->size[0];
   int n = a->size[1];
@@ -181,7 +182,7 @@ void THZCudaTensor_cheev(THCState *state, THZCudaTensor *re_, THZCudaTensor *rv_
   magma_vec_t jobz = jobzs[0] == 'N' ? MagmaNoVec : MagmaVec;
 
   THZCudaTensor *input = THZCudaTensor_newColumnMajor(state, rv_, a);
-  cux *input_data = THZCudaTensor_data(state, input);
+  cux *input_data = THZCudaTensor_dataCu(state, input);
 
   // eigen values and workspace
   float *w = th_magma_smalloc_pinned(n);
@@ -355,12 +356,12 @@ void THZCudaTensor_getri(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a)
   int lwork = n * magma_get_sgetri_nb(n);
 
   THZCudaTensor *input = THZCudaTensor_newColumnMajor(state, ra_, a);
-  cux *input_data = THZCudaTensor_data(state, input);
+  cux *input_data = THZCudaTensor_dataCu(state, input);
 
   int *ipiv = th_magma_imalloc_pinned(n);
 
   THZCudaTensor *work = THZCudaTensor_newWithSize1d(state, lwork);
-  cux *work_data = THZCudaTensor_data(state, work);
+  cux *work_data = THZCudaTensor_dataCu(state, work);
 
   // Run LU
   magma_cgetrf_gpu(n, n, input_data, n, ipiv, &info);
@@ -404,7 +405,7 @@ void THZCudaTensor_potri(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a)
   int n = a->size[0];
 
   THZCudaTensor *input = THZCudaTensor_newColumnMajor(state, ra_, a);
-  cux *input_data = THZCudaTensor_data(state, input);
+  cux *input_data = THZCudaTensor_dataCu(state, input);
 
   int info;
   magma_cpotrf_gpu(MagmaUpper, n, input_data, n, &info);
@@ -440,7 +441,7 @@ void THZCudaTensor_potrf(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a)
   int n = a->size[0];
 
   THZCudaTensor *input = THZCudaTensor_newColumnMajor(state, ra_, a);
-  cux *input_data = THZCudaTensor_data(state, input);
+  cux *input_data = THZCudaTensor_dataCu(state, input);
 
   int info;
   magma_cpotrf_gpu(MagmaUpper, n, input_data, n, &info);
@@ -469,11 +470,11 @@ void THZCudaTensor_qr(THCState *state, THZCudaTensor *rq_, THZCudaTensor *rr_, T
   int k = (m < n ? m : n);
   int nb = magma_get_cgeqrf_nb(m);
 
-  cux *a_data = THZCudaTensor_data(state, a);
+  cux *a_data = THZCudaTensor_dataCu(state, a);
   cux *tau_data = th_magma_cmalloc_pinned(n*n);
 
   THZCudaTensor *work = THZCudaTensor_newWithSize1d(state, (2*k + ((n+31)/32)*32)*nb);
-  cux *work_data = THZCudaTensor_data(state, work);
+  cux *work_data = THZCudaTensor_dataCu(state, work);
 
   int info;
   magma_cgeqrf_gpu(m, n, a_data, m, tau_data, work_data, &info);
@@ -482,7 +483,7 @@ void THZCudaTensor_qr(THCState *state, THZCudaTensor *rq_, THZCudaTensor *rr_, T
     THError("MAGMA geqrf : Argument %d : illegal value.", -info);
 
   THZCudaTensor *q = THZCudaTensor_newColumnMajor(state, rq_, a);
-  cux *q_data = THZCudaTensor_data(state, q);
+  cux *q_data = THZCudaTensor_dataCu(state, q);
 
   THZCudaTensor_narrow(state, a, a, 0, 0, k);
   THZCudaTensor_triu(state, rr_, a, 0);

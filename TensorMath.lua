@@ -594,24 +594,26 @@ wrap("gather",
                      arg.__metatable.init(arg),
                      string.format("TH%s_checkGPU(cutorch_getstate(L), 1, %s);",
                                    Tensor, arg.args[4]:carg()),
-                     string.format("TH%s_resizeAs(cutorch_getstate(L), %s, %s);", Tensor, arg:carg(), arg.args[4]:carg()),
+                                  --  THZCudaTensor_rawResize(state, self, src->nDimension, src->size, NULL);
+                    --  string.format("TH%s_resizeAs(cutorch_getstate(L), %s, %s);", CTensor, arg:carg(), arg.args[4]:carg()),
+                     string.format("TH%s_rawResize(cutorch_getstate(L), %s, %s->nDimension, %s->size, NULL);", CTensor, arg.args[4]:carg(), arg:carg(), arg:carg()),
                   }, '\n')
             end
       },
       {name=Tensor},
       {name="index"},
-      {name=Tensor}})
+      {name=CTensor}})
 
 wrap("scatter",
      cname("scatter"),
      {{name=Tensor, returned=true},
       {name="index"},
-      {name=Tensor},
+      {name=CTensor},
       {name=Tensor}},
      cname("scatterFill"),
      {{name=Tensor, returned=true},
       {name="index"},
-      {name=Tensor},
+      {name=CTensor},
       {name=real}})
 
 -- wrap("sort",

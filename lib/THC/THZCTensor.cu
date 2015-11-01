@@ -7,7 +7,7 @@ cudaTextureObject_t THZCudaTensor_getTextureObject(THCState *state, THZCudaTenso
   struct cudaResourceDesc resDesc;
   memset(&resDesc, 0, sizeof(resDesc));
   resDesc.resType = cudaResourceTypeLinear;
-  resDesc.res.linear.devPtr = THZCudaTensor_data(state, self);
+  resDesc.res.linear.devPtr = THZCudaTensor_dataCu(state, self);
   resDesc.res.linear.sizeInBytes = THZCudaTensor_nElement(state, self) * 4;
   resDesc.res.linear.desc = cudaCreateChannelDesc(32, 0, 0, 0,
                                                   cudaChannelFormatKindFloat);

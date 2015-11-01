@@ -1,15 +1,16 @@
 #include "THZCTensorMath.h"
 #include "THZCGeneral.h"
+#include "THZCGeneral.cuh"
 #include "THZCBlas.h"
 #include "THZCTensorCopy.h"
-#include "THZCTensorRandom.h"
+//#include "THZCTensorRandom.h"
 #include "THZCApply.cuh"
 #include "THZCReduce.cuh"
 
 #include <thrust/functional.h>
 
-#include <cusp/complex.h>
-typedef cusp::complex<float> ccx;
+// #include <thrust/complex.h>
+// typedef thrust::complex<float> ccx;
 
 /* A set of reduction kernels that take in binary ops on thrust pairs (of value, index).
    These are useful when you not only have to do a reduction, but you might have
@@ -91,12 +92,12 @@ __global__ void THZCudaTensor_kernel_transformReduceInnermostDimIndex(
 
   for (unsigned block_row = blockIdx.x * blockDim.y; block_row < num_rows; block_row += blockDim.y * gridDim.x) {
     unsigned row = block_row + threadIdx.y;
-    thrust::pair<float,float> acc = init;
+    thrust::pair<ccx,float> acc = init;
     if (row < num_rows) {
       ccx *src = src_ + row * row_size;
       // Sequential reduction within a thread.
       for (unsigned col = threadIdx.x; col < row_size; col += blockDim.x) {
-        acc = binary_op(thrust::make_pair(src[col], col+1), acc);
+        acc = binary_op(thrust::make_pair(src[col], (float)(col+1)), acc);
       }
     }
 
@@ -182,7 +183,7 @@ struct maxvalue_functor
   __host__ __device__ thrust::pair<ccx,float> operator()(const thrust::pair<ccx,float> &a,
                                                             const thrust::pair<ccx,float> &b)
   {
-    if (cusp::abs(a.first) > cusp::abs(b.first)) return a;
+    if (thrust::abs(a.first) > thrust::abs(b.first)) return a;
     else return b;
   }
 };
@@ -191,17 +192,17 @@ void THZCudaTensor_max(THCState *state, THZCudaTensor *values, THZCudaTensor *in
 {
   THAssert(THZCudaTensor_checkGPU(state, 3, values, indices, src));
   const float minfloat32 = -3.402823466e+38f;
-  thrust::pair<float,float> init = thrust::make_pair<ccx,float>(ccx(minfloat32,0), -1);
+  thrust::pair<ccx,float> init = thrust::make_pair<ccx,float>(ccx(minfloat32,0), -1);
   return THZCudaTensor_reduceDimIndex(state, values, indices, src, dimension, init,
                                  maxvalue_functor());
 }
 
 struct minvalue_functor
 {
-  __host__ __device__ thrust::pair<float,float> operator()(const thrust::pair<float,float> &a,
-                                                            const thrust::pair<float,float> &b)
+  __host__ __device__ thrust::pair<ccx,float> operator()(const thrust::pair<ccx,float> &a,
+                                                            const thrust::pair<ccx,float> &b)
   {
-    if (a.first < b.first) return a;
+    if (thrust::abs(a.first) < thrust::abs(b.first)) return a;
     else return b;
   }
 };
@@ -210,7 +211,7 @@ void THZCudaTensor_min(THCState *state, THZCudaTensor *values, THZCudaTensor *in
 {
   THAssert(THZCudaTensor_checkGPU(state, 3, values, indices, src));
   const float maxfloat32 = 3.402823466e+38f;
-  thrust::pair<float,float> init = thrust::make_pair<float,float>(maxfloat32, -1);
+  thrust::pair<ccx,float> init = thrust::make_pair<ccx,float>(ccx(maxfloat32,0), -1);
   return THZCudaTensor_reduceDimIndex(state, values, indices, src, dimension, init,
                                      minvalue_functor());
 }

@@ -23,7 +23,6 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "/home/philipp/torch/install/include/TH"
   "/usr/local/cuda/include"
   "../lib/THC/CUDA_SDK_ROOT_DIR-NOTFOUND/common/inc"
-  "/usr/local/include"
   "../lib/THC/include/THC"
   "lib/THC"
   )

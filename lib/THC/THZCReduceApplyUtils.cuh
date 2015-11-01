@@ -3,13 +3,18 @@
 
 #include <cuda.h>
 #include <assert.h>
+
 #include "THGeneral.h"
+
 #include "THZCGeneral.h"
+#include "THZCGeneral.cuh"
 #include "THZCTensor.h"
 #include "THZCDeviceUtils.cuh"
 
-#include <cusp/complex.h>
-typedef cusp::complex<float> ccx;
+#include "THC/THCReduceApplyUtils.cuh"
+
+// #include <thrust/complex.h>
+// typedef thrust::complex<float> ccx;
 
 // Maximum number of dimensions allowed for cutorch
 #define MAX_CUTORCH_DIMS 25
@@ -22,11 +27,12 @@ typedef cusp::complex<float> ccx;
 
 // Enum that indicates whether tensor arguments are read/write or
 // read-only
-enum TensorArgType { ReadWrite, ReadOnly };
+// already there in the THC version
+// enum TensorArgType { ReadWrite, ReadOnly };
 
 // Copy operator for the pointwise apply kernel
 template <typename T>
-struct CopyOp {
+struct ZCopyOp {
   __device__ __forceinline__ void operator()(T* dst, T* src) {
 // #if __CUDA_ARCH__ >= 350
     // *dst = __ldg(src);
@@ -38,21 +44,21 @@ struct CopyOp {
   }
 };
 
-enum NoCollapseMode { NoCollapseDims };
+// enum NoCollapseMode { NoCollapseDims };
 
 // CUDA kernel argument that defines tensor layout
 template <typename IndexType>
-struct TensorInfo {
+struct ZTensorInfo {
   // Extracts size/stride information for the kernel.
   // Successive dimensions can be collapsed if the size/strides match
   // up and thus there are no holes between the dimensions. This is used
   // to reduce the complexity of the problem.
   // The optional `reduceDim` indicates a reduction dimension for the
   // given tensor, so that the output size for this dimension will be 1.
-  TensorInfo(THCState* state, THZCudaTensor* t, int reduceDim = -1);
+  ZTensorInfo(THCState* state, THZCudaTensor* t, int reduceDim = -1);
 
   // Doesn't collapse runs of contiguous dimensions.
-  TensorInfo(THCState* state, THZCudaTensor* t, NoCollapseMode);
+  ZTensorInfo(THCState* state, THZCudaTensor* t, NoCollapseMode);
 
   // Contiguous tensors of more than one dimension are collapsed down
   // to one tensor
@@ -67,7 +73,7 @@ struct TensorInfo {
 };
 
 template <typename IndexType>
-TensorInfo<IndexType>::TensorInfo(THCState* state,
+ZTensorInfo<IndexType>::ZTensorInfo(THCState* state,
                                   THZCudaTensor* t,
                                   int reduceDim)
     : data(NULL), dims(0) {
@@ -171,7 +177,7 @@ TensorInfo<IndexType>::TensorInfo(THCState* state,
 }
 
 template<typename IndexType>
-TensorInfo<IndexType>::TensorInfo(THCState* state,
+ZTensorInfo<IndexType>::ZTensorInfo(THCState* state,
                                   THZCudaTensor* t,
                                   NoCollapseMode) {
   data = (ccx*)THZCudaTensor_data(state, t);
@@ -187,10 +193,10 @@ TensorInfo<IndexType>::TensorInfo(THCState* state,
 // Translate a linear index for the apply to a float* offset;
 // specialized on `Dims` to reduce nvcc compilation time
 template <typename IndexType, int Dims>
-struct IndexToOffset {
+struct ZIndexToOffset {
   static __host__ __device__ IndexType get(
     IndexType linearId,
-    const TensorInfo<IndexType>& info) {
+    const ZTensorInfo<IndexType>& info) {
     IndexType offset = 0;
 
     // Use static dims
@@ -209,17 +215,17 @@ struct IndexToOffset {
 };
 
 template <typename IndexType>
-struct IndexToOffset<IndexType, -2> {
+struct ZIndexToOffset<IndexType, -2> {
   static __forceinline__ __host__ __device__ IndexType
-    get(IndexType linearId, const TensorInfo<IndexType>& info) {
+    get(IndexType linearId, const ZTensorInfo<IndexType>& info) {
     return linearId;
   }
 };
 
 template <typename IndexType>
-struct IndexToOffset<IndexType, -1> {
+struct ZIndexToOffset<IndexType, -1> {
   static __forceinline__ __host__ __device__ IndexType
-    get(IndexType linearId, const TensorInfo<IndexType>& info) {
+    get(IndexType linearId, const ZTensorInfo<IndexType>& info) {
     IndexType offset = 0;
 
     // Use dynamic dims
@@ -235,65 +241,65 @@ struct IndexToOffset<IndexType, -1> {
   }
 };
 
-template <typename IndexType>
-__device__ __forceinline__ IndexType getLinearBlockId() {
-  return blockIdx.z * gridDim.y * gridDim.x +
-    blockIdx.y * gridDim.x +
-    blockIdx.x;
-}
+// template <typename IndexType>
+// __device__ __forceinline__ IndexType getLinearBlockId() {
+//   return blockIdx.z * gridDim.y * gridDim.x +
+//     blockIdx.y * gridDim.x +
+//     blockIdx.x;
+// }
 
 // Block-wide reduction in shared memory helper; only threadIdx.x == 0 will
 // return the reduced value
-template <typename T, typename ReduceOp>
-__device__ T reduceBlock(T* smem,
-                         int numVals,
-                         T threadVal,
-                         ReduceOp reduceOp,
-                         T init) {
-  if (numVals == 0) {
-    return init;
-  }
-
-  if (threadIdx.x < numVals) {
-    smem[threadIdx.x] = threadVal;
-  }
-
-  // First warp will perform reductions across warps
-  __syncthreads();
-  if ((threadIdx.x / warpSize) == 0) {
-    T r = threadIdx.x < numVals ? smem[threadIdx.x] : init;
-
-    for (int i = warpSize + threadIdx.x; i < numVals; i += warpSize) {
-      r = reduceOp(r, smem[i]);
-    }
-
-    smem[threadIdx.x] = r;
-  }
-
-  // First thread will perform reductions across the block
-  __syncthreads();
-
-  T r = init;
-  if (threadIdx.x == 0) {
-    r = smem[0];
-
-    int numLanesParticipating = min(numVals, warpSize);
-
-    if (numLanesParticipating == 32) {
-      // Unroll for warpSize == 32 and numVals >= 32
-#pragma unroll
-      for (int i = 1; i < 32; ++i) {
-        r = reduceOp(r, smem[i]);
-      }
-    } else {
-      for (int i = 1; i < numLanesParticipating; ++i) {
-        r = reduceOp(r, smem[i]);
-      }
-    }
-  }
-
-  return r;
-}
+// template <typename T, typename ReduceOp>
+// __device__ T reduceBlock(T* smem,
+//                          int numVals,
+//                          T threadVal,
+//                          ReduceOp reduceOp,
+//                          T init) {
+//   if (numVals == 0) {
+//     return init;
+//   }
+//
+//   if (threadIdx.x < numVals) {
+//     smem[threadIdx.x] = threadVal;
+//   }
+//
+//   // First warp will perform reductions across warps
+//   __syncthreads();
+//   if ((threadIdx.x / warpSize) == 0) {
+//     T r = threadIdx.x < numVals ? smem[threadIdx.x] : init;
+//
+//     for (int i = warpSize + threadIdx.x; i < numVals; i += warpSize) {
+//       r = reduceOp(r, smem[i]);
+//     }
+//
+//     smem[threadIdx.x] = r;
+//   }
+//
+//   // First thread will perform reductions across the block
+//   __syncthreads();
+//
+//   T r = init;
+//   if (threadIdx.x == 0) {
+//     r = smem[0];
+//
+//     int numLanesParticipating = min(numVals, warpSize);
+//
+//     if (numLanesParticipating == 32) {
+//       // Unroll for warpSize == 32 and numVals >= 32
+// #pragma unroll
+//       for (int i = 1; i < 32; ++i) {
+//         r = reduceOp(r, smem[i]);
+//       }
+//     } else {
+//       for (int i = 1; i < numLanesParticipating; ++i) {
+//         r = reduceOp(r, smem[i]);
+//       }
+//     }
+//   }
+//
+//   return r;
+// }
 
 // Make sure the given tensor doesn't have too many dimensions
 void THZCCheckTensorDims(THCState* state, THZCudaTensor* tensor, int arg);

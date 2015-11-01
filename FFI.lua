@@ -35,7 +35,7 @@ cudaStream_t THCState_getCurrentStream(THCState *state);
 
 typedef struct THZCudaStorage
 {
-    cx *data;
+    cuComplex *data;
     long size;
     int refcount;
     char flag;

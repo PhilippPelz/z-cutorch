@@ -97,7 +97,7 @@ THZCudaStorage* THZCudaStorage_newWithMapping(THCState *state, const char *fileN
 THZCudaStorage* THZCudaStorage_newWithData(THCState *state, cx *data, long size)
 {
   THZCudaStorage *storage = (THZCudaStorage*)THAlloc(sizeof(THZCudaStorage));
-  storage->data = data;
+  storage->data = (cux*)data;
   storage->size = size;
   storage->refcount = 1;
   storage->flag = TH_STORAGE_REFCOUNTED | TH_STORAGE_RESIZABLE | TH_STORAGE_FREEMEM;

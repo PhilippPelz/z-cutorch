@@ -1,12 +1,12 @@
+#include "THZCTensorCopy.h"
 #include "THZCTensorMath.h"
+
 #include "THZCGeneral.h"
 #include "THZCBlas.h"
-#include "THZCTensorCopy.h"
-#include "THZCTensorRandom.h"
+//#include "THZCTensorRandom.h"
 #include "THZCApply.cuh"
 #include "THZCReduce.cuh"
-
-
+#include "THZCTensorMathPairwise.cu"
 
 cx THZCudaTensor_dot(THCState *state, THZCudaTensor *self, THZCudaTensor *src)
 {
@@ -24,7 +24,7 @@ cx THZCudaTensor_dot(THCState *state, THZCudaTensor *self, THZCudaTensor *src)
     THZCudaTensor_free(state, src);
     THZCudaTensor_free(state, self);
 
-    cx result;
+    return result;
   }
 }
 

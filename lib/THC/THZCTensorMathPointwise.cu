@@ -1,24 +1,26 @@
 #include "THZCTensorMath.h"
 #include "THZCGeneral.h"
+#include "THZCGeneral.cuh"
 #include "THZCBlas.h"
 #include "THZCTensorCopy.h"
 #include "THZCApply.cuh"
 #include "THZCReduce.cuh"
 
-#include <cusp/complex.h>
-typedef cusp::complex<float> ccx;
+// #include <thrust/complex.h>
+// typedef thrust::complex<float> ccx;
+
+// ccx toCcx(cx val) {
+// 	return ccx(crealf(val), cimagf(val));
+// }
 
 #define IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(NAME, CFUNC)                   \
   struct Tensor##NAME##Op {                                             \
-    __device__ __forceinline__ void operator()(cx* out, cx* in) const { \
-      ccx *o = (ccx*)out;                                               \
-      ccx *i = (ccx*)in;                                                 \
+    __device__ __forceinline__ void operator()(ccx* o, ccx* i) const { \
       *o = CFUNC(*i);                                                   \
     }                                                                   \
                                                                         \
-    __device__ __forceinline__ void operator()(cx* v) const {        \
-      ccx *vc = (ccx*)v;                                                    \
-      *vc = CFUNC(*vc);                                                   \
+    __device__ __forceinline__ void operator()(ccx* v) const {        \
+      *v = CFUNC(*v);                                                   \
     }                                                                   \
   };                                                                    \
                                                                         \
@@ -39,37 +41,32 @@ typedef cusp::complex<float> ccx;
     THZCudaCheck(cudaGetLastError());                                    \
   }
 
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(log, cusp::log)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(log, thrust::log)
 // IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(log1p, log1p)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(exp, cusp::exp)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(cos, cusp::cos)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(acos, cusp::acos)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(cosh, cusp::cosh)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sin, cusp::sin)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(asin, cusp::asin)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sinh, cusp::sinh)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(tan, cusp::tan)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(atan, cusp::atan)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(tanh, cusp::tanh)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sqrt, cusp::sqrt)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(exp, thrust::exp)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(cos, thrust::cos)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(acos, thrust::acos)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(cosh, thrust::cosh)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sin, thrust::sin)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(asin, thrust::asin)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sinh, thrust::sinh)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(tan, thrust::tan)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(atan, thrust::atan)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(tanh, thrust::tanh)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sqrt, thrust::sqrt)
 // IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(ceil, ceil)
 // IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(floor, floor)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(abs, cusp::abs)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(abs, thrust::abs)
 // IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(round, roundf)
 
 #undef IMPLEMENT_CUDA_TENSOR_BASIC_FUNC
 
 struct TensorAddOp {
-  __device__ __forceinline__ void operator()(cx* out, cx* in) {
-    ccx *o = (ccx*)out;
-    ccx *i = (ccx*)in;
+  __device__ __forceinline__ void operator()(ccx* o, ccx* i) {
     *o += *i;
   }
 
-  __device__ __forceinline__ void operator()(cx* out, cx* in1, cx* in2) {
-    ccx *o = (ccx*)out;
-    ccx *i1 = (ccx*)in1;
-    ccx *i2 = (ccx*)in2;
+  __device__ __forceinline__ void operator()(ccx* o, ccx* i1, ccx* i2) {
     *o = *i1 + *i2;
   }
 };
@@ -77,16 +74,11 @@ struct TensorAddOp {
 struct TensorCAddOp {
   TensorCAddOp(ccx v) : val(v) {}
 
-  __device__ __forceinline__ void operator()(float* out, float* in) {
-    ccx *o = (ccx*)out;
-    ccx *i = (ccx*)in;
+  __device__ __forceinline__ void operator()(ccx* out, ccx* in) {
     *out += val * *in;
   }
 
-  __device__ __forceinline__ void operator()(float* out, float* in1, float* in2) {
-    ccx *o = (ccx*)out;
-    ccx *i1 = (ccx*)in1;
-    ccx *i2 = (ccx*)in2;
+  __device__ __forceinline__ void operator()(ccx* out, ccx* in1, ccx* in2) {
     *out = *in1 + val * *in2;
   }
 
@@ -107,7 +99,7 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
       }
     } else {
       // self += value * src2
-      if (!THZCudaTensor_pointwiseApply2(state, self_, src2, TensorCAddOp((ccx)value))) {
+      if (!THZCudaTensor_pointwiseApply2(state, self_, src2, TensorCAddOp(toCcx(value)))) {
         THArgCheck(false, 2, CUTORCH_DIM_WARNING);
       }
     }
@@ -121,7 +113,7 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
       }
     } else {
       // self = src1 + value * src2
-      if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorCAddOp((ccx)value))) {
+      if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorCAddOp(toCcx(value)))) {
         THArgCheck(false, 2, CUTORCH_DIM_WARNING);
       }
     }
@@ -131,12 +123,12 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
 }
 
 struct TensorMulOp {
-  __device__ __forceinline__ void operator()(cx* out, cx* in) {
-    *out = cuCmulf(*out,*in);
+  __device__ __forceinline__ void operator()(ccx* out, ccx* in) {
+    *out = *out * *in;
   }
 
-  __device__ __forceinline__ void operator()(cx* out, cx* in1, cx* in2) {
-    *out = cuCmulf(*in1,*in2);
+  __device__ __forceinline__ void operator()(ccx* out, ccx* in1, ccx* in2) {
+    *out = *in1 * *in2;
   }
 };
 
@@ -164,17 +156,12 @@ void THZCudaTensor_cmul(THCState *state, THZCudaTensor *self_, THZCudaTensor *sr
 }
 
 struct TensorMaxOp {
-  __device__ __forceinline__ void operator()(cx* out, cx* in) {
-    ccx *o = (ccx*)out;
-    ccx *i = (ccx*)in;
-    *o = max(cusp::abs(*o), cusp::abs(*i));
+  __device__ __forceinline__ void operator()(ccx* o, ccx* i) {
+    *o = max(thrust::abs(*o), thrust::abs(*i));
   }
 
-  __device__ __forceinline__ void operator()(cx* out, cx* in1, cx* in2) {
-    ccx *o = (ccx*)out;
-    ccx *i1 = (ccx*)in1;
-    ccx *i2 = (ccx*)in2;
-    *o = max(cusp::abs(*i1), cusp::abs(*i2));
+  __device__ __forceinline__ void operator()(ccx* o, ccx* i1, ccx* i2) {
+    *o = max(thrust::abs(*i1), thrust::abs(*i2));
   }
 };
 
@@ -197,17 +184,12 @@ void THZCudaTensor_cmax(THCState *state, THZCudaTensor *self, THZCudaTensor *src
 }
 
 struct TensorMinOp {
-  __device__ __forceinline__ void operator()(float* out, float* in) {
-    ccx *o = (ccx*)out;
-    ccx *i = (ccx*)in;
-    *o = min(cusp::abs(*o), cusp::abs(*i));
+  __device__ __forceinline__ void operator()(ccx* o, ccx* i) {
+    *o = min(thrust::abs(*o), thrust::abs(*i));
   }
 
-  __device__ __forceinline__ void operator()(float* out, float* in1, float* in2) {
-    ccx *o = (ccx*)out;
-    ccx *i1 = (ccx*)in1;
-    ccx *i2 = (ccx*)in2;
-    *o = min(cusp::abs(*i1), cusp::abs(*i2));
+  __device__ __forceinline__ void operator()(ccx* o, ccx* i1, ccx* i2) {
+    *o = min(thrust::abs(*i1), thrust::abs(*i2));
   }
 };
 

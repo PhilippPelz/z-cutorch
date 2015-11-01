@@ -15,10 +15,11 @@
 
 #include <cuComplex.h>
 #include <complex.h>
-#define cx float complex
-typedef cuComplex cux;
 
-#define USE_MAGMA
+#define cx float _Complex           // used in all public interfaces
+typedef cuComplex cux;              // used in ZCudaStorage
+
+/* #undef USE_MAGMA */
 
 #ifdef __cplusplus
 # define THZC_EXTERNC extern "C"

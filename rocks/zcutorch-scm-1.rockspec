@@ -6,7 +6,7 @@ source = {
 }
 
 description = {
-   summary = "Torch CUDA complex number Implementation",
+   summary = "Torch CUDA complex number Implementation ",
    detailed = [[
    ]],
    homepage = "https://github.com/torch/zcutorch",
@@ -20,7 +20,7 @@ dependencies = {
 build = {
    type = "command",
    build_command = [[
-cmake -E make_directory build && cd build && cmake .. -DLUALIB=$(LUALIB) -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(LUA_BINDIR)/.." -DCMAKE_INSTALL_PREFIX="$(PREFIX)" && $(MAKE) install
+cmake -E make_directory build && cd build && cmake .. -DLUALIB=$(LUALIB) -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(LUA_BINDIR)/.." -DCMAKE_INSTALL_PREFIX="$(PREFIX)" -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda && $(MAKE) -j$(getconf _NPROCESSORS_ONLN) install
 ]],
 	platforms = {
       windows = {

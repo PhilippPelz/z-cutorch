@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCBlas.cu.o"
+  "CMakeFiles/THZC.dir/./THZC_generated_THZCGeneral.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCStorage.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCStorageCopy.cu.o"
   "CMakeFiles/THZC.dir/./THZC_generated_THZCTensor.cu.o"

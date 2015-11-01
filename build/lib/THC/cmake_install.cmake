@@ -37,15 +37,15 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so")
     file(RPATH_CHECK
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so"
-         RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/lib")
+         RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib")
   endif()
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/philipp/projects/zcutorch/build/lib/THC/libTHZC.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so"
-         OLD_RPATH "/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/lib:::::::::::::::"
-         NEW_RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/lib")
+         OLD_RPATH "/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:::::::::::::::"
+         NEW_RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so")
     endif()
@@ -56,6 +56,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/THC" TYPE FILE FILES
     "/home/philipp/projects/zcutorch/lib/THC/THZC.h"
     "/home/philipp/projects/zcutorch/build/lib/THC/THZCGeneral.h"
+    "/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.cuh"
     "/home/philipp/projects/zcutorch/lib/THC/THZCBlas.h"
     "/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h"
     "/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h"

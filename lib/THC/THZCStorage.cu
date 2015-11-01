@@ -1,4 +1,6 @@
 #include "THZCStorage.h"
+#include "THZCGeneral.h"
+#include "THZCGeneral.cuh"
 
 #include <thrust/device_ptr.h>
 #include <thrust/fill.h>
@@ -6,9 +8,10 @@
 #include <thrust/system/cuda/execution_policy.h>
 #endif
 
-#include <cusp/complex.h>
-typedef cusp::complex<float> ccx;
-
+// #include <thrust/complex.h>
+// typedef thrust::complex<float> ccx;
+// #include <complex.h>
+// #define cx float _Complex
 void THZCudaStorage_fill(THCState *state, THZCudaStorage *self, cx value)
 {
   thrust::device_ptr<ccx> self_data((ccx*)self->data);
