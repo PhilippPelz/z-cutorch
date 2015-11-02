@@ -805,11 +805,12 @@ for _,name in ipairs({"cmin", "cmax"}) do
         cname(name),
         {{name=Tensor, default=true, returned=true},
          {name=Tensor, method={default=1}},
-         {name=Tensor}},
-        cname(name .. "Value"),
-        {{name=Tensor, default=true, returned=true},
-         {name=Tensor, method={default=1}},
-         {name=real}})
+         {name=Tensor}})
+        --  ,
+        -- cname(name .. "Value"),
+        -- {{name=Tensor, default=true, returned=true},
+        --  {name=Tensor, method={default=1}},
+        --  {name=real}})
 end
 
 wrap("tril",
@@ -838,7 +839,7 @@ for _,name in ipairs({"log","log10", "exp",
 
 end
 
-for _,name in ipairs({"abs","arg","norm"}) do
+for _,name in ipairs({"abs","arg"}) do
    wrap(name,
         cname(name),
         {{name=CTensor, default=true, returned=true, method={default='nil'}},
@@ -879,12 +880,12 @@ wrap("pow",
 --         {name="int"},
 --         {name="boolean", default=false}})
 
-wrap("clamp",
-     cname("clamp"),
-     {{name=Tensor, default=true, returned=true, method={default='nil'}},
-      {name=Tensor, default=1},
-      {name=real},
-      {name=real}})
+-- wrap("clamp",
+--      cname("clamp"),
+--      {{name=Tensor, default=true, returned=true, method={default='nil'}},
+--       {name=Tensor, default=1},
+--       {name=real},
+--       {name=real}})
 
 -- for _,name in pairs({'lt','gt','le','ge','eq','ne'}) do
 --    wrap(name,
