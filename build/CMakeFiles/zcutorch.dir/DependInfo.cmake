@@ -15,6 +15,7 @@ set(CMAKE_C_COMPILER_ID "GNU")
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/DependInfo.cmake"
   )
 
 # The include file search paths:

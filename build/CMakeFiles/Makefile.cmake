@@ -11,6 +11,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.0.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.0.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.0.2/CMakeSystem.cmake"
+  "lib/THC/CMakeFiles/THZC.dir/THZC_generated_FFT.cu.o.depend"
   "lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCApply.cu.o.depend"
   "lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCBlas.cu.o.depend"
   "lib/THC/CMakeFiles/THZC.dir/THZC_generated_THZCGeneral.cu.o.depend"
@@ -77,7 +78,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/cudatensormathwrap.dir/DependInfo.cmake"
+  "CMakeFiles/zcudatensormathwrap.dir/DependInfo.cmake"
   "CMakeFiles/zcutorch.dir/DependInfo.cmake"
   "CMakeFiles/zcutorch_static.dir/DependInfo.cmake"
   "lib/THC/CMakeFiles/THZC.dir/DependInfo.cmake"

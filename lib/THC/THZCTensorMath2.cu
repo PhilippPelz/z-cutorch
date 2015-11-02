@@ -22,6 +22,37 @@
 // 	return ccx(crealf(val), cimagf(val));
 // }
 
+struct ZTensorPowOp {
+  ZTensorPowOp(float v) : val(v) {}
+  __device__ __forceinline__ void operator()(ccx* out, ccx* in) {
+    *out = thrust::pow(*in, val);
+  }
+
+  __device__ __forceinline__ void operator()(ccx* v) {
+    *v = thrust::pow(*v, val);
+  }
+
+  const ccx val;
+};
+
+void THZCudaTensor_powValue(THCState *state, THZCudaTensor *self_, THZCudaTensor *src, cx value)
+{
+  THAssert(THCudaTensor_checkGPU(state, 2, self_, src));
+  if (self_ == src) {
+    if (!THCudaTensor_pointwiseApply1(state, self_, ZTensorPowOp(value))) {
+      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+    }
+  } else {
+    THCudaTensor_resizeAs(state, self_, src);
+
+    if (!THCudaTensor_pointwiseApply2(state, self_, src, ZTensorPowOp(value))) {
+      THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+    }
+  }
+
+  THCudaCheck(cudaGetLastError());
+}
+
 cx THZCudaTensor_meanall(THCState *state, THZCudaTensor *self)
 {
   THAssert(THZCudaTensor_checkGPU(state, 1, self));
@@ -151,7 +182,7 @@ float THZCudaTensor_normall(THCState *state, THZCudaTensor *self, float value)
   return res;
 }
 
-void THZCudaTensor_norm(THCState *state, THZCudaTensor* self, THZCudaTensor* src, float value, long dimension)
+void THZCudaTensor_normDim(THCState *state, THZCudaTensor* self, THZCudaTensor* src, float value, long dimension)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
   if (value == 0.0f) {

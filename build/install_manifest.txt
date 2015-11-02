@@ -6,6 +6,7 @@
 /home/philipp/torch/install/lib/libTHZC.so
 /home/philipp/torch/install/include/THC/THZC.h
 /home/philipp/torch/install/include/THC/THZCGeneral.h
+/home/philipp/torch/install/include/THC/FFT.h
 /home/philipp/torch/install/include/THC/THZCGeneral.cuh
 /home/philipp/torch/install/include/THC/THZCBlas.h
 /home/philipp/torch/install/include/THC/THZCStorage.h

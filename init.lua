@@ -1,4 +1,6 @@
 require "torch"
+require "cutorch"
+require 'ztorch'
 zcutorch = paths.require("libzcutorch")
 
 local ffi = require 'ffi'

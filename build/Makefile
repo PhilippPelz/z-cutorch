@@ -144,17 +144,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named cudatensormathwrap
+# Target rules for targets named zcudatensormathwrap
 
 # Build rule for target.
-cudatensormathwrap: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 cudatensormathwrap
-.PHONY : cudatensormathwrap
+zcudatensormathwrap: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 zcudatensormathwrap
+.PHONY : zcudatensormathwrap
 
 # fast build rule for target.
-cudatensormathwrap/fast:
-	$(MAKE) -f CMakeFiles/cudatensormathwrap.dir/build.make CMakeFiles/cudatensormathwrap.dir/build
-.PHONY : cudatensormathwrap/fast
+zcudatensormathwrap/fast:
+	$(MAKE) -f CMakeFiles/zcudatensormathwrap.dir/build.make CMakeFiles/zcudatensormathwrap.dir/build
+.PHONY : zcudatensormathwrap/fast
 
 #=============================================================================
 # Target rules for targets named zcutorch
@@ -363,13 +363,13 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... cudatensormathwrap"
 	@echo "... edit_cache"
 	@echo "... install"
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... zcudatensormathwrap"
 	@echo "... zcutorch"
 	@echo "... zcutorch_static"
 	@echo "... THZC"

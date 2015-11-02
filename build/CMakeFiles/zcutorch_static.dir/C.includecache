@@ -97,6 +97,8 @@ torch/utils.h
 /home/philipp/projects/zcutorch/torch/utils.h
 THZCTensorCopy.h
 /home/philipp/projects/zcutorch/THZCTensorCopy.h
+THZTensor.h
+/home/philipp/projects/zcutorch/THZTensor.h
 THZC.h
 /home/philipp/projects/zcutorch/THZC.h
 THFile.h
@@ -131,18 +133,6 @@ string.h
 /home/philipp/projects/zcutorch/build/string.h
 string.h
 /home/philipp/projects/zcutorch/build/string.h
-
-/home/philipp/projects/zcutorch/init.c
-utils.h
-/home/philipp/projects/zcutorch/utils.h
-luaT.h
-/home/philipp/projects/zcutorch/luaT.h
-THZCGeneral.h
-/home/philipp/projects/zcutorch/THZCGeneral.h
-
-/home/philipp/projects/zcutorch/torch/utils.c
-utils.h
-/home/philipp/projects/zcutorch/torch/utils.h
 
 /home/philipp/projects/zcutorch/torch/utils.h
 luaT.h

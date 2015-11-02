@@ -1,4 +1,4 @@
 /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir
-/home/philipp/projects/zcutorch/build/CMakeFiles/cudatensormathwrap.dir
+/home/philipp/projects/zcutorch/build/CMakeFiles/zcudatensormathwrap.dir
 /home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch.dir
 /home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch_static.dir

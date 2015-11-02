@@ -80,6 +80,7 @@ SET(src-cuda
   THZCReduceApplyUtils.cu
   THZCBlas.cu
   THZCGeneral.cu
+  FFT.cu
   THZCStorage.cu
   THZCStorageCopy.cu
   THZCTensor.cu
@@ -115,6 +116,7 @@ INSTALL(TARGETS THZC
 INSTALL(FILES
           THZC.h
           ${CMAKE_CURRENT_BINARY_DIR}/THZCGeneral.h
+          FFT.h
           THZCGeneral.cuh
           THZCBlas.h
           THZCStorage.h

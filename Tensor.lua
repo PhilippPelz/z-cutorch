@@ -22,7 +22,15 @@ local function Tensor__typeAs(self,tensor)
    return self:type(tensor:type())
 end
 local function Tensor__zcuda(self)
-   return self:type('torch.ZCudaTensor')
+  local zfloat = self:type('torch.ZFloatTensor')
+  return torch.ZCudaTensor(zfloat:size()):copy(zfloat)
+end
+local function ZFTensor__zcuda(self)
+  return torch.ZCudaTensor(self:size()):copy(self)
+end
+local function Tensor__zcuda_device(self)
+
+  -- TODO
 end
 local function Tensor__double(self)
    return self:type('torch.DoubleTensor')
@@ -51,14 +59,15 @@ local function Tensor__long(self)
    return self:type('torch.LongTensor')
 end
 
-rawset(torch.getmetatable('torch.DoubleTensor'), 'cuda', Tensor__zcuda)
-rawset(torch.getmetatable('torch.FloatTensor'), 'cuda', Tensor__zcuda)
-rawset(torch.getmetatable('torch.ByteTensor'), 'cuda', Tensor__zcuda)
-rawset(torch.getmetatable('torch.CharTensor'), 'cuda', Tensor__zcuda)
-rawset(torch.getmetatable('torch.IntTensor'), 'cuda', Tensor__zcuda)
-rawset(torch.getmetatable('torch.ShortTensor'), 'cuda', Tensor__zcuda)
-rawset(torch.getmetatable('torch.LongTensor'), 'cuda', Tensor__zcuda)
-rawset(torch.getmetatable('torch.CudaTensor'), 'cuda', Tensor__zcuda)
+rawset(torch.getmetatable('torch.DoubleTensor'), 'zcuda', Tensor__zcuda)
+rawset(torch.getmetatable('torch.FloatTensor'), 'zcuda', Tensor__zcuda)
+rawset(torch.getmetatable('torch.ByteTensor'), 'zcuda', Tensor__zcuda)
+rawset(torch.getmetatable('torch.CharTensor'), 'zcuda', Tensor__zcuda)
+rawset(torch.getmetatable('torch.IntTensor'), 'zcuda', Tensor__zcuda)
+rawset(torch.getmetatable('torch.ShortTensor'), 'zcuda', Tensor__zcuda)
+rawset(torch.getmetatable('torch.LongTensor'), 'zcuda', Tensor__zcuda)
+rawset(torch.getmetatable('torch.ZFloatTensor'), 'zcuda', ZFTensor__zcuda)
+rawset(torch.getmetatable('torch.CudaTensor'), 'zcuda', Tensor__zcuda_device)
 
 rawset(torch.getmetatable('torch.ZCudaTensor'), 'type', Tensor__type)
 rawset(torch.getmetatable('torch.ZCudaTensor'), 'typeAs', Tensor__typeAs)

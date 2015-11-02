@@ -56,6 +56,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/THC" TYPE FILE FILES
     "/home/philipp/projects/zcutorch/lib/THC/THZC.h"
     "/home/philipp/projects/zcutorch/build/lib/THC/THZCGeneral.h"
+    "/home/philipp/projects/zcutorch/lib/THC/FFT.h"
     "/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.cuh"
     "/home/philipp/projects/zcutorch/lib/THC/THZCBlas.h"
     "/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h"

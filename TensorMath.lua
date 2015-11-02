@@ -719,7 +719,7 @@ wrap("scatter",
            {name=Tensor, dim=1},
            {name=Tensor, dim=1}}
    )
-print("----------------------------------- 2")
+-- print("----------------------------------- 2")
    for _,f in ipairs({
          {name="addmv",   dim1=1, dim2=2, dim3=1},
          {name="addmm",   dim1=2, dim2=2, dim3=2},
@@ -800,17 +800,17 @@ for _,name in ipairs({"min", "max"}) do
            {name="index"}})
 end
 
--- for _,name in ipairs({"cmin", "cmax"}) do
---    wrap(name,
---         cname(name),
---         {{name=Tensor, default=true, returned=true},
---          {name=Tensor, method={default=1}},
---          {name=Tensor}},
---         cname(name .. "Value"),
---         {{name=Tensor, default=true, returned=true},
---          {name=Tensor, method={default=1}},
---          {name=real}})
--- end
+for _,name in ipairs({"cmin", "cmax"}) do
+   wrap(name,
+        cname(name),
+        {{name=Tensor, default=true, returned=true},
+         {name=Tensor, method={default=1}},
+         {name=Tensor}},
+        cname(name .. "Value"),
+        {{name=Tensor, default=true, returned=true},
+         {name=Tensor, method={default=1}},
+         {name=real}})
+end
 
 wrap("tril",
      cname("tril"),
@@ -823,19 +823,26 @@ wrap("triu",
      {{name=Tensor, default=true, returned=true},
       {name=Tensor},
       {name="int", default=0}})
-print("----------------------------------- 2")
-for _,name in ipairs({"log", "exp",
-                      "cos", "acos", "cosh",
-                      "sin", "asin", "sinh",
-                      "tan", "atan", "tanh",
-                      "sqrt",
-                      "abs"}) do
+
+for _,name in ipairs({"log","log10", "exp",
+                      "cos", "acos", "cosh","acosh",
+                      "sin", "asin", "sinh","asinh",
+                      "tan", "atan", "tanh","atanh",
+                      "sqrt","conj","proj",
+                      "zabs","zarg","znorm"}) do
 
    wrap(name,
         cname(name),
         {{name=Tensor, default=true, returned=true, method={default='nil'}},
          {name=Tensor, method={default=1}}})
 
+end
+
+for _,name in ipairs({"abs","arg","norm"}) do
+   wrap(name,
+        cname(name),
+        {{name=CTensor, default=true, returned=true, method={default='nil'}},
+         {name=Tensor, method={default=1}}})
 end
 
 -- wrap("atan2",
@@ -849,12 +856,11 @@ end
 wrap("pow",
      cname("pow"),
      {{name=Tensor, default=true, returned=true, method={default='nil'}},
-      {name=Tensor, method={default=1}},
+      {name=Tensor, method={default=1}}},
+     cname("powValue"),
+     {{name=Tensor, default=true, returned=true},
+      {name=Tensor},
       {name=real}})
-    --  cname("tpow"),
-    --  {{name=Tensor, default=true, returned=true, method={default='nil'}},
-    --   {name = real},
-    --   {name=Tensor, method={default=1}}})
 
 -- wrap("rand",
 --      cname("rand"),
@@ -1053,12 +1059,14 @@ wrap("norm",
      {{name=Tensor},
       {name=real, default=2},
       {name=real, creturned=true}},
-     cname("norm"),
+     cname("normDim"),
      {{name=Tensor, default=true, returned=true},
       {name=Tensor},
       {name=real},
-      {name="index"}})
-
+      {name="index"}},
+      cname("norm"),
+      {{name=CTensor, default=true, returned=true, method={default='nil'}},
+       {name=Tensor, method={default=1}}})
 wrap("renorm",
      cname("renorm"),
      {{name=Tensor, default=true, returned=true, method={default='nil'}},
