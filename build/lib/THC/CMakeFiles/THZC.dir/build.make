@@ -420,6 +420,7 @@ lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcudart.so
 lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcublas.so
 lib/THC/libTHZC.so: /home/philipp/torch/install/lib/libTH.so
 lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcurand.so
+lib/THC/libTHZC.so: /usr/local/lib/libmagma.so
 lib/THC/libTHZC.so: /opt/OpenBLAS/lib/libopenblas.so
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX shared library libTHZC.so"

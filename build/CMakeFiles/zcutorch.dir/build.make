@@ -217,6 +217,7 @@ libzcutorch.so: /usr/local/cuda/lib64/libcublas.so
 libzcutorch.so: /home/philipp/torch/install/lib/libTH.so
 libzcutorch.so: /opt/OpenBLAS/lib/libopenblas.so
 libzcutorch.so: /usr/local/cuda/lib64/libcurand.so
+libzcutorch.so: /usr/local/lib/libmagma.so
 libzcutorch.so: CMakeFiles/zcutorch.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking C shared module libzcutorch.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/zcutorch.dir/link.txt --verbose=$(VERBOSE)

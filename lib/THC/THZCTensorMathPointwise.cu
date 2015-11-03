@@ -64,9 +64,6 @@ IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(sqrt, thrust::sqrt)
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(conj, thrust::conj)
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(proj, thrust::proj)
 
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(pow, thrust::pow)
-
-
 #define IMPLEMENT_CUDA_TENSOR_BASIC_FUNCZ(NAME, CFUNC)                   \
   struct Tensor##NAME##Op {                                             \
     __device__ __forceinline__ void operator()(ccx* o, ccx* i) const { \
@@ -110,14 +107,13 @@ IMPLEMENT_CUDA_TENSOR_BASIC_FUNCZ(znorm, thrust::norm)
   void THZCudaTensor_##NAME(THCState* state, THCudaTensor* self_, THZCudaTensor* src) { \
     THAssert(THZCudaTensor_checkGPU(state, 1, src));                \
     THAssert(THCudaTensor_checkGPU(state, 1, self_));                \
-    THLongStorage *size = THCudaTensor_newSizeOf(state, src);                 \
-    THLongStorage *stride = THCudaTensor_newStrideOf(state, src);               \
+    THLongStorage *size = THZCudaTensor_newSizeOf(state, src);                 \
+    THLongStorage *stride = THZCudaTensor_newStrideOf(state, src);               \
     THCudaTensor_resize(state,self_,size,stride);                               \
                                                                         \
       if (!THZCudaTensor_pointwiseApply2ZF(state, src, self_, Tensor##NAME##Op())) { \
         THArgCheck(false, 2, CUTORCH_DIM_WARNING); 						\
       }                                                                 \
-    }                                                                   \
                                                                         \
     THZCudaCheck(cudaGetLastError());                                    \
     THLongStorage_free(size);                                           \
@@ -125,16 +121,79 @@ IMPLEMENT_CUDA_TENSOR_BASIC_FUNCZ(znorm, thrust::norm)
   }
 
 
+  __device__ __forceinline__ float exreal(ccx& i) {
+    return i.real();
+  }
+
+
+  __device__ __forceinline__ float eximag(ccx& i) {
+    return i.imag();
+  }
+
 
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(abs, thrust::abs)
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(arg, thrust::arg)
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(norm, thrust::norm)
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(real, [ccx* i,float* o] () { *o = (*i).real();   })
-IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(imag, [ccx* i,float* o] () { *o = (*i).imag();   })
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(real, exreal)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(imag, eximag)
 
 // IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(round, roundf)
 
 #undef IMPLEMENT_CUDA_TENSOR_BASIC_FUNC
+
+struct TensorzrealOp {
+__device__ __forceinline__ void operator()(ccx* o, ccx* i) const {
+  *o = ccx((*i).real(),0);
+}
+
+__device__ __forceinline__ void operator()(ccx* v) const {
+  *v = ccx((*v).real(),0);
+}
+};
+
+void THZCudaTensor_zreal(THCState* state, THZCudaTensor* self_, THZCudaTensor* src) {
+THAssert(THZCudaTensor_checkGPU(state, 2, self_, src));
+if (self_ == src) {
+  if (!THZCudaTensor_pointwiseApply1(state, self_, TensorzrealOp())) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+} else {
+  THZCudaTensor_resizeAs(state, self_, src);
+
+  if (!THZCudaTensor_pointwiseApply2(state, self_, src, TensorzrealOp())) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+}
+
+THZCudaCheck(cudaGetLastError());
+}
+
+struct TensorzimagOp {
+__device__ __forceinline__ void operator()(ccx* o, ccx* i) const {
+  *o = ccx((*i).real(),0);
+}
+
+__device__ __forceinline__ void operator()(ccx* v) const {
+  *v = ccx((*v).real(),0);
+}
+};
+
+void THZCudaTensor_zimag(THCState* state, THZCudaTensor* self_, THZCudaTensor* src) {
+THAssert(THZCudaTensor_checkGPU(state, 2, self_, src));
+if (self_ == src) {
+  if (!THZCudaTensor_pointwiseApply1(state, self_, TensorzimagOp())) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+} else {
+  THZCudaTensor_resizeAs(state, self_, src);
+
+  if (!THZCudaTensor_pointwiseApply2(state, self_, src, TensorzimagOp())) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+}
+
+THZCudaCheck(cudaGetLastError());
+}
 
 struct TensorAddOp {
 	__device__ __forceinline__ void operator()(ccx* o, ccx* i) {
@@ -198,14 +257,15 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
 }
 
 struct TensorPolarOp {
-	__device__ __forceinline__ void operator()(ccx* out, float* abs, float* arg) {
+	__device__ __forceinline__ void operator()(float* abs, float* arg, ccx* out) {
 		*out = thrust::polar(*abs,*arg);
 	}
 };
 
 void THZCudaTensor_polar(THCState *state, THZCudaTensor *self_, THCudaTensor *src1, THCudaTensor *src2) {
-	THAssert(THZCudaTensor_checkGPU(state, 3, self_, src1, src2));
-	THArgCheck(THZCudaTensor_nElement(state, src1) == THZCudaTensor_nElement(state, src2), 3, "sizes do not match");
+	THAssert(THZCudaTensor_checkGPU(state, 2, self_, src2));
+	THAssert(THCudaTensor_checkGPU(state, 1, src1));
+	THArgCheck(THCudaTensor_nElement(state, src1) == THCudaTensor_nElement(state, src2), 3, "sizes do not match");
 
 
     THLongStorage *size = THCudaTensor_newSizeOf(state, src1);
@@ -213,13 +273,107 @@ void THZCudaTensor_polar(THCState *state, THZCudaTensor *self_, THCudaTensor *sr
     THZCudaTensor_resize(state,self_,size,stride);
 
 		// self = src1 * src2
-		if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorPolarOp())) {
+		if (!THZCudaTensor_pointwiseApply3FFZ(state, src1, src2, self_, TensorPolarOp())) {
 			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
 		}
 
 	   THZCudaCheck(cudaGetLastError());
 }
 
+struct TensorPowOp {
+	__device__ __forceinline__ void operator()(ccx* out, ccx* in) {
+		*out = thrust::pow(*out,*in);
+	}
+
+	__device__ __forceinline__ void operator()(ccx* out, ccx* in1, ccx* in2) {
+		*out = thrust::pow(*in1,*in2);
+	}
+};
+
+void THZCudaTensor_cpow(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THZCudaTensor *src2) {
+	THAssert(THZCudaTensor_checkGPU(state, 3, self_, src1, src2));
+	THArgCheck(THZCudaTensor_nElement(state, src1) == THZCudaTensor_nElement(state, src2), 3, "sizes do not match");
+
+	if (self_ == src1) {
+		// self *= src2
+		if (!THZCudaTensor_pointwiseApply2(state, self_, src2, TensorPowOp())) {
+			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+		}
+	} else {
+		THZCudaTensor_resizeAs(state, self_, src1);
+
+		// self = src1 * src2
+		if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorPowOp())) {
+			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+		}
+	}
+
+	THZCudaCheck(cudaGetLastError());
+}
+
+struct TensorSetImOp {
+	__device__ __forceinline__ void operator()(ccx* out, float* in) {
+		out->imag(*in);
+	}
+
+	__device__ __forceinline__ void operator()(ccx* out, ccx* in1, float* in2) {
+    in1->imag(*in2);
+		*out = *in1;
+	}
+};
+THZC_API void THZCudaTensor_cim(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THCudaTensor *src2){
+THAssert(THZCudaTensor_checkGPU(state, 2, self_, src1, src2));
+THAssert(THZCudaTensor_checkGPU(state, 1, src2));
+THArgCheck(THZCudaTensor_nElement(state, src1) == THCudaTensor_nElement(state, src2), 3, "sizes do not match");
+
+if (self_ == src1) {
+  // self *= src2
+  if (!THZCudaTensor_pointwiseApply2ZF(state, self_, src2, TensorSetImOp())) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+} else {
+  THZCudaTensor_resizeAs(state, self_, src1);
+
+  // self = src1 * src2
+  if (!THZCudaTensor_pointwiseApply3ZZF(state, self_, src1, src2, TensorSetImOp())) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+}
+
+THZCudaCheck(cudaGetLastError());
+}
+
+struct TensorSetReOp {
+	__device__ __forceinline__ void operator()(ccx* out, float* in) {
+		out->real(*in);
+	}
+
+	__device__ __forceinline__ void operator()(ccx* out, ccx* in1, float* in2) {
+    in1->real(*in2);
+		*out = *in1;
+	}
+};
+THZC_API void THZCudaTensor_cre(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THCudaTensor *src2){
+THAssert(THZCudaTensor_checkGPU(state, 2, self_, src1, src2));
+THAssert(THZCudaTensor_checkGPU(state, 1, src2));
+THArgCheck(THZCudaTensor_nElement(state, src1) == THCudaTensor_nElement(state, src2), 3, "sizes do not match");
+
+if (self_ == src1) {
+  // self *= src2
+  if (!THZCudaTensor_pointwiseApply2ZF(state, self_, src2, TensorSetReOp())) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+} else {
+  THZCudaTensor_resizeAs(state, self_, src1);
+
+  // self = src1 * src2
+  if (!THZCudaTensor_pointwiseApply3ZZF(state, self_, src1, src2, TensorSetReOp())) {
+    THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+  }
+}
+
+THZCudaCheck(cudaGetLastError());
+}
 
 struct TensorMulOp {
 	__device__ __forceinline__ void operator()(ccx* out, ccx* in) {

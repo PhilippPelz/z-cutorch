@@ -1,7 +1,8 @@
 require "torch"
 require "cutorch"
 require 'ztorch'
-zcutorch = paths.require("libzcutorch")
+
+local zcutorch = paths.require("libzcutorch")
 
 local ffi = require 'ffi'
 local argcheck = require 'argcheck'
@@ -9,8 +10,8 @@ local argcheck = require 'argcheck'
 torch.ZCudaStorage.__tostring__ = torch.ZFloatStorage.__tostring__
 torch.ZCudaTensor.__tostring__ = torch.ZFloatTensor.__tostring__
 
+
 include('Tensor.lua')
-include('FFI.lua')
 include('test.lua')
 
 local unpack = unpack or table.unpack

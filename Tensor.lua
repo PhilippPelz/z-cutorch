@@ -1,3 +1,26 @@
+local C = require 'THZCi'
+
+local THZCudaTensor_abs = C['THZCudaTensor_abs']
+local THZCudaTensor_arg = C['THZCudaTensor_arg']
+local THZCudaTensor_norm = C['THZCudaTensor_norm']
+
+local THZCudaTensor_real = C['THZCudaTensor_real']
+local THZCudaTensor_imag = C['THZCudaTensor_imag']
+
+local THZCudaTensor_zabs = C['THZCudaTensor_zabs']
+local THZCudaTensor_zarg = C['THZCudaTensor_zarg']
+local THZCudaTensor_znorm = C['THZCudaTensor_znorm']
+
+local THZCudaTensor_zreal = C['THZCudaTensor_zreal']
+local THZCudaTensor_zimag = C['THZCudaTensor_zimag']
+
+local THZCudaTensor_normall = C['THZCudaTensor_normall']
+local THZCudaTensor_normDim = C['THZCudaTensor_normDim']
+
+local THZCudaTensor_polar = C['THZCudaTensor_polar']
+local THZCudaTensor_cim = C['THZCudaTensor_cim']
+local THZCudaTensor_cre = C['THZCudaTensor_cre']
+
 function torch.ZCudaTensor.apply(self, func)
    local x = torch.ZFloatTensor(self:size()):copy(self)
    x:apply(func)
@@ -21,20 +44,25 @@ end
 local function Tensor__typeAs(self,tensor)
    return self:type(tensor:type())
 end
+
 local function Tensor__zcuda(self)
   local zfloat = self:type('torch.ZFloatTensor')
   return torch.ZCudaTensor(zfloat:size()):copy(zfloat)
 end
+
 local function ZFTensor__zcuda(self)
   return torch.ZCudaTensor(self:size()):copy(self)
 end
+
 local function Tensor__zcuda_device(self)
 
   -- TODO
 end
+
 local function Tensor__double(self)
    return self:type('torch.DoubleTensor')
 end
+
 local function Tensor__zfloat(self)
    return self:type('torch.ZFloatTensor')
 end
@@ -59,6 +87,228 @@ local function Tensor__long(self)
    return self:type('torch.LongTensor')
 end
 
+local ZTensor = {}
+
+local typename = "torch.ZCudaTensor"
+local ctypename = "torch.CudaTensor"
+
+ZTensor.abs = argcheck{
+   nonamed=true,
+   {name="src", type=typename},
+   call = function(src)
+      local dst = CudaTensor.new()
+      THZCudaTensor_abs(cutorch._state,dst:cdata(), src)
+      return dst
+   end
+}
+ZTensor.abs = argcheck{
+   nonamed=true,
+   {name="dst", type=ctypename},
+   {name="src", type=typename},
+   overload=ZTensor.abs,
+   call = function(dst, src)
+      THZCudaTensor_zabs(cutorch._state,dst, src)
+      return dst
+   end
+}
+
+ZTensor.arg = argcheck{
+   nonamed=true,
+   {name="src", type=typename},
+   call = function(src)
+      local dst = CudaTensor.new()
+      THZCudaTensor_arg(cutorch._state,dst:cdata(), src)
+      return dst
+   end
+}
+
+ZTensor.arg = argcheck{
+   nonamed=true,
+   {name="dst", type=typename},
+   {name="src", type=typename},
+   overload=ZTensor.arg,
+   call = function(dst, src)
+      THZCudaTensor_zarg(cutorch._state,dst, src)
+      return dst
+   end
+}
+
+ZTensor.re = argcheck{
+   nonamed=true,
+   {name="src", type=typename},
+   call = function(src)
+      local dst = CudaTensor.new()
+      THZCudaTensor_real(cutorch._state,dst:cdata(), src)
+      return dst
+   end
+}
+ZTensor.re = argcheck{
+   nonamed=true,
+   {name="dst", type=typename},
+   {name="src", type=typename},
+   overload=ZTensor.re,
+   call = function(dst, src)
+      THZCudaTensor_zreal(cutorch._state,dst, src)
+      return dst
+   end
+}
+
+ZTensor.im = argcheck{
+   nonamed=true,
+   {name="src", type=typename},
+   call = function(src)
+      local dst = CudaTensor.new()
+      THZCudaTensor_imag(cutorch._state,dst:cdata(), src)
+      return dst
+   end
+}
+ZTensor.im = argcheck{
+   nonamed=true,
+   {name="dst", type=typename},
+   {name="src", type=typename},
+   overload=ZTensor.im,
+   call = function(dst, src)
+      THZCudaTensor_zimag(cutorch._state,dst, src)
+      return dst
+   end
+}
+
+ZTensor.norm = argcheck{
+   nonamed=true,
+   {name="src", type=typename},
+   call = function(src)
+      local dst = CudaTensor.new()
+      THZCudaTensor_norm(cutorch._state,dst:cdata(), src)
+      return dst
+   end
+}
+
+ZTensor.norm = argcheck{
+   nonamed=true,
+   {name="dst", type=typename},
+   {name="src", type=typename},
+   overload=ZTensor.norm,
+   call = function(dst, src)
+      THZCudaTensor_znorm(cutorch._state,dst, src)
+      return dst
+   end
+}
+
+ZTensor.normall = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="value", type="number"},
+   call = function(self, value)
+      return THZCudaTensor_normall(cutorch._state,self, value)
+   end
+}
+
+ZTensor.normDim = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src", type=typename},
+   {name="value", type="number"},
+   {name="dimension", type="number"},
+   call = function(self, src, value, dimension)
+      THZCudaTensor_normDim(cutorch._state,self, src, value, dimension)
+      return self
+   end
+}
+
+ZTensor.polar = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src1", type=ctypename},
+   {name="src2", type=ctypename},
+   call = function(self, src1, src2)
+      THZCudaTensor_polar(cutorch._state,self, src1, src2)
+      return self
+   end
+}
+
+ZTensor.cim = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src2", type=ctypename},
+   call = function(self, src2)
+      THZCudaTensor_cim(cutorch._state,self, self, src2)
+      return self
+   end
+}
+ZTensor.cim = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src1", type=typename},
+   {name="src2", type=ctypename},
+   overload=ZTensor.cim,
+   call = function(self, src1, src2)
+      THZCudaTensor_cim(cutorch._state,self, src1, src2)
+      return self
+   end
+}
+
+ZTensor.cre = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src2", type=ctypename},
+   call = function(self, src2)
+      THZCudaTensor_cre(cutorch._state,self, self, src2)
+      return self
+   end
+}
+
+ZTensor.cre = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src1", type=typename},
+   {name="src2", type=ctypename},
+   overload=ZTensor.cre,
+   call = function(self, src1, src2)
+      THZCudaTensor_cre(cutorch._state,self, src1, src2)
+      return self
+   end
+}
+
+zmetatable = torch.getmetatable('torch.ZCudaTensor')
+rawset( zmetatable, 'type', Tensor__type)
+rawset( zmetatable, 'typeAs', Tensor__typeAs)
+rawset( zmetatable, 'zfloat', Tensor__zfloat)
+rawset( zmetatable, 'norm', ZTensor.norm)
+rawset( zmetatable, 'im', ZTensor.im)
+rawset( zmetatable, 're', ZTensor.re)
+rawset( zmetatable, 'arg', ZTensor.arg)
+rawset( zmetatable, 'abs', ZTensor.abs)
+rawset( zmetatable, 'normall', ZTensor.normall)
+rawset( zmetatable, 'normDim', ZTensor.normDim)
+rawset( zmetatable, 'polar', ZTensor.polar)
+rawset( zmetatable, 'cim', ZTensor.cim)
+rawset( zmetatable, 'cre', ZTensor.cre)
+
+local basename = 'torch.CudaTensor'
+local metatable = torch.getmetatable(basename)
+rawset(metatable, 're', argcheck{
+   {name='dst', type=basename},
+   {name='src', type=typename},
+   nonamed=true,
+   overload = rawget(metatable, funcname),
+   call =
+      function(dst, src)
+         THZCudaTensor_real(dst:cdata(), src)
+         return dst
+      end
+})
+rawset(metatable, 'im', argcheck{
+   {name='dst', type=basename},
+   {name='src', type=typename},
+   nonamed=true,
+   overload = rawget(metatable, funcname),
+   call =
+      function(dst, src)
+         THZCudaTensor_imag(dst:cdata(), src)
+         return dst
+      end
+})
+
 rawset(torch.getmetatable('torch.DoubleTensor'), 'zcuda', Tensor__zcuda)
 rawset(torch.getmetatable('torch.FloatTensor'), 'zcuda', Tensor__zcuda)
 rawset(torch.getmetatable('torch.ByteTensor'), 'zcuda', Tensor__zcuda)
@@ -68,10 +318,6 @@ rawset(torch.getmetatable('torch.ShortTensor'), 'zcuda', Tensor__zcuda)
 rawset(torch.getmetatable('torch.LongTensor'), 'zcuda', Tensor__zcuda)
 rawset(torch.getmetatable('torch.ZFloatTensor'), 'zcuda', ZFTensor__zcuda)
 rawset(torch.getmetatable('torch.CudaTensor'), 'zcuda', Tensor__zcuda_device)
-
-rawset(torch.getmetatable('torch.ZCudaTensor'), 'type', Tensor__type)
-rawset(torch.getmetatable('torch.ZCudaTensor'), 'typeAs', Tensor__typeAs)
-rawset(torch.getmetatable('torch.ZCudaTensor'), 'zfloat', Tensor__zfloat)
 
 do
     local metatable = torch.getmetatable('torch.ZCudaTensor')

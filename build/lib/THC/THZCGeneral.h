@@ -19,7 +19,7 @@
 #define cx float _Complex           // used in all public interfaces
 typedef cuComplex cux;              // used in ZCudaStorage
 
-/* #undef USE_MAGMA */
+#define USE_MAGMA
 
 #ifdef __cplusplus
 # define THZC_EXTERNC extern "C"

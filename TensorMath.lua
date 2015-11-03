@@ -839,12 +839,12 @@ for _,name in ipairs({"log","log10", "exp",
 
 end
 
-for _,name in ipairs({"abs","arg"}) do
-   wrap(name,
-        cname(name),
-        {{name=CTensor, default=true, returned=true, method={default='nil'}},
-         {name=Tensor, method={default=1}}})
-end
+-- for _,name in ipairs({"abs","arg"}) do
+--    wrap(name,
+--         cname(name),
+--         {{name=CTensor, default=true, returned=true, method={default='nil'}},
+--          {name=Tensor, method={default=1}}})
+-- end
 
 -- wrap("atan2",
 --      cname("atan2"),
@@ -856,9 +856,6 @@ end
 
 wrap("pow",
      cname("pow"),
-     {{name=Tensor, default=true, returned=true, method={default='nil'}},
-      {name=Tensor, method={default=1}}},
-     cname("powValue"),
      {{name=Tensor, default=true, returned=true},
       {name=Tensor},
       {name=real}})
@@ -989,13 +986,13 @@ wrap("eig",
 wrap("svd",
      cname("gesvd"),
      {{name=Tensor, returned=true},
-      {name=Tensor, returned=true},
+      {name=CTensor, returned=true},
       {name=Tensor, returned=true},
       {name=Tensor},
       {name='charoption', values={'A', 'S'}, default='S'}},
      cname("gesvd"),
      {{name=Tensor, default=true, returned=true, invisible=true},
-      {name=Tensor, default=true, returned=true, invisible=true},
+      {name=CTensor, default=true, returned=true, invisible=true},
       {name=Tensor, default=true, returned=true, invisible=true},
       {name=Tensor},
       {name='charoption', values={'A', 'S'}, default='S'}})
@@ -1055,19 +1052,19 @@ for _,name in ipairs({"var", "std"}) do
          {name="boolean", default=false}})
 end
 
-wrap("norm",
-     cname("normall"),
-     {{name=Tensor},
-      {name=real, default=2},
-      {name=real, creturned=true}},
-     cname("normDim"),
-     {{name=Tensor, default=true, returned=true},
-      {name=Tensor},
-      {name=real},
-      {name="index"}},
-      cname("norm"),
-      {{name=CTensor, default=true, returned=true, method={default='nil'}},
-       {name=Tensor, method={default=1}}})
+-- wrap("norm",
+--      cname("normall"),
+--      {{name=Tensor},
+--       {name=real, default=2},
+--       {name=real, creturned=true}},
+--      cname("normDim"),
+--      {{name=Tensor, default=true, returned=true},
+--       {name=Tensor},
+--       {name=real},
+--       {name="index"}},
+--       cname("norm"),
+--       {{name=CTensor, default=true, returned=true, method={default='nil'}},
+--        {name=Tensor, method={default=1}}})
 wrap("renorm",
      cname("renorm"),
      {{name=Tensor, default=true, returned=true, method={default='nil'}},

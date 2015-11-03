@@ -109,7 +109,7 @@ void cufftShift_2D_kernel(ccx* d, int nx, int ny)
 #define cufftSafeCall(err)      __cufftSafeCall(err, __FILE__, __LINE__)
 inline void __cufftSafeCall(cufftResult err, const char *file, const int line) {
 	if (CUFFT_SUCCESS != err) {
-		fprintf(stderr, "CUFFT error in file '%s', line %d\n %s\nerror %d: %s\nterminating!\n",
+		fprintf(stderr, "CUFFT error in file '%s', line %d\n %s\nerror: %d\nterminating!\n",
 		__FILE__, __LINE__, err, _cudaGetErrorEnum(err));
 		cudaDeviceReset();
 		// assert(0);

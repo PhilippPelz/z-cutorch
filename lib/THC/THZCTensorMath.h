@@ -71,8 +71,8 @@ THZC_API void THZCudaTensor_gesv(THCState *state, THZCudaTensor *rb_, THZCudaTen
 THZC_API void THZCudaTensor_gels(THCState *state, THZCudaTensor *rb_, THZCudaTensor *ra_, THZCudaTensor *b_, THZCudaTensor *a_);
 THZC_API void THZCudaTensor_syev(THCState *state, THZCudaTensor *re_, THZCudaTensor *rv_, THZCudaTensor *a_, const char *jobz, const char *uplo);
 THZC_API void THZCudaTensor_geev(THCState *state, THZCudaTensor *re_, THZCudaTensor *rv_, THZCudaTensor *a_, const char *jobvr);
-THZC_API void THZCudaTensor_gesvd(THCState *state, THZCudaTensor *ru_, THZCudaTensor *rs_, THZCudaTensor *rv_, THZCudaTensor *a, const char *jobu);
-THZC_API void THZCudaTensor_gesvd2(THCState *state, THZCudaTensor *ru_, THZCudaTensor *rs_, THZCudaTensor *rv_, THZCudaTensor *ra_, THZCudaTensor *a,
+THZC_API void THZCudaTensor_gesvd(THCState *state, THZCudaTensor *ru_, THCudaTensor *rs_, THZCudaTensor *rv_, THZCudaTensor *a, const char *jobu);
+THZC_API void THZCudaTensor_gesvd2(THCState *state, THZCudaTensor *ru_, THCudaTensor *rs_, THZCudaTensor *rv_, THZCudaTensor *ra_, THZCudaTensor *a,
 		const char *jobu);
 THZC_API void THZCudaTensor_getri(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a);
 THZC_API void THZCudaTensor_potri(THCState *state, THZCudaTensor *ra_, THZCudaTensor *a);
@@ -110,12 +110,13 @@ THZC_API void THZCudaTensor_sqrt(THCState *state, THZCudaTensor *self, THZCudaTe
 THZC_API void THZCudaTensor_conj(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
 THZC_API void THZCudaTensor_proj(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
 
-THZC_API void THZCudaTensor_pow(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
-THZC_API void THZCudaTensor_powValue(THCState *state, THZCudaTensor *self_, THZCudaTensor *src, cx value);
+THZC_API void THZCudaTensor_pow(THCState *state, THZCudaTensor *self_, THZCudaTensor *src, cx value);
 
 THZC_API void THZCudaTensor_zabs(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
 THZC_API void THZCudaTensor_zarg(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
 THZC_API void THZCudaTensor_znorm(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
+THZC_API void THZCudaTensor_zreal(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
+THZC_API void THZCudaTensor_zimag(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
 
 THZC_API void THZCudaTensor_polar(THCState *state, THZCudaTensor *self, THCudaTensor *src1, THCudaTensor *src2);
 
@@ -130,6 +131,8 @@ THZC_API void THZCudaTensor_cmul(THCState *state, THZCudaTensor *self, THZCudaTe
 THZC_API void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, cx value, THZCudaTensor *src2);
 THZC_API void THZCudaTensor_cpow(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THZCudaTensor *src2);
 THZC_API void THZCudaTensor_cdiv(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THZCudaTensor *src2);
+THZC_API void THZCudaTensor_cim(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THCudaTensor *src2);
+THZC_API void THZCudaTensor_cre(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THCudaTensor *src2);
 
 // MathTransformReduce
 THZC_API void THZCudaTensor_min(THCState *state, THZCudaTensor *values, THZCudaTensor *indices, THZCudaTensor *src, long dim);

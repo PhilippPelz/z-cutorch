@@ -23,7 +23,7 @@
 // }
 
 struct ZTensorPowOp {
-  ZTensorPowOp(float v) : val(v) {}
+  ZTensorPowOp(ccx v) : val(v) {}
   __device__ __forceinline__ void operator()(ccx* out, ccx* in) {
     *out = thrust::pow(*in, val);
   }
@@ -35,22 +35,22 @@ struct ZTensorPowOp {
   const ccx val;
 };
 
-void THZCudaTensor_powValue(THCState *state, THZCudaTensor *self_, THZCudaTensor *src, cx value)
+void THZCudaTensor_pow(THCState *state, THZCudaTensor *self_, THZCudaTensor *src, cx value)
 {
-  THAssert(THCudaTensor_checkGPU(state, 2, self_, src));
+  THAssert(THZCudaTensor_checkGPU(state, 2, self_, src));
   if (self_ == src) {
-    if (!THCudaTensor_pointwiseApply1(state, self_, ZTensorPowOp(value))) {
+    if (!THZCudaTensor_pointwiseApply1(state, self_, ZTensorPowOp(toCcx(value)))) {
       THArgCheck(false, 2, CUTORCH_DIM_WARNING);
     }
   } else {
-    THCudaTensor_resizeAs(state, self_, src);
+    THZCudaTensor_resizeAs(state, self_, src);
 
-    if (!THCudaTensor_pointwiseApply2(state, self_, src, ZTensorPowOp(value))) {
+    if (!THZCudaTensor_pointwiseApply2(state, self_, src, ZTensorPowOp(toCcx(value)))) {
       THArgCheck(false, 2, CUTORCH_DIM_WARNING);
     }
   }
 
-  THCudaCheck(cudaGetLastError());
+  THZCudaCheck(cudaGetLastError());
 }
 
 cx THZCudaTensor_meanall(THCState *state, THZCudaTensor *self)
