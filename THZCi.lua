@@ -50,8 +50,6 @@ void THZCudaTensor_cim(THCState *state, THZCudaTensor *self, THZCudaTensor *src1
 void THZCudaTensor_cre(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THCudaTensor *src2);
 ]])
 
-
-ffi.cdef(cdefs)
 C = ffi.load('THZC')
 
 local Storage = torch.getmetatable('torch.ZCudaStorage')

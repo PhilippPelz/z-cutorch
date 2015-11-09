@@ -1,4 +1,5 @@
-local C = require 'THZCi'
+local C = require 'zcutorch.THZCi'
+local argcheck = require "argcheck"
 
 local THZCudaTensor_abs = C['THZCudaTensor_abs']
 local THZCudaTensor_arg = C['THZCudaTensor_arg']
