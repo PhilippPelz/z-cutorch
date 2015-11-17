@@ -219,10 +219,10 @@ static int zcutorch_ZCudaTensor_getDevice(lua_State *L) {
 }
 
 void zcutorch_ZCudaTensor_init(lua_State *L) {
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  // printf("Still running at %s:%d\n", __FILE__, __LINE__);
   /* the standard stuff */
   torch_ZCudaTensor_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  // printf("Still running at %s:%d\n", __FILE__, __LINE__);
   /* additional methods */
   luaT_pushmetatable(L, "torch.ZFloatTensor");
   lua_pushcfunction(L, zcuda_ZFloatTensor_fakecopy);
@@ -250,19 +250,19 @@ void zcutorch_ZCudaTensor_init(lua_State *L) {
     //   lua_setfield(L, -2, "copy");
     //   lua_pop(L, 1);
     // }
-    printf("Still running at %s:%d\n", __FILE__, __LINE__);
+    // printf("Still running at %s:%d\n", __FILE__, __LINE__);
     // Register async copy methods.
     luaT_pushmetatable(L, "torch.ZCudaTensor");
     lua_pushcfunction(L, zcutorch_ZCudaTensor_copyAsync);
     lua_setfield(L, -2, "copyAsync");
     lua_pop(L, 1);
-    printf("Still running at %s:%d\n", __FILE__, __LINE__);
+    // printf("Still running at %s:%d\n", __FILE__, __LINE__);
     luaT_pushmetatable(L, "torch.ZFloatTensor");
     lua_pushcfunction(L, zcutorch_ZFloatTensor_copyAsync);
     lua_setfield(L, -2, "copyAsync");
     lua_pop(L, 1);
   }
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  // printf("Still running at %s:%d\n", __FILE__, __LINE__);
   luaT_pushmetatable(L, "torch.ZCudaTensor");
   lua_pushcfunction(L, zcutorch_ZCudaTensor_getDevice);
   lua_setfield(L, -2, "getDevice");

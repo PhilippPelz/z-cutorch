@@ -286,7 +286,130 @@ ZTensor.cre = argcheck{
    end
 }
 
-zmetatable = torch.getmetatable('torch.ZCudaTensor')
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type=typename},
+   call =
+      function(dst, src)
+         THZCudaTensor_copy(cutorch._state,dst:cdata(), src)
+         return dst
+      end
+}
+
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type='torch.ByteTensor'},
+   overload=ZTensor.copy,
+   call =
+      function(dst, src)
+         src=src:cdata()
+         THZCudaTensor_copyByte(cutorch._state,dst:cdata(), src)
+         return dst
+      end
+}
+
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type='torch.CharTensor'},
+   overload=ZTensor.copy,
+   call =
+      function(dst, src)
+         src=src:cdata()
+         THZCudaTensor_copyChar(cutorch._state,dst:cdata(), src)
+         return dst
+      end
+}
+
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type='torch.ShortTensor'},
+   overload=ZTensor.copy,
+   call =
+      function(dst, src)
+         src=src:cdata()
+         THZCudaTensor_copyShort(cutorch._state,dst:cdata(), src)
+         return dst
+      end
+}
+
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type='torch.IntTensor'},
+   overload=ZTensor.copy,
+   call =
+      function(dst, src)
+         src=src:cdata()
+         THZCudaTensor_copyInt(cutorch._state,dst:cdata(), src)
+         return dst
+      end
+}
+
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type='torch.LongTensor'},
+   overload=ZTensor.copy,
+   call =
+      function(dst, src)
+         src=src:cdata()
+         THZCudaTensor_copyLong(cutorch._state,dst:cdata(), src)
+         return dst
+      end
+}
+
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type='torch.FloatTensor'},
+   overload=ZTensor.copy,
+   call =
+      function(dst, src)
+         src=src:cdata()
+         THZCudaTensor_copyFloat(cutorch._state,dst:cdata(), src)
+         return dst
+      end
+}
+
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type='torch.ZFloatTensor'},
+   overload=ZTensor.copy,
+   call =
+      function(dst, src)
+         THZCudaTensor_copyZFloat(cutorch._state,dst:cdata(), src)
+         return dst
+      end
+}
+
+ZTensor.copy = argcheck{
+   nonamed=true,
+   name = "copy",
+   {name="dst", type=typename},
+   {name="src", type='torch.DoubleTensor'},
+   overload=ZTensor.copy,
+   call =
+      function(dst, src)
+         src=src:cdata()
+         THZCudaTensor_copyDouble(dst, src)
+         return dst
+      end
+}
+
+local zmetatable = torch.getmetatable('torch.ZCudaTensor')
 rawset( zmetatable, 'type', Tensor__type)
 rawset( zmetatable, 'typeAs', Tensor__typeAs)
 rawset( zmetatable, 'zfloat', Tensor__zfloat)
@@ -295,36 +418,29 @@ rawset( zmetatable, 'im', ZTensor.im)
 rawset( zmetatable, 're', ZTensor.re)
 rawset( zmetatable, 'arg', ZTensor.arg)
 rawset( zmetatable, 'abs', ZTensor.abs)
-rawset( zmetatable, 'normall', ZTensor.normall)
+rawset( zmetatable, 'normAll', ZTensor.normall)
 rawset( zmetatable, 'normDim', ZTensor.normDim)
 rawset( zmetatable, 'polar', ZTensor.polar)
 rawset( zmetatable, 'cim', ZTensor.cim)
 rawset( zmetatable, 'cre', ZTensor.cre)
+rawset( zmetatable, 'copy', ZTensor.copy)
 
-local basename = 'torch.CudaTensor'
-local metatable = torch.getmetatable(basename)
-rawset(metatable, 're', argcheck{
-   {name='dst', type=basename},
-   {name='src', type=typename},
+local zfname = 'torch.ZFloatTensor'
+local zfmetatable = torch.getmetatable(zfname)
+
+zfmetatable.copy = argcheck{
    nonamed=true,
-   overload = rawget(metatable, funcname),
+   name = "copy",
+   {name="dst", type=zfname},
+   {name="src", type=typename},
+   overload=zfmetatable.copy,
    call =
       function(dst, src)
-         THZCudaTensor_real(dst:cdata(), src)
+         THZFloatTensor_copyZCuda(cutorch._state,dst, src:cdata())
          return dst
       end
-})
-rawset(metatable, 'im', argcheck{
-   {name='dst', type=basename},
-   {name='src', type=typename},
-   nonamed=true,
-   overload = rawget(metatable, funcname),
-   call =
-      function(dst, src)
-         THZCudaTensor_imag(dst:cdata(), src)
-         return dst
-      end
-})
+}
+
 
 rawset(torch.getmetatable('torch.DoubleTensor'), 'zcuda', Tensor__zcuda)
 rawset(torch.getmetatable('torch.FloatTensor'), 'zcuda', Tensor__zcuda)

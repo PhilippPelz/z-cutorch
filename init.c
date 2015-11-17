@@ -758,15 +758,15 @@ int luaopen_libzcutorch(lua_State *L) {
   lua_pushboolean(L, 1);
   lua_setfield(L, -2, "magma");
 #endif
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  // printf("Still running at %s:%d\n", __FILE__, __LINE__);
   zcutorch_ZCudaStorage_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  // printf("Still running at %s:%d\n", __FILE__, __LINE__);
   zcutorch_ZCudaTensor_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  // printf("Still running at %s:%d\n", __FILE__, __LINE__);
   zcutorch_ZCudaTensorMath_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  // printf("Still running at %s:%d\n", __FILE__, __LINE__);
   zcutorch_ZCudaTensorOperator_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  // printf("Still running at %s:%d\n", __FILE__, __LINE__);
 
   /* Store state in cutorch table. */
   lua_pushlightuserdata(L, state);
