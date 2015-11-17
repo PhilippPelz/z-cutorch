@@ -21,7 +21,7 @@ INCLUDE_DIRECTORIES("${CMAKE_CURRENT_SOURCE_DIR}/torch")
 INCLUDE_DIRECTORIES("${THZC_INSTALL_INCLUDE_SUBDIR}/THC")
 
 SET(src Storage.c init.c Tensor.c TensorMath.c TensorOperator.c torch/utils.c)
-SET(luasrc init.lua Tensor.lua FFI.lua test/test.lua)
+SET(luasrc init.lua Tensor.lua FFI.lua test/test.lua THZCi.lua)
 
 ADD_TORCH_WRAP(zcudatensormathwrap TensorMath.lua)
 

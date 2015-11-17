@@ -281,10 +281,10 @@ CUDA_npps_LIBRARY:FILEPATH=/usr/local/cuda/lib64/libnpps.so
 LUALIB:UNINITIALIZED=
 
 //Path to a file.
-MAGMA_INCLUDE_DIR:PATH=/usr/local/include
+MAGMA_INCLUDE_DIR:PATH=/usr/local/magma/include
 
 //Path to a library.
-MAGMA_LIBRARIES:FILEPATH=/usr/local/lib/libmagma.so
+MAGMA_LIBRARIES:FILEPATH=/usr/local/magma/lib/libmagma.so
 
 //Value Computed by CMake
 Project_BINARY_DIR:STATIC=/home/philipp/projects/zcutorch/build
@@ -305,7 +305,7 @@ THZC_INSTALL_INCLUDE_SUBDIR:PATH=include
 THZC_INSTALL_LIB_SUBDIR:PATH=lib
 
 //Dependencies for the target
-THZC_LIB_DEPENDS:STATIC=general;/usr/local/cuda/lib64/libcudart.so;general;/usr/local/cuda/lib64/libcublas.so;general;TH;general;/usr/local/cuda/lib64/libcurand.so;general;/usr/local/lib/libmagma.so;
+THZC_LIB_DEPENDS:STATIC=general;/usr/local/cuda/lib64/libcudart.so;general;/usr/local/cuda/lib64/libcublas.so;general;TH;general;/usr/local/cuda/lib64/libcurand.so;general;/usr/local/magma/lib/libmagma.so;
 
 //The directory containing a CMake configuration file for Torch.
 Torch_DIR:PATH=/home/philipp/torch/install/share/cmake/torch
@@ -467,7 +467,7 @@ CUDA_CUDA_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_GENERATED_OUTPUT_DIR
 CUDA_GENERATED_OUTPUT_DIR-ADVANCED:INTERNAL=1
 //Returned GPU architetures from detect_gpus tool
-CUDA_GPU_DETECT_OUTPUT:INTERNAL=5.2
+CUDA_GPU_DETECT_OUTPUT:INTERNAL=5.2 2.1(2.0)
 //ADVANCED property for variable: CUDA_HOST_COMPILATION_CPP
 CUDA_HOST_COMPILATION_CPP-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_NVCC_EXECUTABLE

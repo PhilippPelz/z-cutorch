@@ -3,6 +3,7 @@
 /home/philipp/torch/install/lib/luarocks/rocks/zcutorch/scm-1/lua/zcutorch/Tensor.lua
 /home/philipp/torch/install/lib/luarocks/rocks/zcutorch/scm-1/lua/zcutorch/FFI.lua
 /home/philipp/torch/install/lib/luarocks/rocks/zcutorch/scm-1/lua/zcutorch/test.lua
+/home/philipp/torch/install/lib/luarocks/rocks/zcutorch/scm-1/lua/zcutorch/THZCi.lua
 /home/philipp/torch/install/lib/libTHZC.so
 /home/philipp/torch/install/include/THC/THZC.h
 /home/philipp/torch/install/include/THC/THZCGeneral.h

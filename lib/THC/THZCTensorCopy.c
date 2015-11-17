@@ -49,11 +49,11 @@ IMPLEMENT_TH_CUDA_TENSOR_COPY(Short)
 IMPLEMENT_TH_CUDA_TENSOR_COPY(Int)
 IMPLEMENT_TH_CUDA_TENSOR_COPY(Long)
 IMPLEMENT_TH_CUDA_TENSOR_COPY(Double)
+IMPLEMENT_TH_CUDA_TENSOR_COPY(Float)
 
 /* copyCuda */
 
-void THZFloatTensor_copyZCuda(THCState *state, THZFloatTensor *self,
-                              struct THZCudaTensor *src) {
+void THZFloatTensor_copyZCuda(THCState *state, THZFloatTensor *self, struct THZCudaTensor *src) {
   THArgCheck(THZFloatTensor_nElement(self) ==
                  THZCudaTensor_nElement(state, src),
              2, "sizes do not match");
