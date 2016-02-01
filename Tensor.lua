@@ -441,7 +441,6 @@ zfmetatable.copy = argcheck{
       end
 }
 
-
 rawset(torch.getmetatable('torch.DoubleTensor'), 'zcuda', Tensor__zcuda)
 rawset(torch.getmetatable('torch.FloatTensor'), 'zcuda', Tensor__zcuda)
 rawset(torch.getmetatable('torch.ByteTensor'), 'zcuda', Tensor__zcuda)
@@ -459,3 +458,25 @@ do
         rawset(metatable, func, torch[func])
     end
 end
+
+zcutorch.polar = argcheck{
+   nonamed=true,
+   {name="src1", type=ctypename},
+   {name="src2", type=ctypename},
+   call = function(src1, src2)
+      ret = torch.ZCudaTensor(src1:size())
+      THZCudaTensor_polar(cutorch._state,ret, src1, src2)
+      return ret
+   end
+}
+
+torch.polar = argcheck{
+   nonamed=true,
+   {name="src1", type=ctypename},
+   {name="src2", type=ctypename},
+   call = function(src1, src2)
+      ret = torch.ZCudaTensor(src1:size())
+      THZCudaTensor_polar(cutorch._state,ret, src1, src2)
+      return ret
+   end
+}
