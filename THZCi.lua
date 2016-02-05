@@ -62,6 +62,23 @@ void THZFloatTensor_copyZCuda(THCState *state, THZFloatTensor *self, THZCudaTens
 void THZCudaTensor_copyZCuda(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
 void THZCudaTensor_copyAsyncZFloat(THCState *state, THZCudaTensor *self, THZFloatTensor *src);
 void THZFloatTensor_copyAsyncZCuda(THCState *state, THZFloatTensor *self, THZCudaTensor *src);
+
+void THZCudaTensor_fft(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+void THZCudaTensor_fftBatched(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+
+void THZCudaTensor_ifft(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+void THZCudaTensor_ifftBatched(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+
+void THZCudaTensor_ifftU(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+void THZCudaTensor_ifftBatchedU(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+
+void THZCudaTensor_fftShiftedInplace(THCState *state, THZCudaTensor *self);
+void THZCudaTensor_fftShifted(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+
+void THZCudaTensor_fftShiftInplace(THCState *state, THZCudaTensor *self);
+void THZCudaTensor_fftShift(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+void THZCudaTensor_ifftShiftInplace(THCState *state, THZCudaTensor *self);
+void THZCudaTensor_ifftShift(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
 ]])
 
 

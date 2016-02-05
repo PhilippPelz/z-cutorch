@@ -141,43 +141,30 @@ void THZCudaTensor_fftBatched(THCState *state, THZCudaTensor *self, THZCudaTenso
 	cufftSafeCall(cufftExecC2C(plan, (cufftComplex *)THZCudaTensor_data(state, self), (cufftComplex *)THZCudaTensor_data(state, result), direction));
 	cufftDestroy(plan);
 }
-void THZCudaTensor_fftInplace(THCState *s, THZCudaTensor *self) {
-	THZCudaTensor_fft(s, self, self);
-}
+
 void THZCudaTensor_fft(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
 	THZCudaTensor_fft(state, self, result, CUFFT_FORWARD);
 }
-void THZCudaTensor_fftBatchedInplace(THCState *state, THZCudaTensor *self) {
-	THZCudaTensor_fftBatched(state, self, self);
-}
+
 void THZCudaTensor_fftBatched(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
 	THZCudaTensor_fftBatched(state, self, result, CUFFT_FORWARD);
 }
 
-void THZCudaTensor_ifftInplace(THCState *state, THZCudaTensor *self) {
-	THZCudaTensor_ifft(state, self, self);
-}
 void THZCudaTensor_ifft(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
 	THZCudaTensor_ifftU(state, self, result);
 	THZCudaTensor_mul(state, result, result, 1 / THZCudaTensor_nElement(state, result));
 }
-void THZCudaTensor_ifftBatchedInplace(THCState *state, THZCudaTensor *self) {
-	THZCudaTensor_ifftBatched(state, self, self);
-}
+
 void THZCudaTensor_ifftBatched(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
 	THZCudaTensor_ifftBatchedU(state, self, result);
 	THZCudaTensor_mul(state, result, result, 1 / THZCudaTensor_nElement(state, result));
 }
 
-void THZCudaTensor_ifftUInplace(THCState *state, THZCudaTensor *self) {
-	THZCudaTensor_ifftU(state, self, self);
-}
+
 void THZCudaTensor_ifftU(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
 	THZCudaTensor_fft(state, self, result, CUFFT_INVERSE);
 }
-void THZCudaTensor_ifftBatchedUInplace(THCState *state, THZCudaTensor *self) {
-	THZCudaTensor_ifftBatchedU(state, self, self);
-}
+
 void THZCudaTensor_ifftBatchedU(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
 	THZCudaTensor_fftBatched(state, self, result, CUFFT_INVERSE);
 }

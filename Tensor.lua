@@ -36,6 +36,19 @@ local THZCudaTensor_copyZCuda = C['THZCudaTensor_copyZCuda']
 local THZCudaTensor_copyAsyncZFloat = C['THZCudaTensor_copyAsyncZFloat']
 local THZFloatTensor_copyAsyncZCuda = C['THZFloatTensor_copyAsyncZCuda']
 
+local THZCudaTensor_fft = C['THZCudaTensor_fft']
+local THZCudaTensor_fftBatched = C['THZCudaTensor_fftBatched']
+local THZCudaTensor_ifft = C['THZCudaTensor_ifft']
+local THZCudaTensor_ifftBatched = C['THZCudaTensor_ifftBatched']
+local THZCudaTensor_ifftU = C['THZCudaTensor_ifftU']
+local THZCudaTensor_ifftBatchedU = C['THZCudaTensor_ifftBatchedU']
+local THZCudaTensor_fftShiftedInplace = C['THZCudaTensor_fftShiftedInplace']
+local THZCudaTensor_fftShifted = C['THZCudaTensor_fftShifted']
+local THZCudaTensor_fftShiftInplace = C['THZCudaTensor_fftShiftInplace']
+local THZCudaTensor_fftShift = C['THZCudaTensor_fftShift']
+local THZCudaTensor_ifftShiftInplace = C['THZCudaTensor_ifftShiftInplace']
+local THZCudaTensor_ifftShift = C['THZCudaTensor_ifftShift']
+
 function torch.ZCudaTensor.apply(self, func)
    local x = torch.ZFloatTensor(self:size()):copy(self)
    x:apply(func)
@@ -61,14 +74,12 @@ local function Tensor__typeAs(self,tensor)
 end
 
 local function Tensor__zcuda(self)
-  print('im here')
   local zfloat = self:type('torch.ZFloatTensor')
-  print('im here')
   return Tensor__type(zfloat,"torch.ZCudaTensor")
 end
 
 local function ZFTensor__zcuda(self)
-  return torch.ZCudaTensor(self:size()):copy(self:cdata())
+  return torch.ZCudaTensor(self:size()):copy(self)
 end
 
 local function Tensor__zcuda_device(self)
@@ -284,6 +295,90 @@ ZTensor.cre = argcheck{
       THZCudaTensor_cre(cutorch._state,self, src1, src2)
       return self
    end
+}
+-- local THZCudaTensor_fft = C['THZCudaTensor_fft']
+-- local THZCudaTensor_fftBatched = C['THZCudaTensor_fftBatched']
+-- local THZCudaTensor_ifft = C['THZCudaTensor_ifft']
+-- local THZCudaTensor_ifftBatched = C['THZCudaTensor_ifftBatched']
+-- local THZCudaTensor_ifftU = C['THZCudaTensor_ifftU']
+-- local THZCudaTensor_ifftBatchedU = C['THZCudaTensor_ifftBatchedU']
+-- local THZCudaTensor_fftShiftedInplace = C['THZCudaTensor_fftShiftedInplace']
+-- local THZCudaTensor_fftShifted = C['THZCudaTensor_fftShifted']
+-- local THZCudaTensor_fftShiftInplace = C['THZCudaTensor_fftShiftInplace']
+-- local THZCudaTensor_fftShift = C['THZCudaTensor_fftShift']
+-- local THZCudaTensor_ifftShiftInplace = C['THZCudaTensor_ifftShiftInplace']
+-- local THZCudaTensor_ifftShift = C['THZCudaTensor_ifftShift']
+
+ZTensor.fft = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   call =
+      function(dst, src1)
+         dst = dst or src1
+         THZCudaTensor_fft(dst, src1)
+         return dst
+      end
+}
+
+ZTensor.fftBatched = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   call =
+      function(dst, src1)
+         dst = dst or src1
+         THZCudaTensor_fftBatched(dst, src1)
+         return dst
+      end
+}
+
+ZTensor.ifft = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   call =
+      function(dst, src1)
+         dst = dst or src1
+         THZCudaTensor_ifft(dst, src1)
+         return dst
+      end
+}
+
+ZTensor.ifftBatched = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   call =
+      function(dst, src1)
+         dst = dst or src1
+         THZCudaTensor_ifftBatched(dst, src1)
+         return dst
+      end
+}
+
+ZTensor.ifftU = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   call =
+      function(dst, src1)
+         dst = dst or src1
+         THZCudaTensor_ifftU(dst, src1)
+         return dst
+      end
+}
+
+ZTensor.ifftBatchedU = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   call =
+      function(dst, src1)
+         dst = dst or src1
+         THZCudaTensor_ifftBatchedU(dst, src1)
+         return dst
+      end
 }
 
 zmetatable = torch.getmetatable('torch.ZCudaTensor')

@@ -752,21 +752,21 @@ int luaopen_libzcutorch(lua_State *L) {
   /* Register torch.CudaHostAllocator. */
   luaT_pushudata(L, state->cudaHostAllocator, "torch.Allocator");
   lua_setfield(L, -2, "CudaHostAllocator");
-  printf("Still running at %s:%d", __FILE__, __LINE__);
+  //printf("Still runningat %s:%d", __FILE__, __LINE__);
 #ifdef USE_MAGMA
   THZCMagma_init(state);
   lua_pushboolean(L, 1);
   lua_setfield(L, -2, "magma");
 #endif
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  //printf("Still runningat %s:%d\n", __FILE__, __LINE__);
   zcutorch_ZCudaStorage_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  //printf("Still runningat %s:%d\n", __FILE__, __LINE__);
   zcutorch_ZCudaTensor_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  //printf("Still runningat %s:%d\n", __FILE__, __LINE__);
   zcutorch_ZCudaTensorMath_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  //printf("Still runningat %s:%d\n", __FILE__, __LINE__);
   zcutorch_ZCudaTensorOperator_init(L);
-  printf("Still running at %s:%d\n", __FILE__, __LINE__);
+  //printf("Still runningat %s:%d\n", __FILE__, __LINE__);
 
   /* Store state in cutorch table. */
   lua_pushlightuserdata(L, state);

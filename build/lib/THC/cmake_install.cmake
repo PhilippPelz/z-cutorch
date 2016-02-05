@@ -1,4 +1,4 @@
-# Install script for directory: /home/philipp/projects/zcutorch/lib/THC
+# Install script for directory: /home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -37,15 +37,15 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so")
     file(RPATH_CHECK
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so"
-         RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/usr/local/magma/lib:/opt/OpenBLAS/lib")
+         RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/lib")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/philipp/projects/zcutorch/build/lib/THC/libTHZC.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/libTHZC.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so"
-         OLD_RPATH "/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/usr/local/magma/lib:/opt/OpenBLAS/lib:::::::::::::::"
-         NEW_RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/usr/local/magma/lib:/opt/OpenBLAS/lib")
+         OLD_RPATH "/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/lib:::::::::::::::"
+         NEW_RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/lib")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libTHZC.so")
     endif()
@@ -54,27 +54,27 @@ endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/THC" TYPE FILE FILES
-    "/home/philipp/projects/zcutorch/lib/THC/THZC.h"
-    "/home/philipp/projects/zcutorch/build/lib/THC/THZCGeneral.h"
-    "/home/philipp/projects/zcutorch/lib/THC/FFT.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCBlas.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCReduce.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCReduceAll.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCAllocator.h"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCDeviceUtils.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCDeviceTensor.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCDeviceTensor-inl.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCDeviceTensorUtils.cuh"
-    "/home/philipp/projects/zcutorch/lib/THC/THZCDeviceTensorUtils-inl.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZC.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/THZCGeneral.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/FFT.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCGeneral.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCBlas.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCStorage.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCStorageCopy.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCTensor.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCTensorCopy.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCTensorMath.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCTensorConv.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCApply.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCReduce.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCReduceAll.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCReduceApplyUtils.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCAllocator.h"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCDeviceUtils.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCDeviceTensor.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCDeviceTensor-inl.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCDeviceTensorUtils.cuh"
+    "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCDeviceTensorUtils-inl.cuh"
     )
 endif()
 
