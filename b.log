@@ -1,0 +1,1248 @@
+Warning: unmatched variable LUALIB
+-- Found Torch7 in /home/philipp/torch/install
+-- Compiling with MAGMA support
+-- Compiling for CUDA architecture: 5.2 2.1(2.0)
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/philipp/projects/zcutorch/build
+[  2%] [  4%] [  7%] Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCApply.cu.o
+Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCBlas.cu.o
+Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCReduceApplyUtils.cu.o
+[  9%] Building C object CMakeFiles/zcutorch_static.dir/Storage.c.o
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:14:5: error: unknown type name ‘cux’
+     cux *data;
+     ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:21:90: warning: ‘struct THZFloatStorage’ declared inside parameter list
+ THZC_API void THZCudaStorage_copyZFloat(THCState *state, THZCudaStorage *storage, struct THZFloatStorage *src);
+                                                                                          ^
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:21:90: warning: its scope is only this definition or declaration, which is probably not what you want
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:23:58: error: unknown type name ‘THZFloatStorage’
+ THZC_API void THZFloatStorage_copyZCuda(THCState *state, THZFloatStorage *self, struct THZCudaStorage *src);
+                                                          ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:9:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h:39:10: error: unknown type name ‘cux’
+ THZC_API cux *THZCudaTensor_dataCu(THCState *state, const THZCudaTensor *self);
+          ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h:179:49: error: unknown type name ‘THCudaTensor’
+                                           const THCudaTensor *src);
+                                                 ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:10:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h:24:40: error: unknown type name ‘THZFloatTensor’
+                                        THZFloatTensor *src);
+                                        ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h:26:57: error: unknown type name ‘THZFloatTensor’
+ THZC_API void THZFloatTensor_copyZCuda(THCState *state, THZFloatTensor *self,
+                                                         ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h:33:45: error: unknown type name ‘THZFloatTensor’
+                                             THZFloatTensor *src);
+                                             ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h:35:45: error: unknown type name ‘THZFloatTensor’
+                                             THZFloatTensor *self,
+                                             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:12:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:49:80: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_maskedFill(THCState *state, THZCudaTensor *tensor, THCudaTensor *mask, cx value);
+                                                                                ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:50:80: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_maskedFill(THCState *state, THZCudaTensor *tensor, THCudaTensor *mask, cx value);
+                                                                                ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:51:80: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_maskedCopy(THCState *state, THZCudaTensor *tensor, THCudaTensor *mask, THZCudaTensor *src);
+                                                                                ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:52:102: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_maskedSelect(THCState *state, THZCudaTensor *tensor, THZCudaTensor *src, THCudaTensor *mask);
+                                                                                                      ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:74:72: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_gesvd(THCState *state, THZCudaTensor *ru_, THCudaTensor *rs_, THZCudaTensor *rv_, THZCudaTensor *a, const char *jobu);
+                                                                        ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:75:73: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_gesvd2(THCState *state, THZCudaTensor *ru_, THCudaTensor *rs_, THZCudaTensor *rv_, THZCudaTensor *ra_, THZCudaTensor *a,
+                                                                         ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:121:73: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_polar(THCState *state, THZCudaTensor *self, THCudaTensor *src1, THCudaTensor *src2);
+                                                                         ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:121:93: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_polar(THCState *state, THZCudaTensor *self, THCudaTensor *src1, THCudaTensor *src2);
+                                                                                             ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:123:50: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_abs(THCState *state, THCudaTensor *self, THZCudaTensor *src);
+                                                  ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:124:50: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_arg(THCState *state, THCudaTensor *self, THZCudaTensor *src);
+                                                  ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:125:51: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_norm(THCState *state, THCudaTensor *self, THZCudaTensor *src);
+                                                   ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:127:51: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_real(THCState *state, THCudaTensor *self, THZCudaTensor *src);
+                                                   ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:128:51: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_imag(THCState *state, THCudaTensor *self, THZCudaTensor *src);
+                                                   ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:134:92: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_cim(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THCudaTensor *src2);
+                                                                                            ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:135:92: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_cre(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THCudaTensor *src2);
+                                                                                            ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:154:105: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_gather(THCState *state, THZCudaTensor *tensor, THZCudaTensor *src, int dim, THCudaTensor *index);
+                                                                                                         ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:155:86: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_scatter(THCState *state, THZCudaTensor *tensor, int dim, THCudaTensor *index, THZCudaTensor *src);
+                                                                                      ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:156:90: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_scatterFill(THCState *state, THZCudaTensor *tensor, int dim, THCudaTensor *index, cx value);
+                                                                                          ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:157:90: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_scatterFill(THCState *state, THZCudaTensor *tensor, int dim, THCudaTensor *index, cx value);
+                                                                                          ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:159:86: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_indexCopy(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, THZCudaTensor *src);
+                                                                                      ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:160:88: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_indexFill(THCState *state, THZCudaTensor *tensor, int dim, THCudaTensor *index, cx val);
+                                                                                        ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:161:87: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_indexFillf(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, float val);
+                                                                                       ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:162:110: error: unknown type name ‘THCudaTensor’
+ THZC_API void THZCudaTensor_indexSelect(THCState *state, THZCudaTensor *tensor, THZCudaTensor *src, int dim, THCudaTensor *index);
+                                                                                                              ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:165:9: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘void’
+ THC_API void THCudaTensor_indexCopy(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, THZCudaTensor *src);
+         ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:166:9: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘void’
+ THC_API void THCudaTensor_indexAdd(THCState *state, THZCudaTensor *res_, int dim, THCudaTensor *indices, THZCudaTensor *src);
+         ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:167:9: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘void’
+ THC_API void THCudaTensor_indexFill(THCState *state, THZCudaTensor *tensor, int dim, THCudaTensor *index, cx val);
+         ^
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorMath.h:168:9: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘void’
+ THC_API void THCudaTensor_indexSelect(THCState *state, THZCudaTensor *tensor, THZCudaTensor *src, int dim, THCudaTensor *index);
+         ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:41:16: error: redefinition of ‘struct _THCCudaResourcesPerDevice’
+ typedef struct _THCCudaResourcesPerDevice {
+                ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:44:16: note: originally defined here
+ typedef struct _THCCudaResourcesPerDevice {
+                ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:49:3: error: conflicting types for ‘THCCudaResourcesPerDevice’
+ } THCCudaResourcesPerDevice;
+   ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:52:3: note: previous declaration of ‘THCCudaResourcesPerDevice’ was here
+ } THCCudaResourcesPerDevice;
+   ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:53:16: error: redefinition of ‘struct THCState’
+ typedef struct THCState
+                ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:1:0:
+/home/philipp/projects/zcutorch/torch/utils.h:51:8: note: originally defined here
+ struct THCState;
+        ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:86:3: error: conflicting types for ‘THCState’
+ } THCState;
+   ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:85:3: note: previous declaration of ‘THCState’ was here
+ } THCState;
+   ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:100:32: error: conflicting types for ‘THCState_getCurrentDeviceProperties’
+ THC_API struct cudaDeviceProp* THCState_getCurrentDeviceProperties(THCState* state);
+                                ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:91:33: note: previous declaration of ‘THCState_getCurrentDeviceProperties’ was here
+ THZC_API struct cudaDeviceProp* THCState_getCurrentDeviceProperties(THCState* state);
+                                 ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:105:13: error: conflicting types for ‘THCState_getNumDevices’
+ THC_API int THCState_getNumDevices(THCState* state);
+             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:96:14: note: previous declaration of ‘THCState_getNumDevices’ was here
+ THZC_API int THCState_getNumDevices(THCState* state);
+              ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:106:14: error: conflicting types for ‘THCState_reserveStreams’
+ THC_API void THCState_reserveStreams(THCState* state, int numStreams);
+              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:97:15: note: previous declaration of ‘THCState_reserveStreams’ was here
+ THZC_API void THCState_reserveStreams(THCState* state, int numStreams);
+               ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:107:13: error: conflicting types for ‘THCState_getNumStreams’
+ THC_API int THCState_getNumStreams(THCState* state);
+             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:98:14: note: previous declaration of ‘THCState_getNumStreams’ was here
+ THZC_API int THCState_getNumStreams(THCState* state);
+              ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:109:22: error: conflicting types for ‘THCState_getDeviceStream’
+ THC_API cudaStream_t THCState_getDeviceStream(THCState *state, int device, int stream);
+                      ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:100:23: note: previous declaration of ‘THCState_getDeviceStream’ was here
+ THZC_API cudaStream_t THCState_getDeviceStream(THCState *state, int device, int stream);
+                       ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:110:22: error: conflicting types for ‘THCState_getCurrentStream’
+ THC_API cudaStream_t THCState_getCurrentStream(THCState *state);
+                      ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:101:23: note: previous declaration of ‘THCState_getCurrentStream’ was here
+ THZC_API cudaStream_t THCState_getCurrentStream(THCState *state);
+                       ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:111:13: error: conflicting types for ‘THCState_getCurrentStreamIndex’
+ THC_API int THCState_getCurrentStreamIndex(THCState *state);
+             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:102:14: note: previous declaration of ‘THCState_getCurrentStreamIndex’ was here
+ THZC_API int THCState_getCurrentStreamIndex(THCState *state);
+              ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:112:14: error: conflicting types for ‘THCState_setStream’
+ THC_API void THCState_setStream(THCState *state, int device, int stream);
+              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:103:15: note: previous declaration of ‘THCState_setStream’ was here
+ THZC_API void THCState_setStream(THCState *state, int device, int stream);
+               ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:113:14: error: conflicting types for ‘THCState_setStreamForCurrentDevice’
+ THC_API void THCState_setStreamForCurrentDevice(THCState *state, int stream);
+              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:104:15: note: previous declaration of ‘THCState_setStreamForCurrentDevice’ was here
+ THZC_API void THCState_setStreamForCurrentDevice(THCState *state, int stream);
+               ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:115:14: error: conflicting types for ‘THCState_reserveBlasHandles’
+ THC_API void THCState_reserveBlasHandles(THCState* state, int numHandles);
+              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:106:15: note: previous declaration of ‘THCState_reserveBlasHandles’ was here
+ THZC_API void THCState_reserveBlasHandles(THCState* state, int numHandles);
+               ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:116:13: error: conflicting types for ‘THCState_getNumBlasHandles’
+ THC_API int THCState_getNumBlasHandles(THCState* state);
+             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:107:14: note: previous declaration of ‘THCState_getNumBlasHandles’ was here
+ THZC_API int THCState_getNumBlasHandles(THCState* state);
+              ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:118:24: error: conflicting types for ‘THCState_getDeviceBlasHandle’
+ THC_API cublasHandle_t THCState_getDeviceBlasHandle(THCState *state, int device, int handle);
+                        ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:109:25: note: previous declaration of ‘THCState_getDeviceBlasHandle’ was here
+ THZC_API cublasHandle_t THCState_getDeviceBlasHandle(THCState *state, int device, int handle);
+                         ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:119:24: error: conflicting types for ‘THCState_getCurrentBlasHandle’
+ THC_API cublasHandle_t THCState_getCurrentBlasHandle(THCState *state);
+                        ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:110:25: note: previous declaration of ‘THCState_getCurrentBlasHandle’ was here
+ THZC_API cublasHandle_t THCState_getCurrentBlasHandle(THCState *state);
+                         ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:120:13: error: conflicting types for ‘THCState_getCurrentBlasHandleIndex’
+ THC_API int THCState_getCurrentBlasHandleIndex(THCState *state);
+             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:111:14: note: previous declaration of ‘THCState_getCurrentBlasHandleIndex’ was here
+ THZC_API int THCState_getCurrentBlasHandleIndex(THCState *state);
+              ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:121:14: error: conflicting types for ‘THCState_setBlasHandle’
+ THC_API void THCState_setBlasHandle(THCState *state, int device, int handle);
+              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:112:15: note: previous declaration of ‘THCState_setBlasHandle’ was here
+ THZC_API void THCState_setBlasHandle(THCState *state, int device, int handle);
+               ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:122:14: error: conflicting types for ‘THCState_setBlasHandleForCurrentDevice’
+ THC_API void THCState_setBlasHandleForCurrentDevice(THCState *state, int handle);
+              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:113:15: note: previous declaration of ‘THCState_setBlasHandleForCurrentDevice’ was here
+ THZC_API void THCState_setBlasHandleForCurrentDevice(THCState *state, int handle);
+               ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:125:15: error: conflicting types for ‘THCState_getCurrentDeviceScratchSpace’
+ THC_API void* THCState_getCurrentDeviceScratchSpace(THCState* state);
+               ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:116:16: note: previous declaration of ‘THCState_getCurrentDeviceScratchSpace’ was here
+ THZC_API void* THCState_getCurrentDeviceScratchSpace(THCState* state);
+                ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:126:15: error: conflicting types for ‘THCState_getDeviceScratchSpace’
+ THC_API void* THCState_getDeviceScratchSpace(THCState* state, int device, int stream);
+               ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:117:16: note: previous declaration of ‘THCState_getDeviceScratchSpace’ was here
+ THZC_API void* THCState_getDeviceScratchSpace(THCState* state, int device, int stream);
+                ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:127:16: error: conflicting types for ‘THCState_getCurrentDeviceScratchSpaceSize’
+ THC_API size_t THCState_getCurrentDeviceScratchSpaceSize(THCState* state);
+                ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:118:17: note: previous declaration of ‘THCState_getCurrentDeviceScratchSpaceSize’ was here
+ THZC_API size_t THCState_getCurrentDeviceScratchSpaceSize(THCState* state);
+                 ^
+In file included from /home/philipp/torch/install/include/THC/THCStorage.h:5:0,
+                 from /home/philipp/torch/install/include/THC/THCTensor.h:5,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZCTensorConv.h:4,
+                 from /home/philipp/projects/zcutorch/lib/THC/THZC.h:13,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/torch/install/include/THC/THCGeneral.h:128:16: error: conflicting types for ‘THCState_getDeviceScratchSpaceSize’
+ THC_API size_t THCState_getDeviceScratchSpaceSize(THCState* state, int device);
+                ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:4:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h:119:17: note: previous declaration of ‘THCState_getDeviceScratchSpaceSize’ was here
+ THZC_API size_t THCState_getDeviceScratchSpaceSize(THCState* state, int device);
+                 ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c: In function ‘torch_ZCudaStorage_new’:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:7:21: warning: initialization from incompatible pointer type
+   THCState *state = cutorch_getstate(L);
+                     ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:14:42: warning: passing argument 1 of ‘THZCudaStorage_newWithMapping’ from incompatible pointer type
+     storage = THStorage_(newWithMapping)(state, fileName, size, isShared);
+                                          ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:37:26: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API THZCudaStorage* THZCudaStorage_newWithMapping(THCState *state, const char *filename, long size, int shared);
+                          ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:20:39: warning: passing argument 1 of ‘THZCudaStorage_newWithSize’ from incompatible pointer type
+     storage = THStorage_(newWithSize)(state, size);
+                                       ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:32:26: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API THZCudaStorage* THZCudaStorage_newWithSize(THCState *state, long size);
+                          ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:26:26: warning: passing argument 1 of ‘THZCudaStorage_free’ from incompatible pointer type
+         THStorage_(free)(state, storage);
+                          ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:52:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_free(THCState *state, THZCudaStorage *storage);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:8:20: error: expected ‘)’ before ‘complex’
+ #define real float complex
+                    ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:29:45: note: in expansion of macro ‘real’
+       THStorage_(set)(state, storage, i-1, (real)lua_tonumber(L, -1));
+                                             ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:29:23: warning: passing argument 1 of ‘THZCudaStorage_set’ from incompatible pointer type
+       THStorage_(set)(state, storage, i-1, (real)lua_tonumber(L, -1));
+                       ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:28:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_set(THCState *state, THZCudaStorage*, long, cx);
+               ^
+In file included from /home/philipp/torch/install/include/TH/TH.h:4:0,
+                 from /home/philipp/projects/zcutorch/torch/utils.h:5,
+                 from /home/philipp/projects/zcutorch/Storage.c:1:
+/home/philipp/torch/install/include/TH/THStorage.h:8:38: error: incompatible type for argument 4 of ‘THZCudaStorage_set’
+ #define THStorage_(NAME) TH_CONCAT_4(TH,Real,Storage_,NAME)
+                                      ^
+/home/philipp/torch/install/include/TH/THGeneral.h:89:37: note: in definition of macro ‘TH_CONCAT_4_EXPAND’
+ #define TH_CONCAT_4_EXPAND(x,y,z,w) x ## y ## z ## w
+                                     ^
+/home/philipp/torch/install/include/TH/THStorage.h:8:26: note: in expansion of macro ‘TH_CONCAT_4’
+ #define THStorage_(NAME) TH_CONCAT_4(TH,Real,Storage_,NAME)
+                          ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:29:7: note: in expansion of macro ‘THStorage_’
+       THStorage_(set)(state, storage, i-1, (real)lua_tonumber(L, -1));
+       ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:28:15: note: expected ‘cx’ but argument is of type ‘float’
+ THZC_API void THZCudaStorage_set(THCState *state, THZCudaStorage*, long, cx);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:36:10: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+     real *ptr = (real*)src->data;
+          ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:36:11: error: ‘ptr’ undeclared (first use in this function)
+     real *ptr = (real*)src->data;
+           ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:36:11: note: each undeclared identifier is reported only once for each function it appears in
+/home/philipp/projects/zcutorch/Storage.c:8:20: error: expected ‘)’ before ‘complex’
+ #define real float complex
+                    ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:36:18: note: in expansion of macro ‘real’
+     real *ptr = (real*)src->data;
+                  ^
+/home/philipp/projects/zcutorch/Storage.c:8:20: error: pointer value used where a floating point value was expected
+ #define real float complex
+                    ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:36:18: note: in expansion of macro ‘real’
+     real *ptr = (real*)src->data;
+                  ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:45:39: warning: passing argument 1 of ‘THZCudaStorage_newWithData’ from incompatible pointer type
+     storage = THStorage_(newWithData)(state, ptr + offset, size);
+                                       ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:40:26: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API THZCudaStorage* THZCudaStorage_newWithData(THCState *state, cx *data, long size);
+                          ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:48:24: warning: passing argument 1 of ‘THZCudaStorage_retain’ from incompatible pointer type
+     THStorage_(retain)(state, storage->view);
+                        ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:50:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_retain(THCState *state, THZCudaStorage *storage);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:53:10: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+     real *ptr = (real *)luaL_optlong(L, 2, 0);
+          ^
+/home/philipp/projects/zcutorch/Storage.c:8:20: error: expected ‘)’ before ‘complex’
+ #define real float complex
+                    ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:53:18: note: in expansion of macro ‘real’
+     real *ptr = (real *)luaL_optlong(L, 2, 0);
+                  ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:54:39: warning: passing argument 1 of ‘THZCudaStorage_newWithData’ from incompatible pointer type
+     storage = THStorage_(newWithData)(state, ptr, size);
+                                       ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:40:26: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API THZCudaStorage* THZCudaStorage_newWithData(THCState *state, cx *data, long size);
+                          ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:60:39: warning: passing argument 1 of ‘THZCudaStorage_newWithSize’ from incompatible pointer type
+     storage = THStorage_(newWithSize)(state, size);
+                                       ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:32:26: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API THZCudaStorage* THZCudaStorage_newWithSize(THCState *state, long size);
+                          ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c: In function ‘torch_ZCudaStorage_copy’:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:92:21: warning: initialization from incompatible pointer type
+   THCState *state = cutorch_getstate(L);
+                     ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:96:22: warning: passing argument 1 of ‘THZCudaStorage_copy’ from incompatible pointer type
+     THStorage_(copy)(state, storage, src);
+                      ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:11:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copy(THCState *state, THZCudaStorage *storage, THZCudaStorage *src);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:98:26: warning: passing argument 1 of ‘THZCudaStorage_copyByte’ from incompatible pointer type
+     THStorage_(copyByte)(state, storage, src);
+                          ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:14:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyByte(THCState *state, THZCudaStorage *storage, struct THByteStorage *src);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:100:26: warning: passing argument 1 of ‘THZCudaStorage_copyChar’ from incompatible pointer type
+     THStorage_(copyChar)(state, storage, src);
+                          ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:15:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyChar(THCState *state, THZCudaStorage *storage, struct THCharStorage *src);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:102:27: warning: passing argument 1 of ‘THZCudaStorage_copyShort’ from incompatible pointer type
+     THStorage_(copyShort)(state, storage, src);
+                           ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:16:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyShort(THCState *state, THZCudaStorage *storage, struct THShortStorage *src);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:104:25: warning: passing argument 1 of ‘THZCudaStorage_copyInt’ from incompatible pointer type
+     THStorage_(copyInt)(state, storage, src);
+                         ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:17:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyInt(THCState *state, THZCudaStorage *storage, struct THIntStorage *src);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:106:26: warning: passing argument 1 of ‘THZCudaStorage_copyLong’ from incompatible pointer type
+     THStorage_(copyLong)(state, storage, src);
+                          ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:18:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyLong(THCState *state, THZCudaStorage *storage, struct THLongStorage *src);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:108:27: warning: passing argument 1 of ‘THZCudaStorage_copyFloat’ from incompatible pointer type
+     THStorage_(copyFloat)(state, storage, src);
+                           ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:19:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyFloat(THCState *state, THZCudaStorage *storage, struct THFloatStorage *src);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:110:28: warning: passing argument 1 of ‘THZCudaStorage_copyDouble’ from incompatible pointer type
+     THStorage_(copyDouble)(state, storage, src);
+                            ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:20:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyDouble(THCState *state, THZCudaStorage *storage, struct THDoubleStorage *src);
+               ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c: In function ‘torch_ZCudaStorage_fill’:
+/home/philipp/projects/zcutorch/Storage.c:8:20: error: expected ‘)’ before ‘complex’
+ #define real float complex
+                    ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:121:51: note: in expansion of macro ‘real’
+   THStorage_(fill)(cutorch_getstate(L), storage, (real)value);
+                                                   ^
+In file included from /home/philipp/torch/install/include/TH/TH.h:4:0,
+                 from /home/philipp/projects/zcutorch/torch/utils.h:5,
+                 from /home/philipp/projects/zcutorch/Storage.c:1:
+/home/philipp/torch/install/include/TH/THStorage.h:8:38: error: incompatible type for argument 3 of ‘THZCudaStorage_fill’
+ #define THStorage_(NAME) TH_CONCAT_4(TH,Real,Storage_,NAME)
+                                      ^
+/home/philipp/torch/install/include/TH/THGeneral.h:89:37: note: in definition of macro ‘TH_CONCAT_4_EXPAND’
+ #define TH_CONCAT_4_EXPAND(x,y,z,w) x ## y ## z ## w
+                                     ^
+/home/philipp/torch/install/include/TH/THStorage.h:8:26: note: in expansion of macro ‘TH_CONCAT_4’
+ #define THStorage_(NAME) TH_CONCAT_4(TH,Real,Storage_,NAME)
+                          ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:121:3: note: in expansion of macro ‘THStorage_’
+   THStorage_(fill)(cutorch_getstate(L), storage, (real)value);
+   ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:54:15: note: expected ‘cx’ but argument is of type ‘float’
+ THZC_API void THZCudaStorage_fill(THCState *state, THZCudaStorage *storage, cx value);
+               ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c: In function ‘torch_ZCudaStorage___newindex__’:
+/home/philipp/projects/zcutorch/Storage.c:8:20: error: expected ‘)’ before ‘complex’
+ #define real float complex
+                    ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:140:59: note: in expansion of macro ‘real’
+     THStorage_(set)(cutorch_getstate(L), storage, index, (real)number);
+                                                           ^
+In file included from /home/philipp/torch/install/include/TH/TH.h:4:0,
+                 from /home/philipp/projects/zcutorch/torch/utils.h:5,
+                 from /home/philipp/projects/zcutorch/Storage.c:1:
+/home/philipp/torch/install/include/TH/THStorage.h:8:38: error: incompatible type for argument 4 of ‘THZCudaStorage_set’
+ #define THStorage_(NAME) TH_CONCAT_4(TH,Real,Storage_,NAME)
+                                      ^
+/home/philipp/torch/install/include/TH/THGeneral.h:89:37: note: in definition of macro ‘TH_CONCAT_4_EXPAND’
+ #define TH_CONCAT_4_EXPAND(x,y,z,w) x ## y ## z ## w
+                                     ^
+/home/philipp/torch/install/include/TH/THStorage.h:8:26: note: in expansion of macro ‘TH_CONCAT_4’
+ #define THStorage_(NAME) TH_CONCAT_4(TH,Real,Storage_,NAME)
+                          ^
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:140:5: note: in expansion of macro ‘THStorage_’
+     THStorage_(set)(cutorch_getstate(L), storage, index, (real)number);
+     ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:7:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h:28:15: note: expected ‘cx’ but argument is of type ‘float’
+ THZC_API void THZCudaStorage_set(THCState *state, THZCudaStorage*, long, cx);
+               ^
+In file included from /home/philipp/projects/zcutorch/Storage.c:32:0:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c: In function ‘torch_ZCudaStorage___index__’:
+/home/philipp/projects/zcutorch/torch/generic/Storage.c:155:5: error: incompatible type for argument 2 of ‘lua_pushnumber’
+     lua_pushnumber(L, THStorage_(get)(cutorch_getstate(L), storage, index));
+     ^
+In file included from /home/philipp/torch/install/include/luaT.h:7:0,
+                 from /home/philipp/projects/zcutorch/torch/utils.h:4,
+                 from /home/philipp/projects/zcutorch/Storage.c:1:
+/home/philipp/torch/install/include/lua.h:161:16: note: expected ‘lua_Number’ but argument is of type ‘cx’
+ LUA_API void  (lua_pushnumber) (lua_State *L, lua_Number n);
+                ^
+/home/philipp/projects/zcutorch/Storage.c: In function ‘zcutorch_ZCudaStorage_copy’:
+/home/philipp/projects/zcutorch/Storage.c:41:21: warning: initialization from incompatible pointer type
+   THCState *state = cutorch_getstate(L);
+                     ^
+/home/philipp/projects/zcutorch/Storage.c:45:25: warning: passing argument 1 of ‘THZCudaStorage_copy’ from incompatible pointer type
+     THZCudaStorage_copy(state, storage, src);
+                         ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:11:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copy(THCState *state, THZCudaStorage *storage, THZCudaStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:47:29: warning: passing argument 1 of ‘THZCudaStorage_copyByte’ from incompatible pointer type
+     THZCudaStorage_copyByte(state, storage, src);
+                             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:14:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyByte(THCState *state, THZCudaStorage *storage, struct THByteStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:49:29: warning: passing argument 1 of ‘THZCudaStorage_copyChar’ from incompatible pointer type
+     THZCudaStorage_copyChar(state, storage, src);
+                             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:15:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyChar(THCState *state, THZCudaStorage *storage, struct THCharStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:51:30: warning: passing argument 1 of ‘THZCudaStorage_copyShort’ from incompatible pointer type
+     THZCudaStorage_copyShort(state, storage, src);
+                              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:16:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyShort(THCState *state, THZCudaStorage *storage, struct THShortStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:53:28: warning: passing argument 1 of ‘THZCudaStorage_copyInt’ from incompatible pointer type
+     THZCudaStorage_copyInt(state, storage, src);
+                            ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:17:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyInt(THCState *state, THZCudaStorage *storage, struct THIntStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:55:29: warning: passing argument 1 of ‘THZCudaStorage_copyLong’ from incompatible pointer type
+     THZCudaStorage_copyLong(state, storage, src);
+                             ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:18:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyLong(THCState *state, THZCudaStorage *storage, struct THLongStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:57:30: warning: passing argument 1 of ‘THZCudaStorage_copyFloat’ from incompatible pointer type
+     THZCudaStorage_copyFloat(state, storage, src);
+                              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:19:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyFloat(THCState *state, THZCudaStorage *storage, struct THFloatStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:59:31: warning: passing argument 1 of ‘THZCudaStorage_copyDouble’ from incompatible pointer type
+     THZCudaStorage_copyDouble(state, storage, src);
+                               ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:20:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyDouble(THCState *state, THZCudaStorage *storage, struct THDoubleStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c:61:30: warning: passing argument 1 of ‘THZCudaStorage_copyZCuda’ from incompatible pointer type
+     THZCudaStorage_copyZCuda(state, storage, src);
+                              ^
+In file included from /home/philipp/projects/zcutorch/lib/THC/THZC.h:8:0,
+                 from /home/philipp/projects/zcutorch/Storage.c:2:
+/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h:12:15: note: expected ‘struct THCState *’ but argument is of type ‘struct THCState *’
+ THZC_API void THZCudaStorage_copyZCuda(THCState *state, THZCudaStorage *self, THZCudaStorage *src);
+               ^
+/home/philipp/projects/zcutorch/Storage.c: In function ‘zcutorch_ByteStorage_copy’:
+/home/philipp/projects/zcutorch/Storage.c:99:1: error: implicit declaration of function ‘THByteStorage_copyCuda’ [-Werror=implicit-function-declaration]
+ CUDA_IMPLEMENT_STORAGE_COPY(Byte)
+ ^
+/home/philipp/projects/zcutorch/Storage.c: In function ‘zcutorch_CharStorage_copy’:
+/home/philipp/projects/zcutorch/Storage.c:100:1: error: implicit declaration of function ‘THCharStorage_copyCuda’ [-Werror=implicit-function-declaration]
+ CUDA_IMPLEMENT_STORAGE_COPY(Char)
+ ^
+/home/philipp/projects/zcutorch/Storage.c: In function ‘zcutorch_ShortStorage_copy’:
+/home/philipp/projects/zcutorch/Storage.c:101:1: error: implicit declaration of function ‘THShortStorage_copyCuda’ [-Werror=implicit-function-declaration]
+ CUDA_IMPLEMENT_STORAGE_COPY(Short)
+ ^
+/home/philipp/projects/zcutorch/Storage.c: In function ‘zcutorch_IntStorage_copy’:
+/home/philipp/projects/zcutorch/Storage.c:102:1: error: implicit declaration of function ‘THIntStorage_copyCuda’ [-Werror=implicit-function-declaration]
+ CUDA_IMPLEMENT_STORAGE_COPY(Int)
+ ^
+/home/philipp/projects/zcutorch/Storage.c: In function ‘zcutorch_LongStorage_copy’:
+/home/philipp/projects/zcutorch/Storage.c:103:1: error: implicit declaration of function ‘THLongStorage_copyCuda’ [-Werror=implicit-function-declaration]
+ CUDA_IMPLEMENT_STORAGE_COPY(Long)
+ ^
+/home/philipp/projects/zcutorch/Storage.c: In function ‘zcutorch_FloatStorage_copy’:
+/home/philipp/projects/zcutorch/Storage.c:104:1: error: implicit declaration of function ‘THFloatStorage_copyCuda’ [-Werror=implicit-function-declaration]
+ CUDA_IMPLEMENT_STORAGE_COPY(Float)
+ ^
+/home/philipp/projects/zcutorch/Storage.c: In function ‘zcutorch_DoubleStorage_copy’:
+/home/philipp/projects/zcutorch/Storage.c:105:1: error: implicit declaration of function ‘THDoubleStorage_copyCuda’ [-Werror=implicit-function-declaration]
+ CUDA_IMPLEMENT_STORAGE_COPY(Double)
+ ^
+cc1: some warnings being treated as errors
+CMakeFiles/zcutorch_static.dir/build.make:59: recipe for target 'CMakeFiles/zcutorch_static.dir/Storage.c.o' failed
+make[2]: *** [CMakeFiles/zcutorch_static.dir/Storage.c.o] Error 1
+CMakeFiles/Makefile2:126: recipe for target 'CMakeFiles/zcutorch_static.dir/all' failed
+make[1]: *** [CMakeFiles/zcutorch_static.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[ 12%] Building NVCC (Device) object lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCGeneral.cu.o
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h(14): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h(39): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h(179): error: identifier "THCudaTensor" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h(24): error: identifier "THZFloatTensor" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h(26): error: identifier "THZFloatTensor" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h(33): error: identifier "THZFloatTensor" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h(35): error: identifier "THZFloatTensor" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(16): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(16): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(16): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(16): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(16): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(16): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(16): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(16): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(15): warning: variable "i_incy" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(32): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(32): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(32): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(32): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(32): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(32): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(32): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(32): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(52): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(52): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(52): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(52): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(52): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(52): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(52): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(52): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(51): warning: variable "i_incy" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(73): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(72): warning: variable "i_incy" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(95): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(95): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(95): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(95): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(95): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(95): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(95): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(95): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(97): error: identifier "I" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(97): warning: variable "result" is used before its value is set
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(93): warning: variable "i_incy" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(102): error: no suitable constructor exists to convert from "int" to "float2"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(127): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(124): warning: variable "i_incx" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(125): warning: variable "i_incy" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(147): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(143): warning: variable "i_lda" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(145): warning: variable "i_incy" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(211): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(208): warning: variable "i_ldb" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(209): warning: variable "i_ldc" was declared but never referenced
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: expected an expression
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: expected a ")"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: too few arguments in function call
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: argument of type "int" is incompatible with parameter of type "const char *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(232): error: expected a ";"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCBlas.cu(235): warning: parsing restarts here after previous syntax error
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(41): error: invalid redeclaration of type name "_THCCudaResourcesPerDevice"
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h(44): here
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(49): error: invalid redeclaration of type name "THCCudaResourcesPerDevice"
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h(52): here
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(53): error: invalid redeclaration of type name "THCState"
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h(85): here
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(100): error: more than one instance of overloaded function "THCState_getCurrentDeviceProperties" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(105): error: more than one instance of overloaded function "THCState_getNumDevices" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(106): error: more than one instance of overloaded function "THCState_reserveStreams" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(107): error: more than one instance of overloaded function "THCState_getNumStreams" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(109): error: more than one instance of overloaded function "THCState_getDeviceStream" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(110): error: more than one instance of overloaded function "THCState_getCurrentStream" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(111): error: more than one instance of overloaded function "THCState_getCurrentStreamIndex" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(112): error: more than one instance of overloaded function "THCState_setStream" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(113): error: more than one instance of overloaded function "THCState_setStreamForCurrentDevice" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(115): error: more than one instance of overloaded function "THCState_reserveBlasHandles" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(116): error: more than one instance of overloaded function "THCState_getNumBlasHandles" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(118): error: more than one instance of overloaded function "THCState_getDeviceBlasHandle" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(119): error: more than one instance of overloaded function "THCState_getCurrentBlasHandle" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(120): error: more than one instance of overloaded function "THCState_getCurrentBlasHandleIndex" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(121): error: more than one instance of overloaded function "THCState_setBlasHandle" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(122): error: more than one instance of overloaded function "THCState_setBlasHandleForCurrentDevice" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(125): error: more than one instance of overloaded function "THCState_getCurrentDeviceScratchSpace" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(126): error: more than one instance of overloaded function "THCState_getDeviceScratchSpace" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(127): error: more than one instance of overloaded function "THCState_getCurrentDeviceScratchSpaceSize" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(128): error: more than one instance of overloaded function "THCState_getDeviceScratchSpaceSize" has "C" linkage
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(61): error: identifier "NoCollapseMode" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(182): error: identifier "NoCollapseMode" is undefined
+
+80 errors detected in the compilation of "/tmp/tmpxft_00000c82_00000000-10_THZCBlas.compute_20.cpp1.ii".
+CMake Error at THZC_generated_THZCBlas.cu.o.cmake:264 (message):
+  Error generating file
+  /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCBlas.cu.o
+
+
+lib/THC/CMakeFiles/THZC.dir/build.make:63: recipe for target 'lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCBlas.cu.o' failed
+make[2]: *** [lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCBlas.cu.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h(14): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h(39): error: identifier "cux" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(321): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h(179): error: identifier "THCudaTensor" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(323): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(41): error: invalid redeclaration of type name "_THCCudaResourcesPerDevice"
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h(44): here
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(49): error: invalid redeclaration of type name "THCCudaResourcesPerDevice"
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h(52): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(327): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(328): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(332): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(53): error: invalid redeclaration of type name "THCState"
+/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h(85): here
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(100): error: more than one instance of overloaded function "THCState_getCurrentDeviceProperties" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(105): error: more than one instance of overloaded function "THCState_getNumDevices" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(106): error: more than one instance of overloaded function "THCState_reserveStreams" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(107): error: more than one instance of overloaded function "THCState_getNumStreams" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(109): error: more than one instance of overloaded function "THCState_getDeviceStream" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(110): error: more than one instance of overloaded function "THCState_getCurrentStream" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(111): error: more than one instance of overloaded function "THCState_getCurrentStreamIndex" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(112): error: more than one instance of overloaded function "THCState_setStream" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(113): error: more than one instance of overloaded function "THCState_setStreamForCurrentDevice" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(115): error: more than one instance of overloaded function "THCState_reserveBlasHandles" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(116): error: more than one instance of overloaded function "THCState_getNumBlasHandles" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(118): error: more than one instance of overloaded function "THCState_getDeviceBlasHandle" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(119): error: more than one instance of overloaded function "THCState_getCurrentBlasHandle" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(120): error: more than one instance of overloaded function "THCState_getCurrentBlasHandleIndex" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(121): error: more than one instance of overloaded function "THCState_setBlasHandle" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(122): error: more than one instance of overloaded function "THCState_setBlasHandleForCurrentDevice" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(125): error: more than one instance of overloaded function "THCState_getCurrentDeviceScratchSpace" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(126): error: more than one instance of overloaded function "THCState_getDeviceScratchSpace" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(127): error: more than one instance of overloaded function "THCState_getCurrentDeviceScratchSpaceSize" has "C" linkage
+
+/home/philipp/torch/install/include/THC/THCGeneral.h(128): error: more than one instance of overloaded function "THCState_getDeviceScratchSpaceSize" has "C" linkage
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(359): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(364): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(61): error: identifier "NoCollapseMode" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(182): error: identifier "NoCollapseMode" is undefined
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(10): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(15): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(456): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(23): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(24): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(25): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(27): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cuh(465): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(80): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(84): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(95): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(94): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(97): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cu(100): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(116): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(117): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(120): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(121): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(150): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(151): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(154): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+/home/philipp/projects/zcutorch/lib/THC/THZCReduceApplyUtils.cuh(155): error: argument of type "THCState *" is incompatible with parameter of type "THCState *"
+          detected during instantiation of "__nv_bool THZCudaTensor_pointwiseApply2(THCState *, THZCudaTensor *, THZCudaTensor *, const Op &, TensorArgType, TensorArgType) [with Op=ZCopyOp<ccx>]" 
+/home/philipp/projects/zcutorch/lib/THC/THZCApply.cu(7): here
+
+52 errors detected in the compilation of "/tmp/tmpxft_00000c84_00000000-10_THZCApply.compute_20.cpp1.ii".
+CMake Error at THZC_generated_THZCApply.cu.o.cmake:264 (message):
+  Error generating file
+  /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCApply.cu.o
+
+
+lib/THC/CMakeFiles/THZC.dir/build.make:215: recipe for target 'lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o' failed
+make[2]: *** [lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o] Error 1
+37 errors detected in the compilation of "/tmp/tmpxft_00000c81_00000000-10_THZCReduceApplyUtils.compute_20.cpp1.ii".
+CMake Error at THZC_generated_THZCReduceApplyUtils.cu.o.cmake:264 (message):
+  Error generating file
+  /home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCReduceApplyUtils.cu.o
+
+
+lib/THC/CMakeFiles/THZC.dir/build.make:55: recipe for target 'lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o' failed
+make[2]: *** [lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCReduceApplyUtils.cu.o] Error 1
+CMakeFiles/Makefile2:191: recipe for target 'lib/THC/CMakeFiles/THZC.dir/all' failed
+make[1]: *** [lib/THC/CMakeFiles/THZC.dir/all] Error 2
+Makefile:117: recipe for target 'all' failed
+make: *** [all] Error 2
+
+Error: Build error: Failed building.
+cmake -E make_directory build && cd build && cmake .. -DLUALIB= -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="/home/philipp/torch/install/bin/.." -DCMAKE_INSTALL_PREFIX="/home/philipp/torch/install/lib/luarocks/rocks/zcutorch/scm-1" -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda && make -j$(getconf _NPROCESSORS_ONLN) install
+

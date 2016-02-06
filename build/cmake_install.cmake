@@ -44,7 +44,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so"
-         OLD_RPATH "/home/philipp/projects/zcutorch/build/lib/THC:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/magma/lib:"
+         OLD_RPATH "/home/philipp/torch/install/lib:/home/philipp/projects/zcutorch/build/lib/THC:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/magma/lib:"
          NEW_RPATH "$ORIGIN/../lib:/home/philipp/torch/install/lib:/usr/local/cuda/lib64:/opt/OpenBLAS/lib:/usr/local/magma/lib")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/zcutorch/scm-1/lib/libzcutorch.so")
