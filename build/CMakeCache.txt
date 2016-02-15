@@ -305,7 +305,7 @@ THZC_INSTALL_INCLUDE_SUBDIR:PATH=include
 THZC_INSTALL_LIB_SUBDIR:PATH=lib
 
 //Dependencies for the target
-THZC_LIB_DEPENDS:STATIC=general;/usr/local/cuda/lib64/libcudart.so;general;/usr/local/cuda/lib64/libcublas.so;general;TH;general;/usr/local/cuda/lib64/libcurand.so;general;/usr/local/magma/lib/libmagma.so;
+THZC_LIB_DEPENDS:STATIC=general;/usr/local/cuda/lib64/libcudart.so;general;/usr/local/cuda/lib64/libcublas.so;general;/usr/local/cuda/lib64/libcufft.so;general;TH;general;/usr/local/cuda/lib64/libcurand.so;general;/usr/local/magma/lib/libmagma.so;
 
 //The directory containing a CMake configuration file for Torch.
 Torch_DIR:PATH=/home/philipp/torch/install/share/cmake/torch
@@ -315,9 +315,6 @@ WITH_RPATH:BOOL=ON
 
 //Dependencies for the target
 zcutorch_LIB_DEPENDS:STATIC=general;luaT;general;THZ;general;THC;general;THZC;
-
-//Dependencies for target
-zcutorch_static_LIB_DEPENDS:STATIC=
 
 
 ########################

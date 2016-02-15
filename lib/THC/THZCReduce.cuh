@@ -26,7 +26,10 @@ __device__ __forceinline__ IndexType getReduceNoncontigDimSliceIndex() {
 // thread
 template <typename ModifyOp, typename ReduceOp, typename IndexType, int ADims,
           int BDims>
-__launch_bounds__(32 * 16, 4) __global__ void THZCudaTensor_reduceNoncontigDim(
+#if __CUDA_ARCH__ >= 350
+__launch_bounds__(32 * 16, 4) 
+#endif
+__global__ void THZCudaTensor_reduceNoncontigDim(
     ZTensorInfo<IndexType> out, ZTensorInfo<IndexType> in,
     IndexType reductionStride, IndexType reductionSize, IndexType totalSlices,
     ccx init, ModifyOp modifyOp, ReduceOp reduceOp) {

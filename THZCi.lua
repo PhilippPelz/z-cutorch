@@ -50,6 +50,10 @@ void THZCudaTensor_cim(THCState *state, THZCudaTensor *self, THZCudaTensor *src1
 void THZCudaTensor_cre(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THCudaTensor *src2);
 
 void THZCudaTensor_copy(THCState *state, THZCudaTensor *self, THZCudaTensor *src);
+
+void THZCudaTensor_copyIm(THCState *state, THZCudaTensor *self, THCudaTensor *src);
+void THZCudaTensor_copyRe(THCState *state, THZCudaTensor *self, THCudaTensor *src);
+
 void THZCudaTensor_copyByte(THCState *state, THZCudaTensor *self, THByteTensor *src);
 void THZCudaTensor_copyChar(THCState *state, THZCudaTensor *self, THCharTensor *src);
 void THZCudaTensor_copyShort(THCState *state, THZCudaTensor *self, THShortTensor *src);
@@ -79,6 +83,21 @@ void THZCudaTensor_fftShiftInplace(THCState *state, THZCudaTensor *self);
 void THZCudaTensor_fftShift(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
 void THZCudaTensor_ifftShiftInplace(THCState *state, THZCudaTensor *self);
 void THZCudaTensor_ifftShift(THCState *state, THZCudaTensor *self, THZCudaTensor *result);
+
+void THZCudaTensor_fillim(THCState *state, THZCudaTensor *self, float value);
+void THZCudaTensor_fillre(THCState *state, THZCudaTensor *self, float value);
+
+void THZCudaTensor_add(THCState *state, THZCudaTensor *self, THZCudaTensor *src, float _Complex value);
+void THZCudaTensor_mul(THCState *state, THZCudaTensor *self, THZCudaTensor *src, float _Complex value);
+void THZCudaTensor_div(THCState *state, THZCudaTensor *self, THZCudaTensor *src, float _Complex value);
+
+void THZCudaTensor_addcmul(THCState *state, THZCudaTensor *self, THZCudaTensor *t, float _Complex value, THZCudaTensor *src1, THZCudaTensor *src2);
+void THZCudaTensor_addcdiv(THCState *state, THZCudaTensor *self, THZCudaTensor *t, float _Complex value, THZCudaTensor *src1, THZCudaTensor *src2);
+
+void THZCudaTensor_cmul(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THZCudaTensor *src2);
+void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, float _Complex value, THZCudaTensor *src2);
+void THZCudaTensor_cpow(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THZCudaTensor *src2);
+void THZCudaTensor_cdiv(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THZCudaTensor *src2);
 ]])
 
 

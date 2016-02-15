@@ -133,7 +133,7 @@ void THZCudaTensor_indexCopy_long(THCState *state, THZCudaTensor *res_, int dim,
   THCudaTensor *indices_ = THCudaTensor_newWithSize1d(state, indices->size[0]);
   THCudaTensor_copyLong(state, indices_, indices);
 
-  THCudaTensor_indexCopy(state, res_, dim, indices_, src);
+  THZCudaTensor_indexCopy(state, res_, dim, indices_, src);
 
   THCudaTensor_free(state, indices_);
 }

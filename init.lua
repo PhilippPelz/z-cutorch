@@ -1,7 +1,8 @@
 require "torch"
 require "cutorch"
 require 'ztorch'
-
+-- include('THZCi.lua')
+-- local THZCudaTensor_polar = C['THZCudaTensor_polar']
 local zcutorch = paths.require("libzcutorch")
 
 local ffi = require 'ffi'
@@ -44,5 +45,27 @@ function zcutorch.createZCudaHostTensor(...)
 end
 
 zcutorch.setHeapTracking(true)
+
+-- zcutorch.polar = argcheck{
+--    nonamed=true,
+--    {name="src1", type=ctypename},
+--    {name="src2", type=ctypename},
+--    call = function(src1, src2)
+--       ret = torch.ZCudaTensor(src1:size())
+--       THZCudaTensor_polar(cutorch._state,ret, src1, src2)
+--       return ret
+--    end
+-- }
+--
+-- torch.polar = argcheck{
+--    nonamed=true,
+--    {name="src1", type=ctypename},
+--    {name="src2", type=ctypename},
+--    call = function(src1, src2)
+--       ret = torch.ZCudaTensor(src1:size())
+--       THZCudaTensor_polar(cutorch._state,ret, src1, src2)
+--       return ret
+--    end
+-- }
 
 return zcutorch

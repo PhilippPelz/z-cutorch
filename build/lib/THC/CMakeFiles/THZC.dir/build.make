@@ -418,6 +418,7 @@ lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/./THZC_generated_THZCApply.cu.o
 lib/THC/libTHZC.so: lib/THC/CMakeFiles/THZC.dir/build.make
 lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcudart.so
 lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcublas.so
+lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcufft.so
 lib/THC/libTHZC.so: /home/philipp/torch/install/lib/libTH.so
 lib/THC/libTHZC.so: /usr/local/cuda/lib64/libcurand.so
 lib/THC/libTHZC.so: /usr/local/magma/lib/libmagma.so

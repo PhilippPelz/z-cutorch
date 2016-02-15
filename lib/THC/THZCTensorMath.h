@@ -7,6 +7,7 @@
 // Tensormath.cu
 THZC_API void THZCudaTensor_fill(THCState *state, THZCudaTensor *self,
 cx value);
+
 THZC_API void THZCudaTensor_fillim(THCState *state, THZCudaTensor *self, float value);
 THZC_API void THZCudaTensor_fillre(THCState *state, THZCudaTensor *self, float value);
 THZC_API void THZCudaTensor_zero(THCState *state, THZCudaTensor *self);

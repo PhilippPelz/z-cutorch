@@ -224,14 +224,18 @@ struct TensorCAddOp {
 void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* src1, cx value, THZCudaTensor *src2) {
 	THAssert(THZCudaTensor_checkGPU(state, 3, self_, src1, src2));
 	THArgCheck(THZCudaTensor_nElement(state, src1) == THZCudaTensor_nElement(state, src2), 3, "sizes do not match");
-
+  float real = crealf(value);
+  float imag = cimagf(value);
+  // printf("val = %g + %g i\n", real, imag);
 	if (self_ == src1) {
-		if (value == 1.0f) {
+		if (real == 1.0f && imag == 0.0) {
+      // printf("path11\n");
 			// self += src2
 			if (!THZCudaTensor_pointwiseApply2(state, self_, src2, TensorAddOp())) {
 				THArgCheck(false, 2, CUTORCH_DIM_WARNING);
 			}
 		} else {
+      // printf("path22\n");
 			// self += value * src2
 			if (!THZCudaTensor_pointwiseApply2(state, self_, src2, TensorCAddOp(toCcx(value)))) {
 				THArgCheck(false, 2, CUTORCH_DIM_WARNING);
@@ -240,12 +244,14 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
 	} else {
 		THZCudaTensor_resizeAs(state, self_, src1);
 
-		if (value == 1.0f) {
+		if (real == 1.0f && imag == 0.0) {
+      // printf("path33\n");
 			// self = src1 + src2
 			if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorAddOp())) {
 				THArgCheck(false, 2, CUTORCH_DIM_WARNING);
 			}
 		} else {
+      // printf("path44\n");
 			// self = src1 + value * src2
 			if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorCAddOp(toCcx(value)))) {
 				THArgCheck(false, 2, CUTORCH_DIM_WARNING);

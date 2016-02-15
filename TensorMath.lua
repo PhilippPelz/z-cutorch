@@ -486,14 +486,14 @@ wrap("fill",
      {{name=Tensor, returned=true},
       {name=real}})
 
-wrap("fillim",
-     cname("fillim"),
-     {{name=Tensor, returned=true},
-      {name=fl}})
-wrap("fillre",
-     cname("fillre"),
-     {{name=Tensor, returned=true},
-      {name=fl}})
+-- wrap("fillim",
+--      cname("fillim"),
+--      {{name=Tensor, returned=true},
+--       {name=fl}})
+-- wrap("fillre",
+--      cname("fillre"),
+--      {{name=Tensor, returned=true},
+--       {name=fl}})
 wrap("zeros",
      cname("zeros"),
      {{name=Tensor, default=true, returned=true, method={default='nil'}},
@@ -515,27 +515,28 @@ wrap("zeros",
       {{name=Tensor},
          {name="long", creturned=true}})
 
-wrap("add",
-     cname("add"),
-     {{name=Tensor, default=true, returned=true, method={default='nil'}},
-      {name=Tensor, method={default=1}},
-      {name=real}},
-     cname("cadd"),
-     {{name=Tensor, default=true, returned=true, method={default='nil'}},
-      {name=Tensor, method={default=1}},
-      {name=real, default=1},
-      {name=Tensor}},
-    cname("cadd"),
-    {{name=Tensor, default=true, returned=true, method={default='nil'}},
-     {name=Tensor, method={default=1}},
-     {name=real, default=1},
-     {name=Tensor}})
+-- wrap("add",
+--      cname("add"),
+--      {{name=Tensor, default=true, returned=true, method={default='nil'}},
+--       {name=Tensor, method={default=1}},
+--       {name=real}},
+--      cname("cadd"),
+--      {{name=Tensor, default=true, returned=true, method={default='nil'}},
+--       {name=Tensor, method={default=1}},
+--       {name=real, default=1},
+--       {name=Tensor}},
+--     cname("cadd"),
+--     {{name=Tensor, default=true, returned=true, method={default='nil'}},
+--      {name=Tensor, method={default=1}},
+--      {name=real, default=1},
+--      {name=Tensor}})
 
 wrap("mul",
      cname("mul"),
      {{name=Tensor, default=true, returned=true, method={default='nil'}},
         {name=Tensor, method={default=1}},
-        {name=real}})
+        {name=real}}
+)
 
 wrap("div",
      cname("div"),
@@ -550,22 +551,22 @@ for _, name in ipairs({"cmul", "cpow", "cdiv"}) do
           {name=Tensor, method={default=1}},
         {name=Tensor}})
 end
-
-wrap("addcmul",
-     cname("addcmul"),
-     {{name=Tensor, default=true, returned=true, method={default='nil'}},
-        {name=Tensor, method={default=1}},
-        {name=real, default=1},
-        {name=Tensor},
-        {name=Tensor}})
-
-wrap("addcdiv",
-     cname("addcdiv"),
-     {{name=Tensor, default=true, returned=true, method={default='nil'}},
-        {name=Tensor, method={default=1}},
-        {name=real, default=1},
-        {name=Tensor},
-        {name=Tensor}})
+--
+-- wrap("addcmul",
+--      cname("addcmul"),
+--      {{name=Tensor, default=true, returned=true, method={default='nil'}},
+--         {name=Tensor, method={default=1}},
+--         {name=real, default=1},
+--         {name=Tensor},
+--         {name=Tensor}})
+--
+-- wrap("addcdiv",
+--      cname("addcdiv"),
+--      {{name=Tensor, default=true, returned=true, method={default='nil'}},
+--         {name=Tensor, method={default=1}},
+--         {name=real, default=1},
+--         {name=Tensor},
+--         {name=Tensor}})
 
 wrap("maskedFill",
      cname("maskedFill"),

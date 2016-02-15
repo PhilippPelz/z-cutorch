@@ -13,7 +13,12 @@
 #include "string.h"
 static void str_arg_types(lua_State *L, char *buf, int n) {
     int i;
-  for (i = 1; i <= lua_gettop(L); i++) {
+  int nargs = lua_gettop(L);
+  if (nargs == 0) {
+    snprintf(buf, n, "no arguments provided");
+    return;
+  }
+  for (i = 1; i <= nargs; i++) {
     int l;
     const char *torch_type = luaT_typename(L, i);
     if(torch_type && !strncmp(torch_type, "torch.", 6)) torch_type += 6;
@@ -83,64 +88,6 @@ luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* float co
 }
 lua_pushvalue(L, arg1_idx);
 THZCudaTensor_fill(default_arg1,arg1,arg2);
-return 1;
-}
-
-static int zcutorch_ZCudaTensor_fillim(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-float arg2 = 0;
-if(narg == 2
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-)
-{
-arg1_idx = 1;
-arg2 = (float)lua_tonumber(L, 2);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* float", type_buf);
-}
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_fillim(default_arg1,arg1,arg2);
-return 1;
-}
-
-static int zcutorch_ZCudaTensor_fillre(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-float arg2 = 0;
-if(narg == 2
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-)
-{
-arg1_idx = 1;
-arg2 = (float)lua_tonumber(L, 2);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* float", type_buf);
-}
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_fillre(default_arg1,arg1,arg2);
 return 1;
 }
 
@@ -290,163 +237,6 @@ luaL_error(L, "invalid arguments: %s\nexpected arguments: ZCudaTensor", type_buf
 arg2 = THZCudaTensor_numel(default_arg1,arg1);
 lua_pushnumber(L, (lua_Number)arg2);
 return 1;
-}
-
-static int zcutorch_ZCudaTensor_add(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-int argset = 0;
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-THZCudaTensor *arg2 = NULL;
-float complex arg3 = 0;
-THZCudaTensor *arg4 = NULL;
-int arg4_idx = 0;
-THZCudaTensor *arg5 = NULL;
-float complex arg6 = 0;
-THZCudaTensor *arg7 = NULL;
-THZCudaTensor *arg8 = NULL;
-int arg8_idx = 0;
-THZCudaTensor *arg9 = NULL;
-float complex arg10 = 0;
-THZCudaTensor *arg11 = NULL;
-if(narg == 2
-&& (arg2 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-)
-{
-argset = 1;
-arg3 = (float complex)lua_tonumber(L, 2);
-arg1 = THZCudaTensor_new(cutorch_getstate(L));
-}
-else if(narg == 3
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-)
-{
-argset = 1;
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 3);
-}
-else if(narg == 2
-&& (arg5 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg7 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-)
-{
-argset = 2;
-arg4 = THZCudaTensor_new(cutorch_getstate(L));
-arg6 = 0;
-}
-else if(narg == 3
-&& (arg4 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg7 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-argset = 2;
-arg4_idx = 1;
-arg6 = 0;
-}
-else if(narg == 3
-&& (arg5 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-&& (arg7 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-argset = 2;
-arg6 = (float complex)lua_tonumber(L, 2);
-arg4 = THZCudaTensor_new(cutorch_getstate(L));
-}
-else if(narg == 4
-&& (arg4 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-&& (arg7 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-argset = 2;
-arg4_idx = 1;
-arg6 = (float complex)lua_tonumber(L, 3);
-}
-else if(narg == 2
-&& (arg9 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg11 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-)
-{
-argset = 3;
-arg8 = THZCudaTensor_new(cutorch_getstate(L));
-arg10 = 0;
-}
-else if(narg == 3
-&& (arg8 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg9 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg11 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-argset = 3;
-arg8_idx = 1;
-arg10 = 0;
-}
-else if(narg == 3
-&& (arg9 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-&& (arg11 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-argset = 3;
-arg10 = (float complex)lua_tonumber(L, 2);
-arg8 = THZCudaTensor_new(cutorch_getstate(L));
-}
-else if(narg == 4
-&& (arg8 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg9 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-&& (arg11 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-argset = 3;
-arg8_idx = 1;
-arg10 = (float complex)lua_tonumber(L, 3);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: [*ZCudaTensor*] ZCudaTensor float complex | [*ZCudaTensor*] ZCudaTensor [float complex] ZCudaTensor | [*ZCudaTensor*] ZCudaTensor [float complex] ZCudaTensor", type_buf);
-}
-if(argset == 1)
-{
-if(arg1_idx)
-lua_pushvalue(L, arg1_idx);
-else
-luaT_pushudata(L, arg1, "torch.ZCudaTensor");
-THZCudaTensor_add(default_arg1,arg1,arg2,arg3);
-return 1;
-}
-else if(argset == 2)
-{
-if(arg4_idx)
-lua_pushvalue(L, arg4_idx);
-else
-luaT_pushudata(L, arg4, "torch.ZCudaTensor");
-THZCudaTensor_cadd(default_arg1,arg4,arg5,arg6,arg7);
-return 1;
-}
-else if(argset == 3)
-{
-if(arg8_idx)
-lua_pushvalue(L, arg8_idx);
-else
-luaT_pushudata(L, arg8, "torch.ZCudaTensor");
-THZCudaTensor_cadd(default_arg1,arg8,arg9,arg10,arg11);
-return 1;
-}
-return 0;
 }
 
 static int zcutorch_ZCudaTensor_mul(lua_State *L)
@@ -650,140 +440,6 @@ lua_pushvalue(L, arg1_idx);
 else
 luaT_pushudata(L, arg1, "torch.ZCudaTensor");
 THZCudaTensor_cdiv(default_arg1,arg1,arg2,arg3);
-return 1;
-}
-
-static int zcutorch_ZCudaTensor_addcmul(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-THZCudaTensor *arg2 = NULL;
-float complex arg3 = 0;
-THZCudaTensor *arg4 = NULL;
-THZCudaTensor *arg5 = NULL;
-if(narg == 3
-&& (arg2 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg4 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-arg1 = THZCudaTensor_new(cutorch_getstate(L));
-arg3 = 0;
-}
-else if(narg == 4
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg4 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = 0;
-}
-else if(narg == 4
-&& (arg2 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-&& (arg4 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-arg3 = (float complex)lua_tonumber(L, 2);
-arg1 = THZCudaTensor_new(cutorch_getstate(L));
-}
-else if(narg == 5
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-&& (arg4 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 5, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 3);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: [*ZCudaTensor*] ZCudaTensor [float complex] ZCudaTensor ZCudaTensor", type_buf);
-}
-if(arg1_idx)
-lua_pushvalue(L, arg1_idx);
-else
-luaT_pushudata(L, arg1, "torch.ZCudaTensor");
-THZCudaTensor_addcmul(default_arg1,arg1,arg2,arg3,arg4,arg5);
-return 1;
-}
-
-static int zcutorch_ZCudaTensor_addcdiv(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-THZCudaTensor *arg2 = NULL;
-float complex arg3 = 0;
-THZCudaTensor *arg4 = NULL;
-THZCudaTensor *arg5 = NULL;
-if(narg == 3
-&& (arg2 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg4 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-arg1 = THZCudaTensor_new(cutorch_getstate(L));
-arg3 = 0;
-}
-else if(narg == 4
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg4 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = 0;
-}
-else if(narg == 4
-&& (arg2 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-&& (arg4 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-arg3 = (float complex)lua_tonumber(L, 2);
-arg1 = THZCudaTensor_new(cutorch_getstate(L));
-}
-else if(narg == 5
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-&& (arg4 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 5, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 3);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: [*ZCudaTensor*] ZCudaTensor [float complex] ZCudaTensor ZCudaTensor", type_buf);
-}
-if(arg1_idx)
-lua_pushvalue(L, arg1_idx);
-else
-luaT_pushudata(L, arg1, "torch.ZCudaTensor");
-THZCudaTensor_addcdiv(default_arg1,arg1,arg2,arg3,arg4,arg5);
 return 1;
 }
 
@@ -4444,7 +4100,12 @@ return 0;
 #include "string.h"
 static void str_arg_types(lua_State *L, char *buf, int n) {
     int i;
-  for (i = 1; i <= lua_gettop(L); i++) {
+  int nargs = lua_gettop(L);
+  if (nargs == 0) {
+    snprintf(buf, n, "no arguments provided");
+    return;
+  }
+  for (i = 1; i <= nargs; i++) {
     int l;
     const char *torch_type = luaT_typename(L, i);
     if(torch_type && !strncmp(torch_type, "torch.", 6)) torch_type += 6;
@@ -4514,64 +4175,6 @@ luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* float co
 }
 lua_pushvalue(L, arg1_idx);
 THZCudaTensor_fill(default_arg1,arg1,arg2);
-return 1;
-}
-
-static int wrapper_fillim(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-float arg2 = 0;
-if(narg == 2
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-)
-{
-arg1_idx = 1;
-arg2 = (float)lua_tonumber(L, 2);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* float", type_buf);
-}
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_fillim(default_arg1,arg1,arg2);
-return 1;
-}
-
-static int wrapper_fillre(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-float arg2 = 0;
-if(narg == 2
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-)
-{
-arg1_idx = 1;
-arg2 = (float)lua_tonumber(L, 2);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* float", type_buf);
-}
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_fillre(default_arg1,arg1,arg2);
 return 1;
 }
 
@@ -4701,159 +4304,6 @@ luaL_error(L, "invalid arguments: %s\nexpected arguments: ZCudaTensor", type_buf
 arg2 = THZCudaTensor_numel(default_arg1,arg1);
 lua_pushnumber(L, (lua_Number)arg2);
 return 1;
-}
-
-static int wrapper_add(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-int argset = 0;
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-THZCudaTensor *arg2 = NULL;
-float complex arg3 = 0;
-THZCudaTensor *arg4 = NULL;
-int arg4_idx = 0;
-THZCudaTensor *arg5 = NULL;
-float complex arg6 = 0;
-THZCudaTensor *arg7 = NULL;
-THZCudaTensor *arg8 = NULL;
-int arg8_idx = 0;
-THZCudaTensor *arg9 = NULL;
-float complex arg10 = 0;
-THZCudaTensor *arg11 = NULL;
-if(narg == 2
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-)
-{
-argset = 1;
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 2);
-arg2 = arg1;
-}
-else if(narg == 3
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-)
-{
-argset = 1;
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 3);
-}
-else if(narg == 2
-&& (arg4 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg7 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-)
-{
-argset = 2;
-arg4_idx = 1;
-arg5 = arg4;
-arg6 = 0;
-}
-else if(narg == 3
-&& (arg4 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg7 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-argset = 2;
-arg4_idx = 1;
-arg6 = 0;
-}
-else if(narg == 3
-&& (arg4 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-&& (arg7 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-argset = 2;
-arg4_idx = 1;
-arg6 = (float complex)lua_tonumber(L, 2);
-arg5 = arg4;
-}
-else if(narg == 4
-&& (arg4 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-&& (arg7 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-argset = 2;
-arg4_idx = 1;
-arg6 = (float complex)lua_tonumber(L, 3);
-}
-else if(narg == 2
-&& (arg8 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg11 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-)
-{
-argset = 3;
-arg8_idx = 1;
-arg9 = arg8;
-arg10 = 0;
-}
-else if(narg == 3
-&& (arg8 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg9 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg11 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-argset = 3;
-arg8_idx = 1;
-arg10 = 0;
-}
-else if(narg == 3
-&& (arg8 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-&& (arg11 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-argset = 3;
-arg8_idx = 1;
-arg10 = (float complex)lua_tonumber(L, 2);
-arg9 = arg8;
-}
-else if(narg == 4
-&& (arg8 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg9 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-&& (arg11 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-argset = 3;
-arg8_idx = 1;
-arg10 = (float complex)lua_tonumber(L, 3);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* [ZCudaTensor] float complex | *ZCudaTensor* [ZCudaTensor] [float complex] ZCudaTensor | *ZCudaTensor* [ZCudaTensor] [float complex] ZCudaTensor", type_buf);
-}
-if(argset == 1)
-{
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_add(default_arg1,arg1,arg2,arg3);
-return 1;
-}
-else if(argset == 2)
-{
-lua_pushvalue(L, arg4_idx);
-THZCudaTensor_cadd(default_arg1,arg4,arg5,arg6,arg7);
-return 1;
-}
-else if(argset == 3)
-{
-lua_pushvalue(L, arg8_idx);
-THZCudaTensor_cadd(default_arg1,arg8,arg9,arg10,arg11);
-return 1;
-}
-return 0;
 }
 
 static int wrapper_mul(lua_State *L)
@@ -5047,138 +4497,6 @@ luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* [ZCudaTe
 }
 lua_pushvalue(L, arg1_idx);
 THZCudaTensor_cdiv(default_arg1,arg1,arg2,arg3);
-return 1;
-}
-
-static int wrapper_addcmul(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-THZCudaTensor *arg2 = NULL;
-float complex arg3 = 0;
-THZCudaTensor *arg4 = NULL;
-THZCudaTensor *arg5 = NULL;
-if(narg == 3
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg4 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg2 = arg1;
-arg3 = 0;
-}
-else if(narg == 4
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg4 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = 0;
-}
-else if(narg == 4
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-&& (arg4 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 2);
-arg2 = arg1;
-}
-else if(narg == 5
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-&& (arg4 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 5, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 3);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* [ZCudaTensor] [float complex] ZCudaTensor ZCudaTensor", type_buf);
-}
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_addcmul(default_arg1,arg1,arg2,arg3,arg4,arg5);
-return 1;
-}
-
-static int wrapper_addcdiv(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-THZCudaTensor *arg2 = NULL;
-float complex arg3 = 0;
-THZCudaTensor *arg4 = NULL;
-THZCudaTensor *arg5 = NULL;
-if(narg == 3
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg4 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg2 = arg1;
-arg3 = 0;
-}
-else if(narg == 4
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& (arg4 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = 0;
-}
-else if(narg == 4
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 2)
-&& (arg4 = luaT_toudata(L, 3, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 2);
-arg2 = arg1;
-}
-else if(narg == 5
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.ZCudaTensor"))
-&& lua_isnumber(L, 3)
-&& (arg4 = luaT_toudata(L, 4, "torch.ZCudaTensor"))
-&& (arg5 = luaT_toudata(L, 5, "torch.ZCudaTensor"))
-)
-{
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 3);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* [ZCudaTensor] [float complex] ZCudaTensor ZCudaTensor", type_buf);
-}
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_addcdiv(default_arg1,arg1,arg2,arg3,arg4,arg5);
 return 1;
 }
 
@@ -8767,20 +8085,15 @@ return 0;
 static const struct luaL_Reg m_zcutorch_ZCudaTensorMath__ [] = {
 {"zero", wrapper_zero},
 {"fill", wrapper_fill},
-{"fillim", wrapper_fillim},
-{"fillre", wrapper_fillre},
 {"zeros", wrapper_zeros},
 {"ones", wrapper_ones},
 {"reshape", wrapper_reshape},
 {"numel", wrapper_numel},
-{"add", wrapper_add},
 {"mul", wrapper_mul},
 {"div", wrapper_div},
 {"cmul", wrapper_cmul},
 {"cpow", wrapper_cpow},
 {"cdiv", wrapper_cdiv},
-{"addcmul", wrapper_addcmul},
-{"addcdiv", wrapper_addcdiv},
 {"maskedFill", wrapper_maskedFill},
 {"maskedCopy", wrapper_maskedCopy},
 {"maskedSelect", wrapper_maskedSelect},
@@ -8849,20 +8162,15 @@ static const struct luaL_Reg m_zcutorch_ZCudaTensorMath__ [] = {
 static const struct luaL_Reg zcutorch_ZCudaTensorMath__ [] = {
 {"zero", zcutorch_ZCudaTensor_zero},
 {"fill", zcutorch_ZCudaTensor_fill},
-{"fillim", zcutorch_ZCudaTensor_fillim},
-{"fillre", zcutorch_ZCudaTensor_fillre},
 {"zeros", zcutorch_ZCudaTensor_zeros},
 {"ones", zcutorch_ZCudaTensor_ones},
 {"reshape", zcutorch_ZCudaTensor_reshape},
 {"numel", zcutorch_ZCudaTensor_numel},
-{"add", zcutorch_ZCudaTensor_add},
 {"mul", zcutorch_ZCudaTensor_mul},
 {"div", zcutorch_ZCudaTensor_div},
 {"cmul", zcutorch_ZCudaTensor_cmul},
 {"cpow", zcutorch_ZCudaTensor_cpow},
 {"cdiv", zcutorch_ZCudaTensor_cdiv},
-{"addcmul", zcutorch_ZCudaTensor_addcmul},
-{"addcdiv", zcutorch_ZCudaTensor_addcdiv},
 {"maskedFill", zcutorch_ZCudaTensor_maskedFill},
 {"maskedCopy", zcutorch_ZCudaTensor_maskedCopy},
 {"maskedSelect", zcutorch_ZCudaTensor_maskedSelect},

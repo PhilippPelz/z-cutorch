@@ -52,7 +52,7 @@ static const char *_cudaGetErrorEnum(cufftResult error)
 
 void cufftShift_2D_kernel(ccx* d, int nx, int ny)
 {
-	int idx = threadIdx.x + blockIdx.x * blockDim.x;
+	// int idx = threadIdx.x + blockIdx.x * blockDim.x;
     // // 2D Slice & 1D Line
     // int sLine = N;
     // int sSlice = N * N;
@@ -109,26 +109,35 @@ void cufftShift_2D_kernel(ccx* d, int nx, int ny)
 #define cufftSafeCall(err)      __cufftSafeCall(err, __FILE__, __LINE__)
 inline void __cufftSafeCall(cufftResult err, const char *file, const int line) {
 	if (CUFFT_SUCCESS != err) {
-		fprintf(stderr, "CUFFT error in file '%s', line %d\n %s\nerror: %d\nterminating!\n",
+		printf("CUFFT error in file '%s', line %d\n %s\nerror: %d\nterminating!\n",
 		__FILE__, __LINE__, err, _cudaGetErrorEnum(err));
 		cudaDeviceReset();
 		// assert(0);
 	}
 }
-void THZCudaTensor_fft(THCState *state, THZCudaTensor *self, THZCudaTensor *result, int direction) {
-	int ndim = THZCudaTensor_nDimension(state, self);
+void THZCudaTensor_fftbase(THCState *state, THZCudaTensor *self, THZCudaTensor *result, int direction) {
+	int ndim = THZCudaTensor_nDimension(state, result);
+	// printf("ndim %d\n",ndim);
+	// printf("pself %p\n",(void*)THZCudaTensor_data(state, self));
+	// printf("presult %p\n",(void*)THZCudaTensor_data(state, result));
 	int batch = 1;
-	int fft_dims[4];
+	int *fft_dims = (int*)malloc(ndim*sizeof(int));
 	for (int i = 0; i < ndim; i++) {
 		fft_dims[i] = (int) THZCudaTensor_size(state, self, i);
+		// printf("dim %d: %d\n",i,fft_dims[i]);
 	}
 	cufftHandle plan;
+	// printf("here 1\n");
 	cufftSafeCall(cufftPlanMany(&plan, ndim, fft_dims, NULL, 1, 0, NULL, 1, 0, CUFFT_C2C, batch));
+	// printf("here 2\n");
 	cufftSafeCall(cufftSetStream(plan, THCState_getCurrentStream(state)));
+	// printf("here 3\n");
 	cufftSafeCall(cufftExecC2C(plan, (cufftComplex *)THZCudaTensor_data(state, self), (cufftComplex *)THZCudaTensor_data(state, result), direction));
+	// printf("here 4\n");
 	cufftDestroy(plan);
+	free(fft_dims);
 }
-void THZCudaTensor_fftBatched(THCState *state, THZCudaTensor *self, THZCudaTensor *result, int direction) {
+void THZCudaTensor_fftBatchedbase(THCState *state, THZCudaTensor *self, THZCudaTensor *result, int direction) {
 	int ndim = THZCudaTensor_nDimension(state, self);
 	int batch = THZCudaTensor_size(state, self, 0);
 	int fft_dims[3];
@@ -143,30 +152,30 @@ void THZCudaTensor_fftBatched(THCState *state, THZCudaTensor *self, THZCudaTenso
 }
 
 void THZCudaTensor_fft(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
-	THZCudaTensor_fft(state, self, result, CUFFT_FORWARD);
+	THZCudaTensor_fftbase(state, self, result, CUFFT_FORWARD);
 }
 
 void THZCudaTensor_fftBatched(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
-	THZCudaTensor_fftBatched(state, self, result, CUFFT_FORWARD);
+	THZCudaTensor_fftBatchedbase(state, self, result, CUFFT_FORWARD);
 }
 
 void THZCudaTensor_ifft(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
 	THZCudaTensor_ifftU(state, self, result);
-	THZCudaTensor_mul(state, result, result, 1 / THZCudaTensor_nElement(state, result));
+	THZCudaTensor_mul(state, result, result, (1 / THZCudaTensor_nElement(state, result)) + 0 * _Complex_I);
 }
 
 void THZCudaTensor_ifftBatched(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
 	THZCudaTensor_ifftBatchedU(state, self, result);
-	THZCudaTensor_mul(state, result, result, 1 / THZCudaTensor_nElement(state, result));
+	THZCudaTensor_mul(state, result, result, (1 / THZCudaTensor_nElement(state, result)) + 0* _Complex_I);
 }
 
 
 void THZCudaTensor_ifftU(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
-	THZCudaTensor_fft(state, self, result, CUFFT_INVERSE);
+	THZCudaTensor_fftbase(state, self, result, CUFFT_INVERSE);
 }
 
 void THZCudaTensor_ifftBatchedU(THCState *state, THZCudaTensor *self, THZCudaTensor *result) {
-	THZCudaTensor_fftBatched(state, self, result, CUFFT_INVERSE);
+	THZCudaTensor_fftBatchedbase(state, self, result, CUFFT_INVERSE);
 }
 
 void THZCudaTensor_fftShiftInplace(THCState *state, THZCudaTensor *self) {

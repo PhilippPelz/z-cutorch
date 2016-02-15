@@ -2,14 +2,14 @@ package = "zcutorch"
 version = "scm-1"
 
 source = {
-   url = "git://github.com/torch/zcutorch.git",
+   url = "git://github.com/PhilippPelz/z-cutorch.git",
 }
 
 description = {
    summary = "Torch CUDA complex number Implementation ",
    detailed = [[
    ]],
-   homepage = "https://github.com/torch/zcutorch",
+   homepage = "https://github.com/PhilippPelz/z-cutorch",
    license = "BSD"
 }
 
@@ -20,7 +20,7 @@ dependencies = {
 build = {
    type = "command",
    build_command = [[
-cmake -E make_directory build && cd build && cmake .. -DLUALIB=$(LUALIB) -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(LUA_BINDIR)/.." -DCMAKE_INSTALL_PREFIX="$(PREFIX)" -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda && $(MAKE) -j$(getconf _NPROCESSORS_ONLN) install
+ cd build && cmake .. -DLUALIB=$(LUALIB) -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(LUA_BINDIR)/.." -DCMAKE_INSTALL_PREFIX="$(PREFIX)" -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda && $(MAKE) -j4 install
 ]],
 	platforms = {
       windows = {

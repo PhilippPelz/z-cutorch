@@ -52,8 +52,6 @@ THZC_API void THZCudaInit(THCState* state);
 THZC_API void THZCudaShutdown(THCState* state);
 THZC_API void THZCudaEnablePeerToPeerAccess(THCState* state);
 
-THZC_API struct cudaDeviceProp* THCState_getCurrentDeviceProperties(THCState* state);
-
 THZC_API void THZCMagma_init(THCState *state);
 
 /* State manipulators and accessors */

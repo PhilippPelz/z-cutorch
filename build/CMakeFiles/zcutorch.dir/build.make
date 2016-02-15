@@ -214,6 +214,7 @@ libzcutorch.so: CMakeFiles/zcutorch.dir/build.make
 libzcutorch.so: lib/THC/libTHZC.so
 libzcutorch.so: /usr/local/cuda/lib64/libcudart.so
 libzcutorch.so: /usr/local/cuda/lib64/libcublas.so
+libzcutorch.so: /usr/local/cuda/lib64/libcufft.so
 libzcutorch.so: /home/philipp/torch/install/lib/libTH.so
 libzcutorch.so: /opt/OpenBLAS/lib/libopenblas.so
 libzcutorch.so: /usr/local/cuda/lib64/libcurand.so

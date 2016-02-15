@@ -6,6 +6,8 @@
 
 THZC_API void THZCudaTensor_copy(THCState *state, THZCudaTensor *self,
                                  THZCudaTensor *src);
+THZC_API void THZCudaTensor_copyIm(THCState *state, THZCudaTensor *self, THCudaTensor *src);
+THZC_API void THZCudaTensor_copyRe(THCState *state, THZCudaTensor *self, THCudaTensor *src);
 THZC_API void THZCudaTensor_copyByte(THCState *state, THZCudaTensor *self,
                                      THByteTensor *src);
 THZC_API void THZCudaTensor_copyChar(THCState *state, THZCudaTensor *self,

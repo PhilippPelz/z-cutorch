@@ -44,7 +44,27 @@ struct ZCopyOp {
   }
 };
 
-// enum NoCollapseMode { NoCollapseDims };
+struct CopyImOp {
+  __device__ __forceinline__ void operator()(ccx* dst, float* src) {
+// #if __CUDA_ARCH__ >= 350
+    // *dst = __ldg(src);
+// #else
+    *dst = ccx(dst->real(),*src);
+// #endif
+  }
+};
+
+struct CopyReOp {
+  __device__ __forceinline__ void operator()(ccx* dst, float* src) {
+// #if __CUDA_ARCH__ >= 350
+    // *dst = __ldg(src);
+// #else
+    *dst = ccx(*src,dst->imag());
+// #endif
+  }
+};
+
+enum NoCollapseMode { NoCollapseDims };
 
 // CUDA kernel argument that defines tensor layout
 template <typename IndexType>

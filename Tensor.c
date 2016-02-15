@@ -15,7 +15,7 @@
 #define torch_Tensor_(NAME) TH_CONCAT_4(torch_, Real, Tensor_, NAME)
 #define torch_Tensor TH_CONCAT_STRING_3(torch., Real, Tensor)
 #define torch_CTensor TH_CONCAT_STRING_3(torch., Cuda, Tensor)
-#define THCTensor TH_CONCAT_3(TH, Cuda, Tensor)
+#define THZCTensor TH_CONCAT_3(TH, ZCuda, Tensor)
 
 #define TH_GENERIC_FILE "generic/Tensor.c"
 #include "generic/Tensor.c"

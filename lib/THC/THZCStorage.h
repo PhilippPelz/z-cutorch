@@ -2,6 +2,7 @@
 #define THZC_STORAGE_INC
 
 #include "THStorage.h"
+#include "THZStorage.h"
 #include "THZCGeneral.h"
 
 #define TH_STORAGE_REFCOUNTED 1

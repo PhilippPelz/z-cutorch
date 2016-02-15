@@ -2,6 +2,7 @@
 #define THZC_TENSOR_INC
 
 #include "THTensor.h"
+#include "THCTensor.h"
 #include "THZCStorage.h"
 #include "THZCGeneral.h"
 
