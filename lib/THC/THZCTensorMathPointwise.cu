@@ -5,7 +5,7 @@
 #include "THZCTensorCopy.h"
 #include "THZCApply.cuh"
 #include "THZCReduce.cuh"
-
+#include "math.h"
 // #include <thrust/complex.h>
 // typedef thrust::complex<float> ccx;
 
@@ -264,7 +264,8 @@ void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self_, THZCudaTensor* sr
 
 struct TensorPolarOp {
 	__device__ __forceinline__ void operator()(float* abs, float* arg, ccx* out) {
-		*out = thrust::polar(*abs,*arg);
+    *out = ccx(*abs*cos(*arg),*abs*sin(*arg));
+		// *out = thrust::polar(*abs,*arg);
 	}
 };
 
