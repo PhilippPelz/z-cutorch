@@ -98,6 +98,33 @@ void THZCudaTensor_cmul(THCState *state, THZCudaTensor *self, THZCudaTensor *src
 void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, float _Complex value, THZCudaTensor *src2);
 void THZCudaTensor_cpow(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THZCudaTensor *src2);
 void THZCudaTensor_cdiv(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THZCudaTensor *src2);
+
+void THZCudaTensor_narrow(THCState *state, THZCudaTensor *self,
+                                   THZCudaTensor *src, int dimension_,
+                                   long firstIndex_, long size_);
+void THZCudaTensor_select(THCState *state, THZCudaTensor *self,
+                                   THZCudaTensor *src, int dimension_,
+                                   long sliceIndex_);
+THZCudaTensor *THZCudaTensor_newNarrow(THCState *state, THZCudaTensor *tensor,
+                                                                          int dimension_, long firstIndex_,
+                                                                          long size_);
+THZCudaTensor *THZCudaTensor_newSelect(THCState *state,THZCudaTensor *tensor, int dimension_, long sliceIndex_);
+
+ THZCudaTensor *THZCudaTensor_new(THCState *state);
+ THZCudaTensor *THZCudaTensor_newWithTensor(THCState *state,
+                                                    THZCudaTensor *tensor);
+/* stride might be NULL */
+ THZCudaTensor *THZCudaTensor_newWithStorage(THCState *state, THZCudaStorage *storage_, long storageOffset_, THLongStorage *size_, THLongStorage *stride_);
+ THZCudaTensor *THZCudaTensor_newWithSize4d(THCState *state, long size0_, long size1_, long size2_, long size3_);
+ THZCudaTensor *THZCudaTensor_newClone(THCState *state,  THZCudaTensor *self);
+ void THZCudaTensor_free(THCState *state, THZCudaTensor *self);
+ THZCudaTensor *THZCudaTensor_newWithSize(THCState *state, THLongStorage *size_, THLongStorage *stride_);
+ void THZCudaTensor_resize(THCState *state, THZCudaTensor *tensor,
+                                    THLongStorage *size, THLongStorage *stride);
+ void THZCudaTensor_resizeAs(THCState *state, THZCudaTensor *tensor, THZCudaTensor *src);
+ void THZCudaTensor_resize4d(THCState *state, THZCudaTensor *tensor, long size0_, long size1_, long size2_, long size3_);
+ void THZCudaTensor_sign(THCState *state, THCudaTensor *self,
+                                 THZCudaTensor *src);
 ]])
 
 

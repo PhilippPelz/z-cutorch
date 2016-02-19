@@ -1,5 +1,8 @@
 include('THZCi.lua')
 local argcheck = require 'argcheck'
+local ffi=require 'ffi'
+-- local torch = require 'torch'
+require 'pprint'
 
 local THZCudaTensor_abs = C['THZCudaTensor_abs']
 local THZCudaTensor_arg = C['THZCudaTensor_arg']
@@ -7,6 +10,7 @@ local THZCudaTensor_norm = C['THZCudaTensor_norm']
 
 local THZCudaTensor_real = C['THZCudaTensor_real']
 local THZCudaTensor_imag = C['THZCudaTensor_imag']
+local THZCudaTensor_sign = C['THZCudaTensor_sign']
 
 local THZCudaTensor_zabs = C['THZCudaTensor_zabs']
 local THZCudaTensor_zarg = C['THZCudaTensor_zarg']
@@ -62,63 +66,15 @@ local THZCudaTensor_cadd = C['THZCudaTensor_cadd']
 local THZCudaTensor_cpow = C['THZCudaTensor_cpow']
 local THZCudaTensor_cdiv = C['THZCudaTensor_cdiv']
 
--- wrap("mul",
---      cname("mul"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---         {name=Tensor, method={default=1}},
---         {name=real}}
--- )
---
--- wrap("div",
---      cname("div"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---         {name=Tensor, method={default=1}},
---         {name=real}})
---
--- for _, name in ipairs({"cmul", "cpow", "cdiv"}) do
---   wrap(name,
---        cname(name),
---        {{name=Tensor, default=true, returned=true, method={default='nil'}},
---           {name=Tensor, method={default=1}},
---         {name=Tensor}})
--- end
---
--- wrap("addcmul",
---      cname("addcmul"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---         {name=Tensor, method={default=1}},
---         {name=real, default=1},
---         {name=Tensor},
---         {name=Tensor}})
---
--- wrap("addcdiv",
---      cname("addcdiv"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---         {name=Tensor, method={default=1}},
---         {name=real, default=1},
---         {name=Tensor},
---         {name=Tensor}})
--- wrap("add",
---      cname("add"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---       {name=Tensor, method={default=1}},
---       {name=real}},
---      cname("cadd"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---       {name=Tensor, method={default=1}},
---       {name=real, default=1},
---       {name=Tensor}},
---     cname("cadd"),
---     {{name=Tensor, default=true, returned=true, method={default='nil'}},
---      {name=Tensor, method={default=1}},
---      {name=real, default=1},
---      {name=Tensor}})
--- local THZCudaTensor_fftShiftedInplace = C['THZCudaTensor_fftShiftedInplace']
--- local THZCudaTensor_fftShifted = C['THZCudaTensor_fftShifted']
--- local THZCudaTensor_fftShiftInplace = C['THZCudaTensor_fftShiftInplace']
--- local THZCudaTensor_fftShift = C['THZCudaTensor_fftShift']
--- local THZCudaTensor_ifftShiftInplace = C['THZCudaTensor_ifftShiftInplace']
--- local THZCudaTensor_ifftShift = C['THZCudaTensor_ifftShift']
+local THZCudaTensor_narrow = C['THZCudaTensor_narrow']
+local THZCudaTensor_select = C['THZCudaTensor_select']
+
+local THZCudaTensor_newNarrow = C['THZCudaTensor_newNarrow']
+local THZCudaTensor_newSelect = C['THZCudaTensor_newSelect']
+
+local THZCudaTensor_resize = C['THZCudaTensor_resize']
+local THZCudaTensor_resizeAs = C['THZCudaTensor_resizeAs']
+local THZCudaTensor_resize4d = C['THZCudaTensor_resize4d']
 
 function torch.ZCudaTensor.apply(self, func)
    local x = torch.ZFloatTensor(self:size()):copy(self)
@@ -190,6 +146,130 @@ local ZTensor = {}
 
 local typename = "torch.ZCudaTensor"
 local ctypename = "torch.CudaTensor"
+local storageType = 'torch.ZCudaStorage'
+
+local THZCudaTensor_new = C['THZCudaTensor_new']
+local THZCudaTensor_newWithTensor = C['THZCudaTensor_newWithTensor']
+local THZCudaTensor_newWithStorage = C['THZCudaTensor_newWithStorage']
+local THZCudaTensor_newWithSize4d = C['THZCudaTensor_newWithSize4d']
+local THZCudaTensor_newClone = C['THZCudaTensor_newClone']
+local THZCudaTensor_free = C['THZCudaTensor_free']
+local THZCudaTensor_newWithSize = C['THZCudaTensor_newWithSize']
+
+local function free(t)
+  THZCudaTensor_free(cutorch._state,t)
+end
+
+local function wrapcdata(cdata)
+  -- print('wrapcdata')
+  return torch.ZCudaTensor().wrapcdata(cdata)
+end
+
+ZTensor.__new = argcheck{
+   nonamed=true,
+   call =
+      function()
+         local self = wrapcdata(THZCudaTensor_new(cutorch._state))
+        --  ffi.gc(self, THZCudaTensor_free)
+         return self
+      end
+}
+
+ZTensor.__new = argcheck{
+   {name='storage', type=storageType},
+   {name='storageOffset', type='number', default=1},
+   {name='size', type='table', opt=true},
+   {name='stride', type='table', opt=true},
+   nonamed=true,
+   overload = ZTensor.__new,
+   call =
+      function(storage, storageOffset, size, stride)
+         if size then
+            size = torch.LongStorage(size):cdata()
+         end
+         if stride then
+            stride = torch.LongStorage(stride):cdata()
+         end
+         local self = wrapcdata(THZCudaTensor_newWithStorage(cutorch._state,storage, storageOffset-1, size, stride))
+        --  ffi.gc(self, free)
+         return self
+      end
+}
+
+ZTensor.__new = argcheck{
+   {name='dim1', type='number'},
+   {name='dim2', type='number', default=0},
+   {name='dim3', type='number', default=0},
+   {name='dim4', type='number', default=0},
+   nonamed=true,
+   overload = ZTensor.__new,
+   call =
+      function(dim1, dim2, dim3, dim4)
+         local self = wrapcdata(THZCudaTensor_newWithSize4d(cutorch._state,dim1, dim2, dim3, dim4))
+        --  print(type(self))
+        --  print(self)
+        --  ffi.gc(self, free)
+         return self
+      end
+}
+ZTensor.__new = argcheck{
+   {name='dimt', type='table'},
+   nonamed=true,
+   overload = ZTensor.__new,
+   call =
+      function(dimt)
+         local dim1 = dimt[1] or 0
+         local dim2 = dimt[2] or 0
+         local dim3 = dimt[3] or 0
+         local dim4 = dimt[4] or 0
+        --  pprint(dimt)
+         local self = wrapcdata(THZCudaTensor_newWithSize4d(cutorch._state,dim1, dim2, dim3, dim4))
+        --  self = torch.ZCudaTensor(self)
+        --  print(type(self))
+        --  print(self)
+        --  ffi.gc(self, free)
+         return self
+      end
+}
+
+ZTensor.__new = argcheck{
+   {name='size', type='torch.LongStorage'},
+   nonamed=true,
+   overload = ZTensor.__new,
+   call =
+      function(size)
+         local self = wrapcdata(THZCudaTensor_newWithSize(cutorch._state,size:cdata(), nil))
+        --  ffi.gc(self, free)
+         return self
+      end
+}
+
+ZTensor.__new = argcheck{
+   {name='tensor', type=typename},
+   nonamed=true,
+   overload = ZTensor.__new,
+   call =
+      function(tensor)
+        --  print('new with tensor')
+         local self = wrapcdata(THZCudaTensor_newWithTensor(cutorch._state,tensor:cdata()))
+        --  ffi.gc(self, free)
+         return self
+      end
+}
+
+ZTensor.newClone = argcheck{
+   {name='tensor', type=typename},
+   nonamed=true,
+   call =
+      function(tensor)
+         local self = wrapcdata(THZCudaTensor_newClone(cutorch._state,tensor:cdata()))
+        --  ffi.gc(self, free)
+         return self
+      end
+}
+
+ZTensor.__call = ZTensor.__new
+ZTensor.new = ZTensor.__new
 
 ZTensor.copyIm = argcheck{
    nonamed=true,
@@ -288,6 +368,16 @@ ZTensor.re = argcheck{
    overload=ZTensor.re,
    call = function(dst, src)
       THZCudaTensor_zreal(cutorch._state,dst:cdata(), src:cdata())
+      return dst
+   end
+}
+
+ZTensor.sign = argcheck{
+   nonamed=true,
+   {name="src", type=typename},
+   call = function(src)
+      local dst = torch.CudaTensor()
+      THZCudaTensor_sign(cutorch._state,dst:cdata(), src:cdata())
       return dst
    end
 }
@@ -446,16 +536,116 @@ ZTensor.cre = argcheck{
 
 ZTensor.fft = argcheck{
    nonamed=true,
-   {name="dst", type=typename, opt=true},
-   {name="src1", type=typename},
+   {name="dst", type=typename},
+   {name="src1", type=typename, opt=true},
    call =
       function(dst, src1)
-         dst = dst or src1
+        --  print('in fft')
+        --  pprint(dst)
+        --  pprint(src1)
+         src1 = src1 or dst
          THZCudaTensor_fft(cutorch._state,dst:cdata(), src1:cdata())
+        --  print('end fft')
          return dst
       end
 }
+ZTensor.fftshift = argcheck{
+   nonamed=true,
+   {name="dst", type=typename},
+   {name="src1", type=typename, opt=true},
+   call =
+      function(dst, src1)
+        if src1 then
+          dst:copy(src1)
+        end
+        local ndim = dst:dim()
 
+        local t = torch.getdefaulttensortype()
+        torch.setdefaulttensortype('torch.FloatTensor')
+        local axes = torch.linspace(1,ndim,ndim)
+        torch.setdefaulttensortype(t)
+        for _, k in pairs(axes:totable()) do
+          local n = dst:size(k)
+          local p2 = math.floor((n+1)/2)
+
+          local half1 = {p2+1,n}
+          local half2 = {1,p2}
+      --    pprint(half1)
+      --    pprint(half2)
+
+          local indextable = {{},{}}
+      --    pprint(indextable)
+          for i=1,ndim do
+      --      print(k .. '_' .. i)
+            if i ~= k then
+              indextable[1][i] = half1
+              indextable[2][i] = half2
+      --        pprint(indextable)
+            else
+              indextable[1][i] = {}
+              indextable[2][i] = {}
+      --        pprint(indextable)
+            end
+          end
+      --    pprint(indextable[1])
+      --    pprint(indextable[2])
+          local tmp = dst[indextable[1]]:clone()
+      --    pprint(tmp)
+      --    pprint(dst)
+          dst[indextable[1]]:copy(dst[indextable[2]])
+          dst[indextable[2]]:copy(tmp)
+        end
+        return dst
+      end
+}
+ZTensor.ifftshift = argcheck{
+   nonamed=true,
+   {name="dst", type=typename},
+   {name="src1", type=typename, opt=true},
+   call =
+      function(dst, src1)
+        if src1 then
+          dst:copy(src1)
+        end
+        local ndim = dst:dim()
+        local t = torch.getdefaulttensortype()
+        torch.setdefaulttensortype('torch.FloatTensor')
+        local axes = torch.linspace(1,ndim,ndim)
+        torch.setdefaulttensortype(t)
+        for _, k in pairs(axes:totable()) do
+          local n = dst:size(k)
+          local p2 = math.floor(n-(n+1)/2)
+
+          local half1 = {p2+1,n}
+          local half2 = {1,p2}
+      --    pprint(half1)
+      --    pprint(half2)
+
+          local indextable = {{},{}}
+      --    pprint(indextable)
+          for i=1,ndim do
+      --      print(k .. '_' .. i)
+            if i ~= k then
+              indextable[1][i] = half1
+              indextable[2][i] = half2
+      --        pprint(indextable)
+            else
+              indextable[1][i] = {}
+              indextable[2][i] = {}
+      --        pprint(indextable)
+            end
+          end
+      --    pprint(indextable[1])
+      --    pprint(indextable[2])
+          local tmp = dst[indextable[1]]:clone()
+      --    pprint(tmp)
+      --    pprint(dst)
+          dst[indextable[1]]:copy(dst[indextable[2]])
+          dst[indextable[2]]:copy(tmp)
+        end
+        return dst
+      end
+}
 ZTensor.fftBatched = argcheck{
    nonamed=true,
    {name="dst", type=typename, opt=true},
@@ -525,6 +715,7 @@ ZTensor.copy = argcheck{
    {name="src", type=typename},
    call =
       function(dst, src)
+        -- print('copy THZCudaTensor_copy')
          THZCudaTensor_copy(cutorch._state,dst:cdata(), src:cdata())
          return dst
       end
@@ -538,7 +729,6 @@ ZTensor.copy = argcheck{
    overload=ZTensor.copy,
    call =
       function(dst, src)
-         src=src:cdata()
          THZCudaTensor_copyByte(cutorch._state,dst:cdata(), src:cdata())
          return dst
       end
@@ -552,7 +742,6 @@ ZTensor.copy = argcheck{
    overload=ZTensor.copy,
    call =
       function(dst, src)
-         src=src:cdata()
          THZCudaTensor_copyChar(cutorch._state,dst:cdata(), src:cdata())
          return dst
       end
@@ -566,7 +755,6 @@ ZTensor.copy = argcheck{
    overload=ZTensor.copy,
    call =
       function(dst, src)
-         src=src:cdata()
          THZCudaTensor_copyShort(cutorch._state,dst:cdata(), src:cdata())
          return dst
       end
@@ -580,7 +768,6 @@ ZTensor.copy = argcheck{
    overload=ZTensor.copy,
    call =
       function(dst, src)
-         src=src:cdata()
          THZCudaTensor_copyInt(cutorch._state,dst:cdata(), src:cdata())
          return dst
       end
@@ -594,7 +781,7 @@ ZTensor.copy = argcheck{
    overload=ZTensor.copy,
    call =
       function(dst, src)
-         src=src:cdata()
+        -- print('copy 5')
          THZCudaTensor_copyLong(cutorch._state,dst:cdata(), src:cdata())
          return dst
       end
@@ -608,7 +795,7 @@ ZTensor.copy = argcheck{
    overload=ZTensor.copy,
    call =
       function(dst, src)
-         src=src:cdata()
+        -- print('copy 4')
          THZCudaTensor_copyFloat(cutorch._state,dst:cdata(), src:cdata())
          return dst
       end
@@ -622,6 +809,7 @@ ZTensor.copy = argcheck{
    overload=ZTensor.copy,
    call =
       function(dst, src)
+        -- print('copy zfloat')
          THZCudaTensor_copyZFloat(cutorch._state,dst:cdata(), src)
          return dst
       end
@@ -635,8 +823,8 @@ ZTensor.copy = argcheck{
    overload=ZTensor.copy,
    call =
       function(dst, src)
-         src=src:cdata()
-         THZCudaTensor_copyDouble(dst, src)
+        -- print('copy 3')
+         THZCudaTensor_copyDouble(dst:cdata(), src:cdata())
          return dst
       end
 }
@@ -695,87 +883,232 @@ ZTensor.addcdiv = argcheck{
          return dst
       end
 }
--- wrap("mul",
---      cname("mul"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---         {name=Tensor, method={default=1}},
---         {name=real}}
--- )
---
--- wrap("div",
---      cname("div"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---         {name=Tensor, method={default=1}},
---         {name=real}})
---
--- for _, name in ipairs({"cmul", "cpow", "cdiv"}) do
---   wrap(name,
---        cname(name),
---        {{name=Tensor, default=true, returned=true, method={default='nil'}},
---           {name=Tensor, method={default=1}},
---         {name=Tensor}})
--- end
---
--- wrap("addcmul",
---      cname("addcmul"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---         {name=Tensor, method={default=1}},
---         {name=real, default=1},
---         {name=Tensor},
---         {name=Tensor}})
---
--- wrap("addcdiv",
---      cname("addcdiv"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---         {name=Tensor, method={default=1}},
---         {name=real, default=1},
---         {name=Tensor},
---         {name=Tensor}})
--- wrap("add",
---      cname("add"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---       {name=Tensor, method={default=1}},
---       {name=real}},
---      cname("cadd"),
---      {{name=Tensor, default=true, returned=true, method={default='nil'}},
---       {name=Tensor, method={default=1}},
---       {name=real, default=1},
---       {name=Tensor}},
---     cname("cadd"),
---     {{name=Tensor, default=true, returned=true, method={default='nil'}},
---      {name=Tensor, method={default=1}},
---      {name=real, default=1},
---      {name=Tensor}})
+-- THCState *state, THZCudaTensor *self,
+--                                    THZCudaTensor *src, int dimension_,
+--                                    long sliceIndex_
+
+
+ZTensor.resize = argcheck{
+   {name='self', type=typename},
+   {name='size', type='table'},
+   {name='stride', type='table', opt=true},
+   nonamed=true,
+   call =
+      function(self, size, stride)
+         local dim = #size
+         assert(not stride or (#stride == dim), 'inconsistent size/stride sizes')
+         size = torch.LongStorage(size)
+         local stridecdata
+         if stride then
+            stride = torch.LongStorage(stride)
+            stridecdata = stride:cdata()
+         end
+         THZCudaTensor_resize(cutorch._state,self, size:cdata(), stridecdata)
+         return self
+      end
+}
+
+ZTensor.resize = argcheck{
+   {name='self', type=typename},
+   {name='dim1', type='number'},
+   {name='dim2', type='number', default=0},
+   {name='dim3', type='number', default=0},
+   {name='dim4', type='number', default=0},
+   nonamed=true,
+   overload = ZTensor.resize,
+   call =
+      function(self, dim1, dim2, dim3, dim4)
+         THZCudaTensor_resize4d(cutorch._state,self, dim1, dim2, dim3, dim4)
+         return self
+      end
+}
+
+ZTensor.resize = argcheck{
+   {name='self', type=typename},
+   {name='size', type='torch.LongStorage'},
+   {name='stride', type='torch.LongStorage', opt=true},
+   nonamed=true,
+   overload = ZTensor.resize,
+   call =
+      function(self, size, stride)
+         if stride then stride = stride:cdata() end
+         THZCudaTensor_resize(cutorch._state,self, size:cdata(), stride)
+         return self
+      end
+}
+
+ZTensor.resizeAs = argcheck{
+   {name='self', type=typename},
+   {name='src', type=typename},
+   nonamed=true,
+   call =
+      function(self, src)
+         THZCudaTensor_resizeAs(cutorch._state,self:cdata(), src:cdata())
+         return self
+      end
+}
+
+ZTensor.resizeAs = argcheck{
+   {name='self', type=typename},
+   {name='src', type=ctypename},
+   overload = ZTensor.resizeAs,
+   nonamed=true,
+   call =
+      function(self, src)
+         THZCudaTensor_resize(cutorch._state,self, src:size():cdata(), src:stride():cdata())
+         return self
+      end
+}
+
+ZTensor.select = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src", type=typename, opt=true},
+   {name="dim", type='number'},
+   {name="index", type='number'},
+   call =
+      function(self, src, dim, index)
+        src = src or self
+        if index < 0 then
+          index = src:size(dim) + index + 1
+        else
+          index = index - 1
+        end
+        -- pprint(src:size())
+        -- print('dim index ' .. dim .. ' ' .. index)
+        assert(dim <= src:dim(), 'dim must be within source dimensions. dim = ' .. dim)
+        assert(index <= src:size(dim), 'index must be within source dimensions. ind = ' .. index)
+        -- THZCudaTensor_select(cutorch._state,self:cdata(),src:cdata(),dim,index)
+        -- return self
+        local ret = wrapcdata(THZCudaTensor_newSelect(cutorch._state,src:cdata(),dim-1,index))
+        return ret
+      end
+}
+
+ZTensor.newSelect = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src", type=typename, opt=true},
+   {name="dim", type='number'},
+   {name="index", type='number'},
+   call =
+      function(self, src, dim, index)
+        src = src or self
+        if index < 0 then
+          index = src:size(dim) + index + 1
+        else
+          index = index - 1
+        end
+        assert(dim <= src:dim(), 'dim must be within source dimensions. dim = ' .. dim)
+        assert(index <= src:size(dim), 'index must be within source dimensions. ind = ' .. index)
+        local ret = wrapcdata(THZCudaTensor_newSelect(cutorch._state,src:cdata(),dim-1,index))
+        return ret
+      end
+}
+-- THCState *state, THZCudaTensor *self,
+--                                    THZCudaTensor *src, int dimension_,
+--                                    long firstIndex_, long size_
+ZTensor.narrow = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src", type=typename, opt=true},
+   {name="dim", type='number'},
+   {name="start", type='number'},
+   {name="size", type='number'},
+   call =
+      function(self, src, dim, start, size)
+          src = src or self
+
+          assert(dim >= 0 and dim <= src:dim(), 'dim must be within source dimensions')
+          assert(start <= src:size(dim) and start >= 0, 'start must be within source dimensions. start = ' .. start)
+          assert(size <= src:size(dim) and size >= 0, 'size must be within source dimensions. size = ' .. size)
+          assert(start + size <= src:size(dim), 'start+size must be within source dimensions. s+s = ' .. (start+size) .. ' size = ' .. src:size(dim))
+          THZCudaTensor_narrow(cutorch._state,self:cdata(),src:cdata(),dim-1,start,size)
+          return self
+      end
+}
+ZTensor.newNarrow = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="src", type=typename, opt=true},
+   {name="dim", type='number'},
+   {name="start", type='number'},
+   {name="size", type='number'},
+   call =
+      function(self, src, dim, start, size)
+          src = src or self
+
+          assert(dim >= 0 and dim <= src:dim(), 'dim must be within source dimensions')
+          assert(start <= src:size(dim) and start >= 0, 'start must be within source dimensions. start = ' .. start)
+          assert(size <= src:size(dim) and size >= 0, 'size must be within source dimensions. size = ' .. size)
+          assert(start + size <= src:size(dim), 'start+size must be within source dimensions. s+s = ' .. (start+size) .. ' size = ' .. src:size(dim))
+          local ret = wrapcdata(THZCudaTensor_newNarrow(cutorch._state,self:cdata(),src:cdata(),dim-1,start,size))
+          return ret
+      end
+}
+
+ZTensor.__index = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="ind", type='table'},
+   call =
+      function(self, ind)
+        local cdim = 1
+        -- print('in __index 2')
+        local ret = ZTensor.new(self)
+        for _, v in ipairs(ind) do
+          if type(v) == 'number' then
+            -- somethig
+            ret:select(cdim,v)
+          elseif type(v) == 'table' then
+            local start = (v[1] or 1) - 1
+            local ends = (v[2] or self:size(cdim)) - 1
+            if ends < 0 then
+              ends = self:size(cdim) + ends + 1
+            end
+            local size = ends - start + 1
+            ret:narrow(cdim,start,size)
+            cdim = cdim + 1
+          end
+        end
+        return ret
+      end
+}
+ZTensor.__index = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="ind", type='number'},
+   overload = ZTensor.__index,
+   call =
+      function(self, ind)
+        -- print('in __index 0')
+        local ret = ZTensor.new(self)
+        -- print('in __index 1')
+        -- pprint(ret)
+        return ret:select(1,ind)
+      end
+}
+ZTensor.__index = argcheck{
+   nonamed=true,
+   {name="self", type=typename},
+   {name="s", type='string'},
+   overload = ZTensor.__index,
+   call =
+      function(self, s)
+        local t = torch.getmetatable('torch.ZCudaTensor')
+        return t[s]
+      end
+}
 
 local zmetatable = torch.getmetatable('torch.ZCudaTensor')
 rawset( zmetatable, 'type', Tensor__type)
 rawset( zmetatable, 'typeAs', Tensor__typeAs)
 rawset( zmetatable, 'zfloat', Tensor__zfloat)
-rawset( zmetatable, 'norm', ZTensor.norm)
-rawset( zmetatable, 'im', ZTensor.im)
-rawset( zmetatable, 're', ZTensor.re)
-rawset( zmetatable, 'fillIm', ZTensor.fillIm)
-rawset( zmetatable, 'fillRe', ZTensor.fillRe)
-rawset( zmetatable, 'copyIm', ZTensor.copyIm)
-rawset( zmetatable, 'copyRe', ZTensor.copyRe)
-rawset( zmetatable, 'arg', ZTensor.arg)
-rawset( zmetatable, 'abs', ZTensor.abs)
-rawset( zmetatable, 'normAll', ZTensor.normall)
-rawset( zmetatable, 'normDim', ZTensor.normDim)
-rawset( zmetatable, 'polar', ZTensor.polar)
-rawset( zmetatable, 'cim', ZTensor.cim)
-rawset( zmetatable, 'cre', ZTensor.cre)
-rawset( zmetatable, 'copy', ZTensor.copy)
-rawset( zmetatable, 'fft', ZTensor.fft)
-rawset( zmetatable, 'ifft', ZTensor.ifft)
-rawset( zmetatable, 'ifftU', ZTensor.ifftU)
-rawset( zmetatable, 'fftBatched', ZTensor.fftBatched)
-rawset( zmetatable, 'ifftBatched', ZTensor.ifftBatched)
-rawset( zmetatable, 'ifftBatchedU', ZTensor.ifftBatchedU)
-rawset( zmetatable, 'add', ZTensor.add)
-rawset( zmetatable, 'addcmul', ZTensor.addcmul)
-rawset( zmetatable, 'addcdiv', ZTensor.addcdiv)
 
+for k,v in pairs(ZTensor) do
+  rawset( zmetatable, k, v)
+end
+-- ffi.metatype('THZCudaTensor', zmetatable)
 local zfname = 'torch.ZFloatTensor'
 local zfmetatable = torch.getmetatable(zfname)
 

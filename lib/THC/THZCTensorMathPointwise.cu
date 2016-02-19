@@ -130,12 +130,19 @@ IMPLEMENT_CUDA_TENSOR_BASIC_FUNCZ(znorm, thrust::norm)
     return i.imag();
   }
 
+  __device__ __forceinline__ float zsign(ccx& i) {
+    float eps = 1e-6;
+    bool rzero = (i.real() < 0 && i.real() > eps) || (i.real() > 0 && i.real() < eps);
+    return rzero ? (i.imag() > 0 ? 1 : -1) : (i.real() < 0 ? -1 : 1) ;
+  }
+
 
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(abs, thrust::abs)
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(arg, thrust::arg)
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(norm, thrust::norm)
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(real, exreal)
 IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(imag, eximag)
+IMPLEMENT_CUDA_TENSOR_BASIC_FUNC_RET_FLOAT(sign, zsign)
 
 // IMPLEMENT_CUDA_TENSOR_BASIC_FUNC(round, roundf)
 

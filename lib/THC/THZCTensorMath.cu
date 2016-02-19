@@ -297,7 +297,7 @@ float THZCudaTensor_maxall(THCState *state, THZCudaTensor *self) {
 	return val;
 }
 
-cx THZCudaTensor_sumall(THCState *state, THZCudaTensor *self) {
+THZC_API cx THZCudaTensor_sumall(THCState *state, THZCudaTensor *self) {
 	THAssert(THZCudaTensor_checkGPU(state, 1, self));
 	ccx val = 0.0f;
 	if (!THZCudaTensor_reduceAll(state, self, thrust::identity<ccx>(), Plus(), 0.0f, &val, 0)) {
@@ -320,7 +320,7 @@ cx THZCudaTensor_prodall(THCState *state, THZCudaTensor *self) {
 	return val.real() + val.imag() * I;
 }
 
-void THZCudaTensor_sum(THCState* state, THZCudaTensor *self, THZCudaTensor *src,
+THZC_API void THZCudaTensor_sum(THCState* state, THZCudaTensor *self, THZCudaTensor *src,
 		long dimension) {
 	THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
 	if (!THZCudaTensor_reduceDim(state, self, src, thrust::identity<ccx>(),
