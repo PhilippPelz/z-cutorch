@@ -170,6 +170,19 @@ zcutorch/fast:
 .PHONY : zcutorch/fast
 
 #=============================================================================
+# Target rules for targets named zcutorch_static
+
+# Build rule for target.
+zcutorch_static: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 zcutorch_static
+.PHONY : zcutorch_static
+
+# fast build rule for target.
+zcutorch_static/fast:
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/build
+.PHONY : zcutorch_static/fast
+
+#=============================================================================
 # Target rules for targets named THZC
 
 # Build rule for target.
@@ -188,6 +201,7 @@ Storage.o: Storage.c.o
 # target to build an object file
 Storage.c.o:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/Storage.c.o
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/Storage.c.o
 .PHONY : Storage.c.o
 
 Storage.i: Storage.c.i
@@ -196,6 +210,7 @@ Storage.i: Storage.c.i
 # target to preprocess a source file
 Storage.c.i:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/Storage.c.i
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/Storage.c.i
 .PHONY : Storage.c.i
 
 Storage.s: Storage.c.s
@@ -204,6 +219,7 @@ Storage.s: Storage.c.s
 # target to generate assembly for a file
 Storage.c.s:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/Storage.c.s
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/Storage.c.s
 .PHONY : Storage.c.s
 
 Tensor.o: Tensor.c.o
@@ -212,6 +228,7 @@ Tensor.o: Tensor.c.o
 # target to build an object file
 Tensor.c.o:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/Tensor.c.o
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/Tensor.c.o
 .PHONY : Tensor.c.o
 
 Tensor.i: Tensor.c.i
@@ -220,6 +237,7 @@ Tensor.i: Tensor.c.i
 # target to preprocess a source file
 Tensor.c.i:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/Tensor.c.i
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/Tensor.c.i
 .PHONY : Tensor.c.i
 
 Tensor.s: Tensor.c.s
@@ -228,6 +246,7 @@ Tensor.s: Tensor.c.s
 # target to generate assembly for a file
 Tensor.c.s:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/Tensor.c.s
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/Tensor.c.s
 .PHONY : Tensor.c.s
 
 TensorMath.o: TensorMath.c.o
@@ -236,6 +255,7 @@ TensorMath.o: TensorMath.c.o
 # target to build an object file
 TensorMath.c.o:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/TensorMath.c.o
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/TensorMath.c.o
 .PHONY : TensorMath.c.o
 
 TensorMath.i: TensorMath.c.i
@@ -244,6 +264,7 @@ TensorMath.i: TensorMath.c.i
 # target to preprocess a source file
 TensorMath.c.i:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/TensorMath.c.i
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/TensorMath.c.i
 .PHONY : TensorMath.c.i
 
 TensorMath.s: TensorMath.c.s
@@ -252,6 +273,7 @@ TensorMath.s: TensorMath.c.s
 # target to generate assembly for a file
 TensorMath.c.s:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/TensorMath.c.s
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/TensorMath.c.s
 .PHONY : TensorMath.c.s
 
 TensorOperator.o: TensorOperator.c.o
@@ -260,6 +282,7 @@ TensorOperator.o: TensorOperator.c.o
 # target to build an object file
 TensorOperator.c.o:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/TensorOperator.c.o
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/TensorOperator.c.o
 .PHONY : TensorOperator.c.o
 
 TensorOperator.i: TensorOperator.c.i
@@ -268,6 +291,7 @@ TensorOperator.i: TensorOperator.c.i
 # target to preprocess a source file
 TensorOperator.c.i:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/TensorOperator.c.i
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/TensorOperator.c.i
 .PHONY : TensorOperator.c.i
 
 TensorOperator.s: TensorOperator.c.s
@@ -276,6 +300,7 @@ TensorOperator.s: TensorOperator.c.s
 # target to generate assembly for a file
 TensorOperator.c.s:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/TensorOperator.c.s
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/TensorOperator.c.s
 .PHONY : TensorOperator.c.s
 
 init.o: init.c.o
@@ -284,6 +309,7 @@ init.o: init.c.o
 # target to build an object file
 init.c.o:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/init.c.o
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/init.c.o
 .PHONY : init.c.o
 
 init.i: init.c.i
@@ -292,6 +318,7 @@ init.i: init.c.i
 # target to preprocess a source file
 init.c.i:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/init.c.i
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/init.c.i
 .PHONY : init.c.i
 
 init.s: init.c.s
@@ -300,6 +327,7 @@ init.s: init.c.s
 # target to generate assembly for a file
 init.c.s:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/init.c.s
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/init.c.s
 .PHONY : init.c.s
 
 torch/utils.o: torch/utils.c.o
@@ -308,6 +336,7 @@ torch/utils.o: torch/utils.c.o
 # target to build an object file
 torch/utils.c.o:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/torch/utils.c.o
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/torch/utils.c.o
 .PHONY : torch/utils.c.o
 
 torch/utils.i: torch/utils.c.i
@@ -316,6 +345,7 @@ torch/utils.i: torch/utils.c.i
 # target to preprocess a source file
 torch/utils.c.i:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/torch/utils.c.i
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/torch/utils.c.i
 .PHONY : torch/utils.c.i
 
 torch/utils.s: torch/utils.c.s
@@ -324,6 +354,7 @@ torch/utils.s: torch/utils.c.s
 # target to generate assembly for a file
 torch/utils.c.s:
 	$(MAKE) -f CMakeFiles/zcutorch.dir/build.make CMakeFiles/zcutorch.dir/torch/utils.c.s
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/torch/utils.c.s
 .PHONY : torch/utils.c.s
 
 # Help Target
@@ -340,6 +371,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... zcudatensormathwrap"
 	@echo "... zcutorch"
+	@echo "... zcutorch_static"
 	@echo "... THZC"
 	@echo "... Storage.o"
 	@echo "... Storage.i"
