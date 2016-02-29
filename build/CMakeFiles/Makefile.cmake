@@ -80,5 +80,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/zcudatensormathwrap.dir/DependInfo.cmake"
   "CMakeFiles/zcutorch.dir/DependInfo.cmake"
+  "CMakeFiles/zcutorch_static.dir/DependInfo.cmake"
   "lib/THC/CMakeFiles/THZC.dir/DependInfo.cmake"
   )

@@ -119,6 +119,41 @@ clean: CMakeFiles/zcutorch.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/zcutorch_static.dir
+
+# All Build rule for target.
+CMakeFiles/zcutorch_static.dir/all:
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/depend
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles  36 37 38 39 40 41 42
+	@echo "Built target zcutorch_static"
+.PHONY : CMakeFiles/zcutorch_static.dir/all
+
+# Include target in all.
+all: CMakeFiles/zcutorch_static.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/zcutorch_static.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/philipp/projects/zcutorch/build/CMakeFiles 7
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/zcutorch_static.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/philipp/projects/zcutorch/build/CMakeFiles 0
+.PHONY : CMakeFiles/zcutorch_static.dir/rule
+
+# Convenience name for target.
+zcutorch_static: CMakeFiles/zcutorch_static.dir/rule
+.PHONY : zcutorch_static
+
+# clean rule for target.
+CMakeFiles/zcutorch_static.dir/clean:
+	$(MAKE) -f CMakeFiles/zcutorch_static.dir/build.make CMakeFiles/zcutorch_static.dir/clean
+.PHONY : CMakeFiles/zcutorch_static.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/zcutorch_static.dir/clean
+.PHONY : clean
+
+#=============================================================================
 # Directory level rules for directory lib
 
 # Convenience name for "all" pass in the directory.

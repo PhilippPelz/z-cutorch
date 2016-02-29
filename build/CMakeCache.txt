@@ -316,6 +316,9 @@ WITH_RPATH:BOOL=ON
 //Dependencies for the target
 zcutorch_LIB_DEPENDS:STATIC=general;luaT;general;THZ;general;THC;general;THZC;
 
+//Dependencies for target
+zcutorch_static_LIB_DEPENDS:STATIC=
+
 
 ########################
 # INTERNAL cache entries

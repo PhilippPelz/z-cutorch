@@ -140,6 +140,14 @@ string.h
 string.h
 /home/philipp/projects/zcutorch/build/string.h
 
+/home/philipp/projects/zcutorch/init.c
+utils.h
+/home/philipp/projects/zcutorch/utils.h
+luaT.h
+/home/philipp/projects/zcutorch/luaT.h
+THZCGeneral.h
+/home/philipp/projects/zcutorch/THZCGeneral.h
+
 /home/philipp/projects/zcutorch/torch/utils.h
 luaT.h
 /home/philipp/projects/zcutorch/torch/luaT.h
@@ -508,8 +516,6 @@ cuda_runtime.h
 cublas_v2.h
 /home/philipp/torch/install/include/THC/cublas_v2.h
 
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
-
 /home/philipp/torch/install/include/THC/THCStorage.h
 THStorage.h
 /home/philipp/torch/install/include/THC/THStorage.h
@@ -569,18 +575,6 @@ THCTensor.h
 /home/philipp/torch/install/include/THC/THCTensorSort.h
 THCTensor.h
 /home/philipp/torch/install/include/THC/THCTensor.h
-
-/home/philipp/torch/install/include/THC/THCTensorTopK.h
-THCTensor.h
-/home/philipp/torch/install/include/THC/THCTensor.h
-
-/home/philipp/torch/install/include/THC/generic/THCStorage.h
-
-/home/philipp/torch/install/include/THC/generic/THCStorageCopy.h
-
-/home/philipp/torch/install/include/THC/generic/THCTensor.h
-
-/home/philipp/torch/install/include/THC/generic/THCTensorCopy.h
 
 /home/philipp/torch/install/include/lauxlib.h
 stddef.h
