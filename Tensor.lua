@@ -1022,8 +1022,8 @@ ZTensor.narrow = argcheck{
           assert(dim >= 0 and dim <= src:dim(), 'dim must be within source dimensions')
           assert(start <= src:size(dim) and start >= 0, 'start must be within source dimensions. start = ' .. start)
           assert(size <= src:size(dim) and size >= 0, 'size must be within source dimensions. size = ' .. size)
-          assert(start + size <= src:size(dim), 'start+size must be within source dimensions. s+s = ' .. (start+size) .. ' size = ' .. src:size(dim))
-          THZCudaTensor_narrow(cutorch._state,self:cdata(),src:cdata(),dim-1,start,size)
+          assert(start-1 + size <= src:size(dim), 'start+size must be within source dimensions. s+s-1 = ' .. (start-1+size) .. ' size = ' .. src:size(dim))
+          THZCudaTensor_narrow(cutorch._state,self:cdata(),src:cdata(),dim-1,start-1,size)
           return self
       end
 }
@@ -1041,8 +1041,8 @@ ZTensor.newNarrow = argcheck{
           assert(dim >= 0 and dim <= src:dim(), 'dim must be within source dimensions')
           assert(start <= src:size(dim) and start >= 0, 'start must be within source dimensions. start = ' .. start)
           assert(size <= src:size(dim) and size >= 0, 'size must be within source dimensions. size = ' .. size)
-          assert(start + size <= src:size(dim), 'start+size must be within source dimensions. s+s = ' .. (start+size) .. ' size = ' .. src:size(dim))
-          local ret = wrapcdata(THZCudaTensor_newNarrow(cutorch._state,self:cdata(),src:cdata(),dim-1,start,size))
+          assert(start-1 + size <= src:size(dim), 'start+size-1 must be within source dimensions. s+s = ' .. (start+size-1) .. ' size = ' .. src:size(dim))
+          local ret = wrapcdata(THZCudaTensor_newNarrow(cutorch._state,self:cdata(),src:cdata(),dim-1,start-1,size))
           return ret
       end
 }
