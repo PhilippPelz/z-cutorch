@@ -322,11 +322,21 @@ ZTensor.abs = argcheck{
 }
 ZTensor.abs = argcheck{
    nonamed=true,
-   {name="dst", type=ctypename},
+   {name="dst", type=typename},
    {name="src", type=typename},
    overload=ZTensor.abs,
    call = function(dst, src)
       THZCudaTensor_zabs(cutorch._state,dst:cdata(), src:cdata())
+      return dst
+   end
+}
+ZTensor.abs = argcheck{
+   nonamed=true,
+   {name="dst", type=ctypename},
+   {name="src", type=typename},
+   overload=ZTensor.abs,
+   call = function(dst, src)
+      THZCudaTensor_abs(cutorch._state,dst:cdata(), src:cdata())
       return dst
    end
 }
@@ -351,7 +361,16 @@ ZTensor.arg = argcheck{
       return dst
    end
 }
-
+ZTensor.arg = argcheck{
+   nonamed=true,
+   {name="dst", type=ctypename},
+   {name="src", type=typename},
+   overload=ZTensor.arg,
+   call = function(dst, src)
+      THZCudaTensor_arg(cutorch._state,dst:cdata(), src:cdata())
+      return dst
+   end
+}
 ZTensor.re = argcheck{
    nonamed=true,
    {name="src", type=typename},
@@ -371,7 +390,16 @@ ZTensor.re = argcheck{
       return dst
    end
 }
-
+ZTensor.re = argcheck{
+   nonamed=true,
+   {name="dst", type=ctypename},
+   {name="src", type=typename},
+   overload=ZTensor.re,
+   call = function(dst, src)
+      THZCudaTensor_real(cutorch._state,dst:cdata(), src:cdata())
+      return dst
+   end
+}
 ZTensor.sign = argcheck{
    nonamed=true,
    {name="src", type=typename},
@@ -401,7 +429,16 @@ ZTensor.im = argcheck{
       return dst
    end
 }
-
+ZTensor.im = argcheck{
+   nonamed=true,
+   {name="dst", type=ctypename},
+   {name="src", type=typename},
+   overload=ZTensor.im,
+   call = function(dst, src)
+      THZCudaTensor_imag(cutorch._state,dst:cdata(), src:cdata())
+      return dst
+   end
+}
 ZTensor.norm = argcheck{
    nonamed=true,
    {name="src", type=typename},
@@ -544,7 +581,7 @@ ZTensor.fft = argcheck{
         --  pprint(dst)
         --  pprint(src1)
          src1 = src1 or dst
-         THZCudaTensor_fft(cutorch._state,dst:cdata(), src1:cdata())
+         THZCudaTensor_fft(cutorch._state,src1:cdata(), dst:cdata())
         --  print('end fft')
          return dst
       end
@@ -653,7 +690,7 @@ ZTensor.fftBatched = argcheck{
    call =
       function(dst, src1)
          dst = dst or src1
-         THZCudaTensor_fftBatched(cutorch._state,dst:cdata(), src1:cdata())
+         THZCudaTensor_fftBatched(cutorch._state,src1:cdata(), dst:cdata())
          return dst
       end
 }
@@ -665,7 +702,7 @@ ZTensor.ifft = argcheck{
    call =
       function(dst, src1)
          dst = dst or src1
-         THZCudaTensor_ifftU(cutorch._state,dst:cdata(), src1:cdata())
+         THZCudaTensor_ifftU(cutorch._state,src1:cdata(), dst:cdata())
          THZCudaTensor_mul(cutorch._state,dst:cdata(), src1:cdata(),(1/dst:nElement(0) + 0i))
          return dst
       end
@@ -678,7 +715,7 @@ ZTensor.ifftBatched = argcheck{
    call =
       function(dst, src1)
          dst = dst or src1
-         THZCudaTensor_ifftBatchedU(cutorch._state,dst:cdata(), src1:cdata())
+         THZCudaTensor_ifftBatchedU(cutorch._state,src1:cdata(), dst:cdata())
          THZCudaTensor_mul(cutorch._state,dst:cdata(), src1:cdata(),(1/dst:nElement(0) + 0i))
          return dst
       end
@@ -691,7 +728,7 @@ ZTensor.ifftU = argcheck{
    call =
       function(dst, src1)
          dst = dst or src1
-         THZCudaTensor_ifftU(cutorch._state,dst:cdata(), src1:cdata())
+         THZCudaTensor_ifftU(cutorch._state,src1:cdata(), dst:cdata())
          return dst
       end
 }
@@ -703,7 +740,7 @@ ZTensor.ifftBatchedU = argcheck{
    call =
       function(dst, src1)
          dst = dst or src1
-         THZCudaTensor_ifftBatchedU(cutorch._state,dst:cdata(), src1:cdata())
+         THZCudaTensor_ifftBatchedU(cutorch._state,src1:cdata(), dst:cdata())
          return dst
       end
 }
@@ -1124,6 +1161,13 @@ zfmetatable.copy = argcheck{
          return dst
       end
 }
+
+local cmetatable = torch.getmetatable('torch.CudaTensor')
+rawset( cmetatable, 'reZ', ZTensor.re)
+rawset( cmetatable, 'imZ', ZTensor.im)
+rawset( cmetatable, 'argZ', ZTensor.arg)
+rawset( cmetatable, 'absZ', ZTensor.abs)
+
 
 rawset(torch.getmetatable('torch.DoubleTensor'), 'zcuda', Tensor__zcuda)
 rawset(torch.getmetatable('torch.FloatTensor'), 'zcuda', Tensor__zcuda)

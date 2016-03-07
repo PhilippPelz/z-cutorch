@@ -64,7 +64,7 @@ struct CopyReOp {
   }
 };
 
-// enum NoCollapseMode { NoCollapseDims };
+enum NoCollapseMode { NoCollapseDims };
 
 // CUDA kernel argument that defines tensor layout
 template <typename IndexType>
