@@ -389,6 +389,38 @@ if (self_ == src1) {
 THZCudaCheck(cudaGetLastError());
 }
 
+struct TensorMulZROp {
+	__device__ __forceinline__ void operator()(ccx* out, float* in) {
+		*out = *out * *in;
+	}
+
+	__device__ __forceinline__ void operator()(ccx* out, ccx* in1, float* in2) {
+		*out = *in1 * *in2;
+	}
+};
+
+void THZCudaTensor_cmulZR(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THCudaTensor *src2) {
+	THAssert(THZCudaTensor_checkGPU(state, 2, self_, src1));
+  THAssert(THCudaTensor_checkGPU(state, 1, src2));
+	THArgCheck(THZCudaTensor_nElement(state, src1) == THCudaTensor_nElement(state, src2), 3, "sizes do not match");
+
+	if (self_ == src1) {
+		// self *= src2
+		if (!THZCudaTensor_pointwiseApply2ZF(state, self_, src2, TensorMulZROp())) {
+			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+		}
+	} else {
+		THZCudaTensor_resizeAs(state, self_, src1);
+
+		// self = src1 * src2
+		if (!THZCudaTensor_pointwiseApply3ZZF(state, self_, src1, src2, TensorMulZROp())) {
+			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+		}
+	}
+
+	THZCudaCheck(cudaGetLastError());
+}
+
 struct TensorMulOp {
 	__device__ __forceinline__ void operator()(ccx* out, ccx* in) {
 		*out = *out * *in;
@@ -444,6 +476,38 @@ void THZCudaTensor_cdiv(THCState *state, THZCudaTensor *self_, THZCudaTensor *sr
 
 		// self = src1 * src2
 		if (!THZCudaTensor_pointwiseApply3(state, self_, src1, src2, TensorDivOp())) {
+			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+		}
+	}
+
+	THZCudaCheck(cudaGetLastError());
+}
+
+struct TensorDivZROp {
+	__device__ __forceinline__ void operator()(ccx* out, float* in) {
+		*out = *out / *in;
+	}
+
+	__device__ __forceinline__ void operator()(ccx* out, ccx* in1, float* in2) {
+		*out = *in1 / *in2;
+	}
+};
+
+void THZCudaTensor_cdivZR(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THCudaTensor *src2) {
+	THAssert(THZCudaTensor_checkGPU(state, 2, self_, src1));
+  THAssert(THCudaTensor_checkGPU(state, 1, src2));
+	THArgCheck(THZCudaTensor_nElement(state, src1) == THCudaTensor_nElement(state, src2), 3, "sizes do not match");
+
+	if (self_ == src1) {
+		// self *= src2
+		if (!THZCudaTensor_pointwiseApply2ZF(state, self_, src2, TensorDivZROp())) {
+			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+		}
+	} else {
+		THZCudaTensor_resizeAs(state, self_, src1);
+
+		// self = src1 * src2
+		if (!THZCudaTensor_pointwiseApply3ZZF(state, self_, src1, src2, TensorDivZROp())) {
 			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
 		}
 	}

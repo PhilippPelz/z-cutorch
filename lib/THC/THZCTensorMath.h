@@ -231,6 +231,8 @@ THZC_API void THZCudaTensor_sign(THCState *state, THCudaTensor *self,
 
 THZC_API void THZCudaTensor_cmul(THCState *state, THZCudaTensor *self,
                                  THZCudaTensor *src1, THZCudaTensor *src2);
+THZC_API void THZCudaTensor_cmulZR(THCState *state, THZCudaTensor *self,
+                                   THZCudaTensor *src1, THCudaTensor *src2);
 THZC_API void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self,
                                  THZCudaTensor *src1, cx value,
                                  THZCudaTensor *src2);
@@ -238,6 +240,8 @@ THZC_API void THZCudaTensor_cpow(THCState *state, THZCudaTensor *self_,
                                  THZCudaTensor *src1, THZCudaTensor *src2);
 THZC_API void THZCudaTensor_cdiv(THCState *state, THZCudaTensor *self,
                                  THZCudaTensor *src1, THZCudaTensor *src2);
+THZC_API void THZCudaTensor_cdivZR(THCState *state, THZCudaTensor *self,
+                                   THZCudaTensor *src1, THCudaTensor *src2);
 THZC_API void THZCudaTensor_cim(THCState *state, THZCudaTensor *self,
                                 THZCudaTensor *src1, THCudaTensor *src2);
 THZC_API void THZCudaTensor_cre(THCState *state, THZCudaTensor *self,

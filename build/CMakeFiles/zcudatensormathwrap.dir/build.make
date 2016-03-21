@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/philipp/projects/distro/extra/z-cutorch
+CMAKE_SOURCE_DIR = /home/philipp/projects/zcutorch
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/philipp/projects/distro/extra/z-cutorch/build
+CMAKE_BINARY_DIR = /home/philipp/projects/zcutorch/build
 
 # Utility rule file for zcudatensormathwrap.
 
@@ -48,9 +48,9 @@ include CMakeFiles/zcudatensormathwrap.dir/progress.make
 CMakeFiles/zcudatensormathwrap: TensorMath.c
 
 TensorMath.c: ../TensorMath.lua
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating TensorMath.c"
-	cd /home/philipp/projects/distro/extra/z-cutorch && /home/philipp/torch/install/bin/luajit /home/philipp/projects/distro/extra/z-cutorch/TensorMath.lua /home/philipp/projects/distro/extra/z-cutorch/build/TensorMath.c
+	cd /home/philipp/projects/zcutorch && /home/philipp/torch/install/bin/luajit /home/philipp/projects/zcutorch/TensorMath.lua /home/philipp/projects/zcutorch/build/TensorMath.c
 
 zcudatensormathwrap: CMakeFiles/zcudatensormathwrap
 zcudatensormathwrap: TensorMath.c
@@ -66,6 +66,6 @@ CMakeFiles/zcudatensormathwrap.dir/clean:
 .PHONY : CMakeFiles/zcudatensormathwrap.dir/clean
 
 CMakeFiles/zcudatensormathwrap.dir/depend:
-	cd /home/philipp/projects/distro/extra/z-cutorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/philipp/projects/distro/extra/z-cutorch /home/philipp/projects/distro/extra/z-cutorch /home/philipp/projects/distro/extra/z-cutorch/build /home/philipp/projects/distro/extra/z-cutorch/build /home/philipp/projects/distro/extra/z-cutorch/build/CMakeFiles/zcudatensormathwrap.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/philipp/projects/zcutorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/philipp/projects/zcutorch /home/philipp/projects/zcutorch /home/philipp/projects/zcutorch/build /home/philipp/projects/zcutorch/build /home/philipp/projects/zcutorch/build/CMakeFiles/zcudatensormathwrap.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/zcudatensormathwrap.dir/depend
 

@@ -62,9 +62,11 @@ local THZCudaTensor_div = C['THZCudaTensor_div']
 local THZCudaTensor_addcmul = C['THZCudaTensor_addcmul']
 local THZCudaTensor_addcdiv = C['THZCudaTensor_addcdiv']
 local THZCudaTensor_cmul = C['THZCudaTensor_cmul']
+local THZCudaTensor_cmulZR = C['THZCudaTensor_cmulZR']
 local THZCudaTensor_cadd = C['THZCudaTensor_cadd']
 local THZCudaTensor_cpow = C['THZCudaTensor_cpow']
 local THZCudaTensor_cdiv = C['THZCudaTensor_cdiv']
+local THZCudaTensor_cdivZR = C['THZCudaTensor_cdivZR']
 
 local THZCudaTensor_narrow = C['THZCudaTensor_narrow']
 local THZCudaTensor_select = C['THZCudaTensor_select']
@@ -448,7 +450,16 @@ ZTensor.norm = argcheck{
       return dst
    end
 }
-
+ZTensor.norm = argcheck{
+   nonamed=true,
+   {name="dst", type=ctypename},
+   {name="src", type=typename},
+   overload=ZTensor.norm,
+   call = function(dst, src)
+      THZCudaTensor_norm(cutorch._state,dst:cdata(), src:cdata())
+      return dst
+   end
+}
 ZTensor.norm = argcheck{
    nonamed=true,
    {name="dst", type=typename},
@@ -878,6 +889,56 @@ ZTensor.add = argcheck{
          return dst
       end
 }
+ZTensor.cmul = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   {name="src2", type=typename},
+   call =
+      function(dst, src1, src2)
+         dst = dst or src1
+         THZCudaTensor_cmul(cutorch._state,dst:cdata(), src1:cdata(), src2:cdata())
+         return dst
+      end
+}
+ZTensor.cmul = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   {name="src2", type=ctypename},
+   overload=ZTensor.cmul,
+   call =
+      function(dst, src1, src2)
+         dst = dst or src1
+         THZCudaTensor_cmulZR(cutorch._state,dst:cdata(), src1:cdata(), src2:cdata())
+         return dst
+      end
+}
+ZTensor.cdiv = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   {name="src2", type=typename},
+   call =
+      function(dst, src1, src2)
+         dst = dst or src1
+         THZCudaTensor_cdiv(cutorch._state,dst:cdata(), src1:cdata(), src2:cdata())
+         return dst
+      end
+}
+ZTensor.cdiv = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   {name="src2", type=ctypename},
+   overload=ZTensor.cdiv,
+   call =
+      function(dst, src1, src2)
+         dst = dst or src1
+         THZCudaTensor_cdivZR(cutorch._state,dst:cdata(), src1:cdata(), src2:cdata())
+         return dst
+      end
+}
 ZTensor.add = argcheck{
    nonamed=true,
    {name="dst", type=typename, opt=true},
@@ -892,6 +953,7 @@ ZTensor.add = argcheck{
          return dst
       end
 }
+
 ZTensor.addcmul = argcheck{
    nonamed=true,
    {name="dst", type=typename, opt=true},
@@ -940,7 +1002,7 @@ ZTensor.resize = argcheck{
             stride = torch.LongStorage(stride)
             stridecdata = stride:cdata()
          end
-         THZCudaTensor_resize(cutorch._state,self, size:cdata(), stridecdata)
+         THZCudaTensor_resize(cutorch._state,self:cdata(), size:cdata(), stridecdata)
          return self
       end
 }
@@ -955,7 +1017,7 @@ ZTensor.resize = argcheck{
    overload = ZTensor.resize,
    call =
       function(self, dim1, dim2, dim3, dim4)
-         THZCudaTensor_resize4d(cutorch._state,self, dim1, dim2, dim3, dim4)
+         THZCudaTensor_resize4d(cutorch._state,self:cdata(), dim1, dim2, dim3, dim4)
          return self
       end
 }
@@ -969,7 +1031,7 @@ ZTensor.resize = argcheck{
    call =
       function(self, size, stride)
          if stride then stride = stride:cdata() end
-         THZCudaTensor_resize(cutorch._state,self, size:cdata(), stride)
+         THZCudaTensor_resize(cutorch._state,self:cdata(), size:cdata(), stride)
          return self
       end
 }
@@ -992,7 +1054,7 @@ ZTensor.resizeAs = argcheck{
    nonamed=true,
    call =
       function(self, src)
-         THZCudaTensor_resize(cutorch._state,self, src:size():cdata(), src:stride():cdata())
+         THZCudaTensor_resize(cutorch._state,self:cdata(), src:size():cdata(), src:stride():cdata())
          return self
       end
 }
@@ -1098,8 +1160,8 @@ ZTensor.__index = argcheck{
             -- somethig
             ret:select(cdim,v)
           elseif type(v) == 'table' then
-            local start = (v[1] or 1) - 1
-            local ends = (v[2] or self:size(cdim)) - 1
+            local start = (v[1] or 1)
+            local ends = (v[2] or self:size(cdim))
             if ends < 0 then
               ends = self:size(cdim) + ends + 1
             end
@@ -1167,6 +1229,7 @@ rawset( cmetatable, 'reZ', ZTensor.re)
 rawset( cmetatable, 'imZ', ZTensor.im)
 rawset( cmetatable, 'argZ', ZTensor.arg)
 rawset( cmetatable, 'absZ', ZTensor.abs)
+rawset( cmetatable, 'normZ', ZTensor.norm)
 
 
 rawset(torch.getmetatable('torch.DoubleTensor'), 'zcuda', Tensor__zcuda)

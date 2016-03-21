@@ -543,8 +543,8 @@ wrap("div",
      {{name=Tensor, default=true, returned=true, method={default='nil'}},
         {name=Tensor, method={default=1}},
         {name=real}})
-
-for _, name in ipairs({"cmul", "cpow", "cdiv"}) do
+-- "cmul",, "cdiv"
+for _, name in ipairs({ "cpow"}) do
   wrap(name,
        cname(name),
        {{name=Tensor, default=true, returned=true, method={default='nil'}},

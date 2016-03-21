@@ -92,7 +92,7 @@ cx  THZCudaBlas_dot(THCState *state, long n, cx *x, long incx, cx *y, long incy)
     int i_incx = (int)incx;
     int i_incy = (int)incy;
     cuComplex result;
-    THZCublasCheck(cublasCdotu(THCState_getCurrentBlasHandle(state), i_n, (cux*)x, i_incx, (cux*)y, i_incy, &result));
+    THZCublasCheck(cublasCdotc(THCState_getCurrentBlasHandle(state), i_n, (cux*)x, i_incx, (cux*)y, i_incy, &result));
     cudaDeviceSynchronize();
     cx tmp = cuCrealf(result) + cuCimagf(result) * I;
     return tmp;

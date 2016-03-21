@@ -8,7 +8,7 @@
 #include "THZCReduce.cuh"
 #include "THZCTensorMathPairwise.cu"
 
-cx THZCudaTensor_dot(THCState *state, THZCudaTensor *self, THZCudaTensor *src)
+THZC_API cx THZCudaTensor_dot(THCState *state, THZCudaTensor *self, THZCudaTensor *src)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
   THArgCheck(THZCudaTensor_nElement(state, self) == THZCudaTensor_nElement(state, src), 2, "sizes do not match");

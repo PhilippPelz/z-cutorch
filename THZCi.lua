@@ -95,10 +95,12 @@ void THZCudaTensor_addcmul(THCState *state, THZCudaTensor *self, THZCudaTensor *
 void THZCudaTensor_addcdiv(THCState *state, THZCudaTensor *self, THZCudaTensor *t, float _Complex value, THZCudaTensor *src1, THZCudaTensor *src2);
 
 void THZCudaTensor_cmul(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THZCudaTensor *src2);
+void THZCudaTensor_cmulZR(THCState *state, THZCudaTensor *self,
+                                   THZCudaTensor *src1, THCudaTensor *src2);
 void THZCudaTensor_cadd(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, float _Complex value, THZCudaTensor *src2);
 void THZCudaTensor_cpow(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THZCudaTensor *src2);
 void THZCudaTensor_cdiv(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THZCudaTensor *src2);
-
+void THZCudaTensor_cdivZR(THCState *state, THZCudaTensor *self, THZCudaTensor *src1, THCudaTensor *src2);
 void THZCudaTensor_narrow(THCState *state, THZCudaTensor *self,
                                    THZCudaTensor *src, int dimension_,
                                    long firstIndex_, long size_);
