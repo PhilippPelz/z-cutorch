@@ -531,12 +531,12 @@ wrap("zeros",
 --      {name=real, default=1},
 --      {name=Tensor}})
 
-wrap("mul",
-     cname("mul"),
-     {{name=Tensor, default=true, returned=true, method={default='nil'}},
-        {name=Tensor, method={default=1}},
-        {name=real}}
-)
+-- wrap("mul",
+--      cname("mul"),
+--      {{name=Tensor, default=true, returned=true, method={default='nil'}},
+--         {name=Tensor, method={default=1}},
+--         {name=real}}
+-- )
 
 wrap("div",
      cname("div"),
@@ -757,11 +757,11 @@ wrap("scatter",
    end
 
 
-wrap("dot",
-     cname("dot"),
-     {{name=Tensor},
-      {name=Tensor},
-      {name=real, creturned=true}})
+-- wrap("dot",
+--      cname("dot"),
+--      {{name=Tensor},
+--       {name=Tensor},
+--       {name=real, creturned=true}})
 
 wrap("sum",
      cname("sumall"),

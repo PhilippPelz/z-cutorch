@@ -273,7 +273,7 @@ THZC_API void THZCudaTensor_addcdiv(THCState *state, THZCudaTensor *self_,
 	THZCudaCheck(cudaGetLastError());
 }
 
-float THZCudaTensor_minall(THCState *state, THZCudaTensor *self) {
+THZC_API float THZCudaTensor_minall(THCState *state, THZCudaTensor *self) {
 	THAssert(THZCudaTensor_checkGPU(state, 1, self));
 	float val = (float) THInf;
 	if (!THZCudaTensor_reduceAllf(state, self, AbsOp(),
@@ -285,7 +285,7 @@ float THZCudaTensor_minall(THCState *state, THZCudaTensor *self) {
 	return val;
 }
 
-float THZCudaTensor_maxall(THCState *state, THZCudaTensor *self) {
+THZC_API float THZCudaTensor_maxall(THCState *state, THZCudaTensor *self) {
 	THAssert(THZCudaTensor_checkGPU(state, 1, self));
 	float val = -THInf;
 	if (!THZCudaTensor_reduceAllf(state, self, AbsOp(),
@@ -308,7 +308,7 @@ THZC_API cx THZCudaTensor_sumall(THCState *state, THZCudaTensor *self) {
 	return val.real() + val.imag() * I;
 }
 
-cx THZCudaTensor_prodall(THCState *state, THZCudaTensor *self) {
+THZC_API cx THZCudaTensor_prodall(THCState *state, THZCudaTensor *self) {
 	THAssert(THZCudaTensor_checkGPU(state, 1, self));
 	ccx val = 1.0f;
 	if (!THZCudaTensor_reduceAll(state, self, thrust::identity<ccx>(), Mul(),
@@ -331,7 +331,7 @@ THZC_API void THZCudaTensor_sum(THCState* state, THZCudaTensor *self, THZCudaTen
 	THZCudaCheck(cudaGetLastError());
 }
 
-void THZCudaTensor_prod(THCState* state, THZCudaTensor *self,
+THZC_API void THZCudaTensor_prod(THCState* state, THZCudaTensor *self,
 		THZCudaTensor *src, long dimension) {
 	THAssert(THZCudaTensor_checkGPU(state, 2, self, src));
 	if (!THZCudaTensor_reduceDim(state, self, src, thrust::identity<ccx>(),

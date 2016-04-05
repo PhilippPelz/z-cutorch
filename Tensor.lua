@@ -3,6 +3,7 @@ local argcheck = require 'argcheck'
 local ffi=require 'ffi'
 -- local torch = require 'torch'
 require 'pprint'
+local ztorch = require 'ztorch'
 
 local THZCudaTensor_abs = C['THZCudaTensor_abs']
 local THZCudaTensor_arg = C['THZCudaTensor_arg']
@@ -77,6 +78,7 @@ local THZCudaTensor_newSelect = C['THZCudaTensor_newSelect']
 local THZCudaTensor_resize = C['THZCudaTensor_resize']
 local THZCudaTensor_resizeAs = C['THZCudaTensor_resizeAs']
 local THZCudaTensor_resize4d = C['THZCudaTensor_resize4d']
+local THZCudaTensor_dot = C['THZCudaTensor_dot']
 
 function torch.ZCudaTensor.apply(self, func)
    local x = torch.ZFloatTensor(self:size()):copy(self)
@@ -192,7 +194,7 @@ ZTensor.__new = argcheck{
          if stride then
             stride = torch.LongStorage(stride):cdata()
          end
-         local self = wrapcdata(THZCudaTensor_newWithStorage(cutorch._state,storage, storageOffset-1, size, stride))
+         local self = wrapcdata(THZCudaTensor_newWithStorage(cutorch._state,storage:cdata(), storageOffset-1, size, stride))
         --  ffi.gc(self, free)
          return self
       end
@@ -581,7 +583,18 @@ ZTensor.cre = argcheck{
 -- local THZCudaTensor_fftShift = C['THZCudaTensor_fftShift']
 -- local THZCudaTensor_ifftShiftInplace = C['THZCudaTensor_ifftShiftInplace']
 -- local THZCudaTensor_ifftShift = C['THZCudaTensor_ifftShift']
-
+ZTensor.dot = argcheck{
+   nonamed=true,
+   {name="dst", type=typename},
+   {name="src1", type=typename, opt=true},
+   call =
+      function(dst, src1)
+         src1 = src1 or dst
+         local result = THZCudaTensor_dot(cutorch._state,src1:cdata(), dst:cdata())
+        --  print('in dot ',result)
+         return result
+      end
+}
 ZTensor.fft = argcheck{
    nonamed=true,
    {name="dst", type=typename},
@@ -876,7 +889,31 @@ ZTensor.copy = argcheck{
          return dst
       end
 }
-
+ZTensor.mul = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src", type=typename},
+   {name="value", type="number"},
+   call =
+      function(dst, src, value)
+         dst = dst or src
+         THZCudaTensor_mul(cutorch._state, dst:cdata(), src:cdata(), value)
+         return dst
+      end
+}
+ZTensor.mul = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src", type=typename},
+   {name="value", type="cdata", check=ztorch.isComplex},
+   overload=ZTensor.mul,
+   call =
+      function(dst, src, value)
+         dst = dst or src
+         THZCudaTensor_mul(cutorch._state, dst:cdata(), src:cdata(), value)
+         return dst
+      end
+}
 ZTensor.add = argcheck{
    nonamed=true,
    {name="dst", type=typename, opt=true},
@@ -1158,7 +1195,7 @@ ZTensor.__index = argcheck{
         for _, v in ipairs(ind) do
           if type(v) == 'number' then
             -- somethig
-            ret:select(cdim,v)
+            ret = ret:select(cdim,v)
           elseif type(v) == 'table' then
             local start = (v[1] or 1)
             local ends = (v[2] or self:size(cdim))
@@ -1166,7 +1203,7 @@ ZTensor.__index = argcheck{
               ends = self:size(cdim) + ends + 1
             end
             local size = ends - start + 1
-            ret:narrow(cdim,start,size)
+            ret = ret:narrow(cdim,start,size)
             cdim = cdim + 1
           end
         end

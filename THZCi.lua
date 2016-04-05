@@ -127,6 +127,7 @@ THZCudaTensor *THZCudaTensor_newSelect(THCState *state,THZCudaTensor *tensor, in
  void THZCudaTensor_resize4d(THCState *state, THZCudaTensor *tensor, long size0_, long size1_, long size2_, long size3_);
  void THZCudaTensor_sign(THCState *state, THCudaTensor *self,
                                  THZCudaTensor *src);
+float _Complex THZCudaTensor_dot(THCState *state, THZCudaTensor *self, THZCudaTensor *src);                                 
 ]])
 
 

@@ -337,7 +337,7 @@ struct TensorSetImOp {
 };
 THZC_API void THZCudaTensor_cim(THCState *state, THZCudaTensor *self_, THZCudaTensor *src1, THCudaTensor *src2){
 THAssert(THZCudaTensor_checkGPU(state, 2, self_, src1, src2));
-THAssert(THZCudaTensor_checkGPU(state, 1, src2));
+THAssert(THCudaTensor_checkGPU(state, 1, src2));
 THArgCheck(THZCudaTensor_nElement(state, src1) == THCudaTensor_nElement(state, src2), 3, "sizes do not match");
 
 if (self_ == src1) {
