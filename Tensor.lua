@@ -926,6 +926,18 @@ ZTensor.add = argcheck{
          return dst
       end
 }
+ZTensor.add = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="src1", type=typename},
+   {name="v", type="cdata", check=ztorch.isComplex},
+   call =
+      function(dst, src1, v)
+         dst = dst or src1
+         THZCudaTensor_add(cutorch._state,dst:cdata(), src1:cdata(),v)
+         return dst
+      end
+}
 ZTensor.cmul = argcheck{
    nonamed=true,
    {name="dst", type=typename, opt=true},
