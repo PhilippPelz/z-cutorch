@@ -13,12 +13,7 @@
 #include "string.h"
 static void str_arg_types(lua_State *L, char *buf, int n) {
     int i;
-  int nargs = lua_gettop(L);
-  if (nargs == 0) {
-    snprintf(buf, n, "no arguments provided");
-    return;
-  }
-  for (i = 1; i <= nargs; i++) {
+  for (i = 1; i <= lua_gettop(L); i++) {
     int l;
     const char *torch_type = luaT_typename(L, i);
     if(torch_type && !strncmp(torch_type, "torch.", 6)) torch_type += 6;
@@ -3951,12 +3946,7 @@ return 0;
 #include "string.h"
 static void str_arg_types(lua_State *L, char *buf, int n) {
     int i;
-  int nargs = lua_gettop(L);
-  if (nargs == 0) {
-    snprintf(buf, n, "no arguments provided");
-    return;
-  }
-  for (i = 1; i <= nargs; i++) {
+  for (i = 1; i <= lua_gettop(L); i++) {
     int l;
     const char *torch_type = luaT_typename(L, i);
     if(torch_type && !strncmp(torch_type, "torch.", 6)) torch_type += 6;
