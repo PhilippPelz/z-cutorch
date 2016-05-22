@@ -4,18 +4,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/philipp/projects/zcutorch/Storage.c" "/home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch.dir/Storage.c.o"
-  "/home/philipp/projects/zcutorch/Tensor.c" "/home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch.dir/Tensor.c.o"
-  "/home/philipp/projects/zcutorch/build/TensorMath.c" "/home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch.dir/TensorMath.c.o"
-  "/home/philipp/projects/zcutorch/TensorOperator.c" "/home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch.dir/TensorOperator.c.o"
-  "/home/philipp/projects/zcutorch/init.c" "/home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch.dir/init.c.o"
-  "/home/philipp/projects/zcutorch/torch/utils.c" "/home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch.dir/torch/utils.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/Storage.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles/zcutorch.dir/Storage.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/Tensor.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles/zcutorch.dir/Tensor.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/build/TensorMath.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles/zcutorch.dir/TensorMath.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/TensorOperator.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles/zcutorch.dir/TensorOperator.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/init.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles/zcutorch.dir/init.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/torch/utils.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles/zcutorch.dir/torch/utils.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/DependInfo.cmake"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/DependInfo.cmake"
   )
 
 # The include file search paths:

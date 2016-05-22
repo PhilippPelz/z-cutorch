@@ -56,18 +56,18 @@ endif()
 
 # Set these up as variables to make reading the generated file easier
 set(CMAKE_COMMAND "/usr/bin/cmake") # path
-set(source_file "/home/philipp/projects/zcutorch/lib/THC/THZCTensorMasked.cu") # path
-set(NVCC_generated_dependency_file "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMasked.cu.o.NVCC-depend") # path
-set(cmake_dependency_file "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMasked.cu.o.depend") # path
+set(source_file "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCTensorMasked.cu") # path
+set(NVCC_generated_dependency_file "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMasked.cu.o.NVCC-depend") # path
+set(cmake_dependency_file "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//THZC_generated_THZCTensorMasked.cu.o.depend") # path
 set(CUDA_make2cmake "/usr/share/cmake-3.0/Modules/FindCUDA/make2cmake.cmake") # path
 set(CUDA_parse_cubin "/usr/share/cmake-3.0/Modules/FindCUDA/parse_cubin.cmake") # path
 set(build_cubin OFF) # bool
 set(CUDA_HOST_COMPILER "/usr/bin/cc") # bool
 # We won't actually use these variables for now, but we need to set this, in
 # order to force this file to be run again if it changes.
-set(generated_file_path "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//.") # path
-set(generated_file_internal "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o") # path
-set(generated_cubin_file_internal "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o.cubin.txt") # path
+set(generated_file_path "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//.") # path
+set(generated_file_internal "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o") # path
+set(generated_cubin_file_internal "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir//./THZC_generated_THZCTensorMasked.cu.o.cubin.txt") # path
 
 set(CUDA_NVCC_EXECUTABLE "/usr/local/cuda/bin/nvcc") # path
 set(CUDA_NVCC_FLAGS -gencode;arch=compute_52,code=sm_52;-gencode;arch=compute_20,code=sm_21 ;; ) # list
@@ -77,7 +77,7 @@ set(CUDA_NVCC_FLAGS_DEBUG  ; )
 set(CUDA_NVCC_FLAGS_MINSIZEREL  ; )
 set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ; )
 set(nvcc_flags -m64;-DTHZC_EXPORTS) # list
-set(CUDA_NVCC_INCLUDE_ARGS "-I/usr/local/cuda/include;-I/home/philipp/torch/install/include;-I/home/philipp/torch/install/include/TH;-I/usr/local/cuda/include;-I/home/philipp/projects/zcutorch/lib/THC/CUDA_SDK_ROOT_DIR-NOTFOUND/common/inc;-I/usr/local/magma/include;-I/home/philipp/torch/install/include/THC;-I/home/philipp/projects/zcutorch/lib/THC/include/THC;-I/home/philipp/projects/zcutorch/build/lib/THC") # list (needs to be in quotes to handle spaces properly).
+set(CUDA_NVCC_INCLUDE_ARGS "-I/usr/local/cuda/include;-I/home/philipp/torch/install/include;-I/home/philipp/torch/install/include/TH;-I/usr/local/cuda/include;-I/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/CUDA_SDK_ROOT_DIR-NOTFOUND/common/inc;-I/usr/local/magma/include;-I/home/philipp/torch/install/include/THC;-I/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/include/THC;-I/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC") # list (needs to be in quotes to handle spaces properly).
 set(format_flag "-c") # string
 
 if(build_cubin AND NOT generated_cubin_file)
@@ -164,7 +164,7 @@ endmacro()
 cuda_execute_process(
   "Removing ${generated_file}"
   COMMAND "${CMAKE_COMMAND}" -E remove "${generated_file}"
-)
+  )
 
 # For CUDA 2.3 and below, -G -M doesn't work, so remove the -G flag
 # for dependency generation and hope for the best.
@@ -224,7 +224,7 @@ set(CUDACC_DEFINE -D__CUDACC__)
 # Copy the file if it is different
 #cuda_execute_process(
 #  "Copy if different ${cmake_dependency_file}.tmp to ${cmake_dependency_file}"
-#  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${cmake_dependency_file}.tmp" "${cmake_dependency_file}"
+#  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${cmake_dependency_file}.tmp" #"${cmake_dependency_file}"
 #  )
 
 #if(CUDA_result)
@@ -234,7 +234,7 @@ set(CUDACC_DEFINE -D__CUDACC__)
 # Delete the temporary file
 #cuda_execute_process(
 #  "Removing ${cmake_dependency_file}.tmp and ${NVCC_generated_dependency_file}"
-#  COMMAND "${CMAKE_COMMAND}" -E remove "${cmake_dependency_file}.tmp" "${NVCC_generated_dependency_file}"
+#  COMMAND "${CMAKE_COMMAND}" -E remove "${cmake_dependency_file}.tmp" #"${NVCC_generated_dependency_file}"
 #  )
 
 #if(CUDA_result)

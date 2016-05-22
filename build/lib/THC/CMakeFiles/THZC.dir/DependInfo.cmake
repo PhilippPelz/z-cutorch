@@ -4,12 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/philipp/projects/zcutorch/lib/THC/THZCAllocator.c" "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o"
-  "/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.c" "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o"
-  "/home/philipp/projects/zcutorch/lib/THC/THZCStorage.c" "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o"
-  "/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.c" "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o"
-  "/home/philipp/projects/zcutorch/lib/THC/THZCTensor.c" "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o"
-  "/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.c" "/home/philipp/projects/zcutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCAllocator.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCAllocator.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCGeneral.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCGeneral.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCStorage.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCStorage.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCStorageCopy.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCStorageCopy.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCTensor.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCTensor.c.o"
+  "/home/philipp/projects/torchdistro/extra/z-cutorch/lib/THC/THZCTensorCopy.c" "/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/CMakeFiles/THZC.dir/THZCTensorCopy.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

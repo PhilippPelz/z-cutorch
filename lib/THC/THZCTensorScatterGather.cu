@@ -129,16 +129,16 @@ void THZCudaTensor_gather(THCState* state, THZCudaTensor *tensor, THZCudaTensor 
     }
   }
 
-  if (THZCudaTensor_nDimension(state, tensor) > MAX_CUTORCH_DIMS) {
-    return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
-  }
+  // if (THZCudaTensor_nDimension(state, tensor) > MAX_CUTORCH_DIMS) {
+  //   return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
+  // }
 
   const long totalElements = THCudaTensor_nElement(state, index);
   const dim3 block = getApplyBlock();
   dim3 grid;
-  if (!getApplyGrid(state, totalElements, grid)) {
-    return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
-  }
+  // if (!getApplyGrid(state, totalElements, grid)) {
+  //   return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
+  // }
 
   THZCudaTensor* oldTensor = NULL;
   if (THZC_overlappingIndices(state, tensor)) {
@@ -237,16 +237,16 @@ void THZCudaTensor_scatter(THCState* state, THZCudaTensor *tensor, int dim, THCu
     }
   }
 
-  if (THZCudaTensor_nDimension(state, tensor) > MAX_CUTORCH_DIMS) {
-    return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
-  }
+  // if (THZCudaTensor_nDimension(state, tensor) > MAX_CUTORCH_DIMS) {
+  //   return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
+  // }
 
   const long totalElements = THCudaTensor_nElement(state, index);
   const dim3 block = getApplyBlock();
   dim3 grid;
-  if (!getApplyGrid(state, totalElements, grid)) {
-    return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
-  }
+  // if (!getApplyGrid(state, totalElements, grid)) {
+  //   return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
+  // }
 
   THZCudaTensor* oldTensor = NULL;
   if (THZC_overlappingIndices(state, tensor)) {
@@ -339,16 +339,16 @@ void THZCudaTensor_scatterFill(THCState* state, THZCudaTensor *tensor, int dim, 
     }
   }
 
-  if (THZCudaTensor_nDimension(state, tensor) > MAX_CUTORCH_DIMS) {
-    return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
-  }
+  // if (THZCudaTensor_nDimension(state, tensor) > MAX_CUTORCH_DIMS) {
+  //   return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
+  // }
 
   const long totalElements = THCudaTensor_nElement(state, index);
   const dim3 block = getApplyBlock();
   dim3 grid;
-  if (!getApplyGrid(state, totalElements, grid)) {
-    return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
-  }
+  // if (!getApplyGrid(state, totalElements, grid)) {
+  //   return THArgCheck(false, 1, CUTORCH_DIM_WARNING);
+  // }
 
   THZCudaTensor* oldTensor = NULL;
   if (THZC_overlappingIndices(state, tensor)) {

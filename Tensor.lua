@@ -456,7 +456,7 @@ ZTensor.norm = argcheck{
 ZTensor.norm = argcheck{
    nonamed=true,
    {name="dst", type=typename},
-   {name="src", type=typename},
+   {name="src", type=typename, opt=true},
    overload=ZTensor.norm,
    call = function(dst, src)
       src = src or dst
@@ -1240,6 +1240,105 @@ ZTensor.__index = argcheck{
       end
 }
 
+local Tensor = {}
+Tensor.fftshift = argcheck{
+   nonamed=true,
+   {name="dst", type='torch.CudaTensor'},
+   {name="src1", type='torch.CudaTensor', opt=true},
+   call =
+      function(dst, src1)
+        if src1 then
+          dst:copy(src1)
+        end
+        local ndim = dst:dim()
+
+        local t = torch.getdefaulttensortype()
+        torch.setdefaulttensortype('torch.FloatTensor')
+        local axes = torch.linspace(1,ndim,ndim)
+        torch.setdefaulttensortype(t)
+        for _, k in pairs(axes:totable()) do
+          local n = dst:size(k)
+          local p2 = math.floor((n+1)/2)
+
+          local half1 = {p2+1,n}
+          local half2 = {1,p2}
+      --    pprint(half1)
+      --    pprint(half2)
+
+          local indextable = {{},{}}
+      --    pprint(indextable)
+          for i=1,ndim do
+      --      print(k .. '_' .. i)
+            if i ~= k then
+              indextable[1][i] = half1
+              indextable[2][i] = half2
+      --        pprint(indextable)
+            else
+              indextable[1][i] = {}
+              indextable[2][i] = {}
+      --        pprint(indextable)
+            end
+          end
+      --    pprint(indextable[1])
+      --    pprint(indextable[2])
+          local tmp = dst[indextable[1]]:clone()
+      --    pprint(tmp)
+      --    pprint(dst)
+          dst[indextable[1]]:copy(dst[indextable[2]])
+          dst[indextable[2]]:copy(tmp)
+        end
+        return dst
+      end
+}
+Tensor.ifftshift = argcheck{
+   nonamed=true,
+   {name="dst", type='torch.CudaTensor'},
+   {name="src1", type='torch.CudaTensor', opt=true},
+   call =
+      function(dst, src1)
+        if src1 then
+          dst:copy(src1)
+        end
+        local ndim = dst:dim()
+        local t = torch.getdefaulttensortype()
+        torch.setdefaulttensortype('torch.FloatTensor')
+        local axes = torch.linspace(1,ndim,ndim)
+        torch.setdefaulttensortype(t)
+        for _, k in pairs(axes:totable()) do
+          local n = dst:size(k)
+          local p2 = math.floor(n-(n+1)/2)
+
+          local half1 = {p2+1,n}
+          local half2 = {1,p2}
+      --    pprint(half1)
+      --    pprint(half2)
+
+          local indextable = {{},{}}
+      --    pprint(indextable)
+          for i=1,ndim do
+      --      print(k .. '_' .. i)
+            if i ~= k then
+              indextable[1][i] = half1
+              indextable[2][i] = half2
+      --        pprint(indextable)
+            else
+              indextable[1][i] = {}
+              indextable[2][i] = {}
+      --        pprint(indextable)
+            end
+          end
+      --    pprint(indextable[1])
+      --    pprint(indextable[2])
+          local tmp = dst[indextable[1]]:clone()
+      --    pprint(tmp)
+      --    pprint(dst)
+          dst[indextable[1]]:copy(dst[indextable[2]])
+          dst[indextable[2]]:copy(tmp)
+        end
+        return dst
+      end
+}
+
 local zmetatable = torch.getmetatable('torch.ZCudaTensor')
 rawset( zmetatable, 'type', Tensor__type)
 rawset( zmetatable, 'typeAs', Tensor__typeAs)
@@ -1271,6 +1370,8 @@ rawset( cmetatable, 'imZ', ZTensor.im)
 rawset( cmetatable, 'argZ', ZTensor.arg)
 rawset( cmetatable, 'absZ', ZTensor.abs)
 rawset( cmetatable, 'normZ', ZTensor.norm)
+rawset( cmetatable, 'fftshift', Tensor.fftshift)
+rawset( cmetatable, 'ifftshift', Tensor.ifftshift)
 
 
 rawset(torch.getmetatable('torch.DoubleTensor'), 'zcuda', Tensor__zcuda)
