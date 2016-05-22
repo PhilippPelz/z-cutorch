@@ -445,15 +445,6 @@ ZTensor.im = argcheck{
 }
 ZTensor.norm = argcheck{
    nonamed=true,
-   {name="src", type=typename},
-   call = function(src)
-      local dst = torch.CudaTensor()
-      THZCudaTensor_norm(cutorch._state,dst:cdata(), src:cdata())
-      return dst
-   end
-}
-ZTensor.norm = argcheck{
-   nonamed=true,
    {name="dst", type=ctypename},
    {name="src", type=typename},
    overload=ZTensor.norm,
@@ -468,6 +459,7 @@ ZTensor.norm = argcheck{
    {name="src", type=typename},
    overload=ZTensor.norm,
    call = function(dst, src)
+      src = src or dst
       THZCudaTensor_znorm(cutorch._state,dst:cdata(), src:cdata())
       return dst
    end
@@ -476,7 +468,7 @@ ZTensor.norm = argcheck{
 ZTensor.normall = argcheck{
    nonamed=true,
    {name="self", type=typename},
-   {name="value", type="number"},
+   {name="value", type="number", default = 2},
    call = function(self, value)
       return THZCudaTensor_normall(cutorch._state,self:cdata(), value)
    end
