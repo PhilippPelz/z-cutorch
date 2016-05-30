@@ -469,7 +469,7 @@ ZTensor.norm = argcheck{
 ZTensor.normall = argcheck{
    nonamed=true,
    {name="self", type=typename},
-   {name="value", type="number"},
+   {name="value", type="number", default = 2},
    call = function(self, value)
       return THZCudaTensor_normall(cutorch._state,self:cdata(), value)
    end
