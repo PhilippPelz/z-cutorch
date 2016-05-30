@@ -1,4 +1,4 @@
-# Install script for directory: /home/philipp/projects/torchdistro/extra/z-cutorch/lib
+# Install script for directory: /home/philipp/projects/zcutorch/lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/philipp/projects/torchdistro/extra/z-cutorch/build/lib/THC/cmake_install.cmake")
+  include("/home/philipp/projects/zcutorch/build/lib/THC/cmake_install.cmake")
 
 endif()
 

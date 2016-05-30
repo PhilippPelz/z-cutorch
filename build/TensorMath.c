@@ -316,37 +316,6 @@ THZCudaTensor_cpow(default_arg1,arg1,arg2,arg3);
 return 1;
 }
 
-static int zcutorch_ZCudaTensor_maskedFill(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-THCudaTensor *arg2 = NULL;
-float complex arg3 = 0;
-if(narg == 3
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.CudaTensor"))
-&& lua_isnumber(L, 3)
-)
-{
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 3);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* CudaTensor float complex", type_buf);
-}
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_maskedFill(default_arg1,arg1,arg2,arg3);
-return 1;
-}
-
 static int zcutorch_ZCudaTensor_maskedCopy(lua_State *L)
 {
 int narg = lua_gettop(L);
@@ -4225,37 +4194,6 @@ THZCudaTensor_cpow(default_arg1,arg1,arg2,arg3);
 return 1;
 }
 
-static int wrapper_maskedFill(lua_State *L)
-{
-int narg = lua_gettop(L);
-lua_getglobal(L, "cutorch");
-lua_getfield(L, -1, "_state");
-THCState *default_arg1 = lua_touserdata(L, -1);
-lua_pop(L, 2);
-THZCudaTensor *arg1 = NULL;
-int arg1_idx = 0;
-THCudaTensor *arg2 = NULL;
-float complex arg3 = 0;
-if(narg == 3
-&& (arg1 = luaT_toudata(L, 1, "torch.ZCudaTensor"))
-&& (arg2 = luaT_toudata(L, 2, "torch.CudaTensor"))
-&& lua_isnumber(L, 3)
-)
-{
-arg1_idx = 1;
-arg3 = (float complex)lua_tonumber(L, 3);
-}
-else
-{
-char type_buf[512];
-str_arg_types(L, type_buf, 512);
-luaL_error(L, "invalid arguments: %s\nexpected arguments: *ZCudaTensor* CudaTensor float complex", type_buf);
-}
-lua_pushvalue(L, arg1_idx);
-THZCudaTensor_maskedFill(default_arg1,arg1,arg2,arg3);
-return 1;
-}
-
 static int wrapper_maskedCopy(lua_State *L)
 {
 int narg = lua_gettop(L);
@@ -7789,7 +7727,6 @@ static const struct luaL_Reg m_zcutorch_ZCudaTensorMath__ [] = {
 {"numel", wrapper_numel},
 {"div", wrapper_div},
 {"cpow", wrapper_cpow},
-{"maskedFill", wrapper_maskedFill},
 {"maskedCopy", wrapper_maskedCopy},
 {"maskedSelect", wrapper_maskedSelect},
 {"gather", wrapper_gather},
@@ -7862,7 +7799,6 @@ static const struct luaL_Reg zcutorch_ZCudaTensorMath__ [] = {
 {"numel", zcutorch_ZCudaTensor_numel},
 {"div", zcutorch_ZCudaTensor_div},
 {"cpow", zcutorch_ZCudaTensor_cpow},
-{"maskedFill", zcutorch_ZCudaTensor_maskedFill},
 {"maskedCopy", zcutorch_ZCudaTensor_maskedCopy},
 {"maskedSelect", zcutorch_ZCudaTensor_maskedSelect},
 {"gather", zcutorch_ZCudaTensor_gather},

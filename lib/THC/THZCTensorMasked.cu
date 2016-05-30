@@ -33,7 +33,7 @@ struct cxTensorMaskedFillOp {
   ccx value;
 };
 
-void THZCudaTensor_maskedFill(THCState* state, THZCudaTensor *tensor, THCudaTensor *mask, cx value)
+THZC_API void THZCudaTensor_maskedFill(THCState* state, THZCudaTensor *tensor, THCudaTensor *mask, cx value)
 {
   THAssert(THZCudaTensor_checkGPU(state, 2, tensor, mask));
   THArgCheck(THZCudaTensor_nElement(state, tensor) ==

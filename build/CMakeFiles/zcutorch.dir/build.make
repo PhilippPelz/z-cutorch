@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/philipp/projects/torchdistro/extra/z-cutorch
+CMAKE_SOURCE_DIR = /home/philipp/projects/zcutorch
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/philipp/projects/torchdistro/extra/z-cutorch/build
+CMAKE_BINARY_DIR = /home/philipp/projects/zcutorch/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/zcutorch.dir/depend.make
@@ -50,23 +50,23 @@ include CMakeFiles/zcutorch.dir/progress.make
 include CMakeFiles/zcutorch.dir/flags.make
 
 TensorMath.c: ../TensorMath.lua
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating TensorMath.c"
-	cd /home/philipp/projects/torchdistro/extra/z-cutorch && /home/philipp/torch/install/bin/luajit /home/philipp/projects/torchdistro/extra/z-cutorch/TensorMath.lua /home/philipp/projects/torchdistro/extra/z-cutorch/build/TensorMath.c
+	cd /home/philipp/projects/zcutorch && /home/philipp/torch/install/bin/luajit /home/philipp/projects/zcutorch/TensorMath.lua /home/philipp/projects/zcutorch/build/TensorMath.c
 
 CMakeFiles/zcutorch.dir/Storage.c.o: CMakeFiles/zcutorch.dir/flags.make
 CMakeFiles/zcutorch.dir/Storage.c.o: ../Storage.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/zcutorch.dir/Storage.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/Storage.c.o   -c /home/philipp/projects/torchdistro/extra/z-cutorch/Storage.c
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/Storage.c.o   -c /home/philipp/projects/zcutorch/Storage.c
 
 CMakeFiles/zcutorch.dir/Storage.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/zcutorch.dir/Storage.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/torchdistro/extra/z-cutorch/Storage.c > CMakeFiles/zcutorch.dir/Storage.c.i
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/Storage.c > CMakeFiles/zcutorch.dir/Storage.c.i
 
 CMakeFiles/zcutorch.dir/Storage.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/zcutorch.dir/Storage.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/torchdistro/extra/z-cutorch/Storage.c -o CMakeFiles/zcutorch.dir/Storage.c.s
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/Storage.c -o CMakeFiles/zcutorch.dir/Storage.c.s
 
 CMakeFiles/zcutorch.dir/Storage.c.o.requires:
 .PHONY : CMakeFiles/zcutorch.dir/Storage.c.o.requires
@@ -79,17 +79,17 @@ CMakeFiles/zcutorch.dir/Storage.c.o.provides.build: CMakeFiles/zcutorch.dir/Stor
 
 CMakeFiles/zcutorch.dir/init.c.o: CMakeFiles/zcutorch.dir/flags.make
 CMakeFiles/zcutorch.dir/init.c.o: ../init.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/zcutorch.dir/init.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/init.c.o   -c /home/philipp/projects/torchdistro/extra/z-cutorch/init.c
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/init.c.o   -c /home/philipp/projects/zcutorch/init.c
 
 CMakeFiles/zcutorch.dir/init.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/zcutorch.dir/init.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/torchdistro/extra/z-cutorch/init.c > CMakeFiles/zcutorch.dir/init.c.i
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/init.c > CMakeFiles/zcutorch.dir/init.c.i
 
 CMakeFiles/zcutorch.dir/init.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/zcutorch.dir/init.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/torchdistro/extra/z-cutorch/init.c -o CMakeFiles/zcutorch.dir/init.c.s
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/init.c -o CMakeFiles/zcutorch.dir/init.c.s
 
 CMakeFiles/zcutorch.dir/init.c.o.requires:
 .PHONY : CMakeFiles/zcutorch.dir/init.c.o.requires
@@ -102,17 +102,17 @@ CMakeFiles/zcutorch.dir/init.c.o.provides.build: CMakeFiles/zcutorch.dir/init.c.
 
 CMakeFiles/zcutorch.dir/Tensor.c.o: CMakeFiles/zcutorch.dir/flags.make
 CMakeFiles/zcutorch.dir/Tensor.c.o: ../Tensor.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/zcutorch.dir/Tensor.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/Tensor.c.o   -c /home/philipp/projects/torchdistro/extra/z-cutorch/Tensor.c
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/Tensor.c.o   -c /home/philipp/projects/zcutorch/Tensor.c
 
 CMakeFiles/zcutorch.dir/Tensor.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/zcutorch.dir/Tensor.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/torchdistro/extra/z-cutorch/Tensor.c > CMakeFiles/zcutorch.dir/Tensor.c.i
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/Tensor.c > CMakeFiles/zcutorch.dir/Tensor.c.i
 
 CMakeFiles/zcutorch.dir/Tensor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/zcutorch.dir/Tensor.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/torchdistro/extra/z-cutorch/Tensor.c -o CMakeFiles/zcutorch.dir/Tensor.c.s
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/Tensor.c -o CMakeFiles/zcutorch.dir/Tensor.c.s
 
 CMakeFiles/zcutorch.dir/Tensor.c.o.requires:
 .PHONY : CMakeFiles/zcutorch.dir/Tensor.c.o.requires
@@ -125,17 +125,17 @@ CMakeFiles/zcutorch.dir/Tensor.c.o.provides.build: CMakeFiles/zcutorch.dir/Tenso
 
 CMakeFiles/zcutorch.dir/TensorMath.c.o: CMakeFiles/zcutorch.dir/flags.make
 CMakeFiles/zcutorch.dir/TensorMath.c.o: TensorMath.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/zcutorch.dir/TensorMath.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/TensorMath.c.o   -c /home/philipp/projects/torchdistro/extra/z-cutorch/build/TensorMath.c
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/TensorMath.c.o   -c /home/philipp/projects/zcutorch/build/TensorMath.c
 
 CMakeFiles/zcutorch.dir/TensorMath.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/zcutorch.dir/TensorMath.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/torchdistro/extra/z-cutorch/build/TensorMath.c > CMakeFiles/zcutorch.dir/TensorMath.c.i
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/build/TensorMath.c > CMakeFiles/zcutorch.dir/TensorMath.c.i
 
 CMakeFiles/zcutorch.dir/TensorMath.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/zcutorch.dir/TensorMath.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/torchdistro/extra/z-cutorch/build/TensorMath.c -o CMakeFiles/zcutorch.dir/TensorMath.c.s
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/build/TensorMath.c -o CMakeFiles/zcutorch.dir/TensorMath.c.s
 
 CMakeFiles/zcutorch.dir/TensorMath.c.o.requires:
 .PHONY : CMakeFiles/zcutorch.dir/TensorMath.c.o.requires
@@ -148,17 +148,17 @@ CMakeFiles/zcutorch.dir/TensorMath.c.o.provides.build: CMakeFiles/zcutorch.dir/T
 
 CMakeFiles/zcutorch.dir/TensorOperator.c.o: CMakeFiles/zcutorch.dir/flags.make
 CMakeFiles/zcutorch.dir/TensorOperator.c.o: ../TensorOperator.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/zcutorch.dir/TensorOperator.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/TensorOperator.c.o   -c /home/philipp/projects/torchdistro/extra/z-cutorch/TensorOperator.c
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/TensorOperator.c.o   -c /home/philipp/projects/zcutorch/TensorOperator.c
 
 CMakeFiles/zcutorch.dir/TensorOperator.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/zcutorch.dir/TensorOperator.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/torchdistro/extra/z-cutorch/TensorOperator.c > CMakeFiles/zcutorch.dir/TensorOperator.c.i
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/TensorOperator.c > CMakeFiles/zcutorch.dir/TensorOperator.c.i
 
 CMakeFiles/zcutorch.dir/TensorOperator.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/zcutorch.dir/TensorOperator.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/torchdistro/extra/z-cutorch/TensorOperator.c -o CMakeFiles/zcutorch.dir/TensorOperator.c.s
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/TensorOperator.c -o CMakeFiles/zcutorch.dir/TensorOperator.c.s
 
 CMakeFiles/zcutorch.dir/TensorOperator.c.o.requires:
 .PHONY : CMakeFiles/zcutorch.dir/TensorOperator.c.o.requires
@@ -171,17 +171,17 @@ CMakeFiles/zcutorch.dir/TensorOperator.c.o.provides.build: CMakeFiles/zcutorch.d
 
 CMakeFiles/zcutorch.dir/torch/utils.c.o: CMakeFiles/zcutorch.dir/flags.make
 CMakeFiles/zcutorch.dir/torch/utils.c.o: ../torch/utils.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles $(CMAKE_PROGRESS_7)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/philipp/projects/zcutorch/build/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/zcutorch.dir/torch/utils.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/torch/utils.c.o   -c /home/philipp/projects/torchdistro/extra/z-cutorch/torch/utils.c
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/zcutorch.dir/torch/utils.c.o   -c /home/philipp/projects/zcutorch/torch/utils.c
 
 CMakeFiles/zcutorch.dir/torch/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/zcutorch.dir/torch/utils.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/torchdistro/extra/z-cutorch/torch/utils.c > CMakeFiles/zcutorch.dir/torch/utils.c.i
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/philipp/projects/zcutorch/torch/utils.c > CMakeFiles/zcutorch.dir/torch/utils.c.i
 
 CMakeFiles/zcutorch.dir/torch/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/zcutorch.dir/torch/utils.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/torchdistro/extra/z-cutorch/torch/utils.c -o CMakeFiles/zcutorch.dir/torch/utils.c.s
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/philipp/projects/zcutorch/torch/utils.c -o CMakeFiles/zcutorch.dir/torch/utils.c.s
 
 CMakeFiles/zcutorch.dir/torch/utils.c.o.requires:
 .PHONY : CMakeFiles/zcutorch.dir/torch/utils.c.o.requires
@@ -240,6 +240,6 @@ CMakeFiles/zcutorch.dir/clean:
 .PHONY : CMakeFiles/zcutorch.dir/clean
 
 CMakeFiles/zcutorch.dir/depend: TensorMath.c
-	cd /home/philipp/projects/torchdistro/extra/z-cutorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/philipp/projects/torchdistro/extra/z-cutorch /home/philipp/projects/torchdistro/extra/z-cutorch /home/philipp/projects/torchdistro/extra/z-cutorch/build /home/philipp/projects/torchdistro/extra/z-cutorch/build /home/philipp/projects/torchdistro/extra/z-cutorch/build/CMakeFiles/zcutorch.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/philipp/projects/zcutorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/philipp/projects/zcutorch /home/philipp/projects/zcutorch /home/philipp/projects/zcutorch/build /home/philipp/projects/zcutorch/build /home/philipp/projects/zcutorch/build/CMakeFiles/zcutorch.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/zcutorch.dir/depend
 

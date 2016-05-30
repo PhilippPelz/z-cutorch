@@ -568,11 +568,11 @@ end
 --         {name=Tensor},
 --         {name=Tensor}})
 
-wrap("maskedFill",
-     cname("maskedFill"),
-     {{name=Tensor, returned=true, method={default='nil'}},
-      {name=CTensor},
-      {name=real}})
+-- wrap("maskedFill",
+--      cname("maskedFill"),
+--      {{name=Tensor, returned=true, method={default='nil'}},
+--       {name=CTensor},
+--       {name=real}})
 
 wrap("maskedCopy",
      cname("maskedCopy"),

@@ -79,6 +79,7 @@ local THZCudaTensor_resize = C['THZCudaTensor_resize']
 local THZCudaTensor_resizeAs = C['THZCudaTensor_resizeAs']
 local THZCudaTensor_resize4d = C['THZCudaTensor_resize4d']
 local THZCudaTensor_dot = C['THZCudaTensor_dot']
+local THZCudaTensor_maskedFill = C['THZCudaTensor_maskedFill']
 
 function torch.ZCudaTensor.apply(self, func)
    local x = torch.ZFloatTensor(self:size()):copy(self)
@@ -623,25 +624,26 @@ ZTensor.fftshift = argcheck{
 
           local half1 = {p2+1,n}
           local half2 = {1,p2}
-      --    pprint(half1)
-      --    pprint(half2)
+          -- pprint(half1)
+          -- pprint(half2)
 
           local indextable = {{},{}}
       --    pprint(indextable)
           for i=1,ndim do
       --      print(k .. '_' .. i)
             if i ~= k then
+              indextable[1][i] = {}
+              indextable[2][i] = {}
+
+      --        pprint(indextable)
+            else
               indextable[1][i] = half1
               indextable[2][i] = half2
       --        pprint(indextable)
-            else
-              indextable[1][i] = {}
-              indextable[2][i] = {}
-      --        pprint(indextable)
             end
           end
-      --    pprint(indextable[1])
-      --    pprint(indextable[2])
+          -- pprint(indextable[1])
+          -- pprint(indextable[2])
           local tmp = dst[indextable[1]]:clone()
       --    pprint(tmp)
       --    pprint(dst)
@@ -679,12 +681,13 @@ ZTensor.ifftshift = argcheck{
           for i=1,ndim do
       --      print(k .. '_' .. i)
             if i ~= k then
-              indextable[1][i] = half1
-              indextable[2][i] = half2
-      --        pprint(indextable)
-            else
               indextable[1][i] = {}
               indextable[2][i] = {}
+
+      --        pprint(indextable)
+            else
+              indextable[1][i] = half1
+              indextable[2][i] = half2
       --        pprint(indextable)
             end
           end
@@ -927,6 +930,17 @@ ZTensor.add = argcheck{
       function(dst, src1, v)
          dst = dst or src1
          THZCudaTensor_add(cutorch._state,dst:cdata(), src1:cdata(),v)
+         return dst
+      end
+}
+ZTensor.maskedFill = argcheck{
+   nonamed=true,
+   {name="dst", type=typename, opt=true},
+   {name="mask", type=ctypename},
+   {name="v", type="cdata", check=ztorch.isComplex},
+   call =
+      function(dst, mask, v)
+         THZCudaTensor_maskedFill(cutorch._state,dst:cdata(), mask:cdata(),v)
          return dst
       end
 }
@@ -1255,6 +1269,7 @@ Tensor.fftshift = argcheck{
         local t = torch.getdefaulttensortype()
         torch.setdefaulttensortype('torch.FloatTensor')
         local axes = torch.linspace(1,ndim,ndim)
+        -- pprint(axes)
         torch.setdefaulttensortype(t)
         for _, k in pairs(axes:totable()) do
           local n = dst:size(k)
@@ -1262,28 +1277,29 @@ Tensor.fftshift = argcheck{
 
           local half1 = {p2+1,n}
           local half2 = {1,p2}
-      --    pprint(half1)
-      --    pprint(half2)
+        --  pprint(half1)
+        --  pprint(half2)
 
           local indextable = {{},{}}
       --    pprint(indextable)
           for i=1,ndim do
-      --      print(k .. '_' .. i)
+          --  print(k .. '_' .. i)
             if i ~= k then
-              indextable[1][i] = half1
-              indextable[2][i] = half2
-      --        pprint(indextable)
-            else
               indextable[1][i] = {}
               indextable[2][i] = {}
-      --        pprint(indextable)
+            --  pprint(indextable)
+            else
+              indextable[1][i] = half1
+              indextable[2][i] = half2
+            --  pprint(indextable)
             end
           end
-      --    pprint(indextable[1])
-      --    pprint(indextable[2])
+          -- pprint(indextable[1])
+          -- pprint(indextable[2])
+          -- pprint(dst)
           local tmp = dst[indextable[1]]:clone()
-      --    pprint(tmp)
-      --    pprint(dst)
+        --  pprint(tmp)
+        --  pprint(dst)
           dst[indextable[1]]:copy(dst[indextable[2]])
           dst[indextable[2]]:copy(tmp)
         end
@@ -1318,12 +1334,12 @@ Tensor.ifftshift = argcheck{
           for i=1,ndim do
       --      print(k .. '_' .. i)
             if i ~= k then
-              indextable[1][i] = half1
-              indextable[2][i] = half2
-      --        pprint(indextable)
-            else
               indextable[1][i] = {}
               indextable[2][i] = {}
+      --        pprint(indextable)
+            else
+              indextable[1][i] = half1
+              indextable[2][i] = half2
       --        pprint(indextable)
             end
           end

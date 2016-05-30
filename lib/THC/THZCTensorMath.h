@@ -76,8 +76,6 @@ THZC_API float THZCudaTensor_dist(THCState *state, THZCudaTensor *self,
 // TensorMasked.cu
 THZC_API void THZCudaTensor_maskedFill(THCState *state, THZCudaTensor *tensor,
                                        THCudaTensor *mask, cx value);
-THZC_API void THZCudaTensor_maskedFill(THCState *state, THZCudaTensor *tensor,
-                                       THCudaTensor *mask, cx value);
 THZC_API void THZCudaTensor_maskedCopy(THCState *state, THZCudaTensor *tensor,
                                        THCudaTensor *mask, THZCudaTensor *src);
 THZC_API void THZCudaTensor_maskedSelect(THCState *state, THZCudaTensor *tensor,
