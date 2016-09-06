@@ -6,87 +6,87 @@
 
 #IncludeRegexTransform: 
 
-/home/philipp/projects/zcutorch/lib/THC/THZCAllocator.c
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCAllocator.c
 THZCAllocator.h
-/home/philipp/projects/zcutorch/lib/THC/THZCAllocator.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCAllocator.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCAllocator.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCAllocator.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCBlas.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCBlas.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.c
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.c
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 TH.h
-/home/philipp/projects/zcutorch/lib/THC/TH.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/TH.h
 THZCBlas.h
-/home/philipp/projects/zcutorch/lib/THC/THZCBlas.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCBlas.h
 THZCAllocator.h
-/home/philipp/projects/zcutorch/lib/THC/THZCAllocator.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCAllocator.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCStorage.c
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorage.c
 THZCStorage.h
-/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorage.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 THAtomic.h
-/home/philipp/projects/zcutorch/lib/THC/THAtomic.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THAtomic.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorage.h
 THStorage.h
-/home/philipp/projects/zcutorch/lib/THC/THStorage.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THStorage.h
 THZStorage.h
-/home/philipp/projects/zcutorch/lib/THC/THZStorage.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZStorage.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.c
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorageCopy.c
 THZCStorageCopy.h
-/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorageCopy.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCStorageCopy.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorageCopy.h
 THZCStorage.h
-/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorage.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCTensor.c
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensor.c
 THZCTensorCopy.h
-/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensorCopy.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 THZCTensor.h
-/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensor.h
 THAtomic.h
-/home/philipp/projects/zcutorch/lib/THC/THAtomic.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THAtomic.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensor.h
 THTensor.h
-/home/philipp/projects/zcutorch/lib/THC/THTensor.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THTensor.h
 THCTensor.h
-/home/philipp/projects/zcutorch/lib/THC/THCTensor.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THCTensor.h
 THZCStorage.h
-/home/philipp/projects/zcutorch/lib/THC/THZCStorage.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCStorage.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.c
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensorCopy.c
 THZCTensorCopy.h
-/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensorCopy.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/lib/THC/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCGeneral.h
 THZCTensor.h
-/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensor.h
 
-/home/philipp/projects/zcutorch/lib/THC/THZCTensorCopy.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensorCopy.h
 THZCTensor.h
-/home/philipp/projects/zcutorch/lib/THC/THZCTensor.h
+/home/philipp/projects/distro/extra/z-cutorch/lib/THC/THZCTensor.h
 
 /home/philipp/torch/install/include/TH/TH.h
 THGeneral.h
@@ -427,8 +427,6 @@ THCTensorConv.h
 /home/philipp/torch/install/include/THC/THCTensorConv.h
 THCTensorSort.h
 /home/philipp/torch/install/include/THC/THCTensorSort.h
-THCTensorTopK.h
-/home/philipp/torch/install/include/THC/THCTensorTopK.h
 
 /home/philipp/torch/install/include/THC/THCAllocator.h
 THCGeneral.h
@@ -457,20 +455,12 @@ THStorage.h
 /home/philipp/torch/install/include/THC/THStorage.h
 THCGeneral.h
 /home/philipp/torch/install/include/THC/THCGeneral.h
-generic/THCStorage.h
-/home/philipp/torch/install/include/THC/generic/THCStorage.h
-THCGenerateAllTypes.h
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
 
 /home/philipp/torch/install/include/THC/THCStorageCopy.h
 THCStorage.h
 /home/philipp/torch/install/include/THC/THCStorage.h
 THCGeneral.h
 /home/philipp/torch/install/include/THC/THCGeneral.h
-generic/THCStorageCopy.h
-/home/philipp/torch/install/include/THC/generic/THCStorageCopy.h
-THCGenerateAllTypes.h
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
 
 /home/philipp/torch/install/include/THC/THCTensor.h
 THTensor.h
@@ -479,10 +469,6 @@ THCStorage.h
 /home/philipp/torch/install/include/THC/THCStorage.h
 THCGeneral.h
 /home/philipp/torch/install/include/THC/THCGeneral.h
-generic/THCTensor.h
-/home/philipp/torch/install/include/THC/generic/THCTensor.h
-THCGenerateAllTypes.h
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
 
 /home/philipp/torch/install/include/THC/THCTensorConv.h
 THCTensor.h
@@ -493,10 +479,6 @@ THCTensor.h
 /home/philipp/torch/install/include/THC/THCTensor.h
 THCGeneral.h
 /home/philipp/torch/install/include/THC/THCGeneral.h
-generic/THCTensorCopy.h
-/home/philipp/torch/install/include/THC/generic/THCTensorCopy.h
-THCGenerateAllTypes.h
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
 
 /home/philipp/torch/install/include/THC/THCTensorMath.h
 THCTensor.h
@@ -591,6 +573,8 @@ cuComplex.h
 /usr/local/cuda/include/cuComplex.h
 cuda_fp16.h
 /usr/local/cuda/include/cuda_fp16.h
+library_types.h
+/usr/local/cuda/include/library_types.h
 
 /usr/local/cuda/include/cublas_v2.h
 cublas_api.h
@@ -615,6 +599,8 @@ host_config.h
 /usr/local/cuda/include/host_config.h
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
+library_types.h
+/usr/local/cuda/include/library_types.h
 channel_descriptor.h
 /usr/local/cuda/include/channel_descriptor.h
 cuda_runtime_api.h
@@ -649,6 +635,10 @@ device_functions.h
 /usr/local/cuda/include/device_functions.h
 device_launch_parameters.h
 /usr/local/cuda/include/device_launch_parameters.h
+functional
+-
+utility
+-
 
 /usr/local/cuda/include/cuda_runtime_api.h
 host_defines.h
@@ -687,6 +677,8 @@ cuComplex.h
 /usr/local/cuda/include/cuComplex.h
 driver_types.h
 /usr/local/cuda/include/driver_types.h
+library_types.h
+/usr/local/cuda/include/library_types.h
 
 /usr/local/cuda/include/device_atomic_functions.h
 builtin_types.h
@@ -747,6 +739,8 @@ sm_32_atomic_functions.h
 /usr/local/cuda/include/sm_32_atomic_functions.h
 sm_35_atomic_functions.h
 /usr/local/cuda/include/sm_35_atomic_functions.h
+sm_60_atomic_functions.h
+/usr/local/cuda/include/sm_60_atomic_functions.h
 sm_20_intrinsics.h
 /usr/local/cuda/include/sm_20_intrinsics.h
 sm_30_intrinsics.h
@@ -803,8 +797,14 @@ features.h
 -
 crtdefs.h
 -
+corecrt.h
+-
+cstdarg
+-
 
 /usr/local/cuda/include/host_defines.h
+
+/usr/local/cuda/include/library_types.h
 
 /usr/local/cuda/include/math_constants.h
 
@@ -948,23 +948,21 @@ sm_32_atomic_functions.h
 sm_32_intrinsics.h
 /usr/local/cuda/include/sm_32_intrinsics.h
 
-/usr/local/cuda/include/surface_functions.h
+/usr/local/cuda/include/sm_60_atomic_functions.h
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
-cuda_surface_types.h
-/usr/local/cuda/include/cuda_surface_types.h
 host_defines.h
 /usr/local/cuda/include/host_defines.h
-surface_types.h
-/usr/local/cuda/include/surface_types.h
-vector_functions.h
-/usr/local/cuda/include/vector_functions.h
-vector_types.h
-/usr/local/cuda/include/vector_types.h
-surface_functions.hpp
-/usr/local/cuda/include/surface_functions.hpp
+sm_60_atomic_functions.hpp
+/usr/local/cuda/include/sm_60_atomic_functions.hpp
 
-/usr/local/cuda/include/surface_functions.hpp
+/usr/local/cuda/include/sm_60_atomic_functions.hpp
+builtin_types.h
+/usr/local/cuda/include/builtin_types.h
+host_defines.h
+/usr/local/cuda/include/host_defines.h
+
+/usr/local/cuda/include/surface_functions.h
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
 cuda_surface_types.h
@@ -979,16 +977,6 @@ vector_types.h
 /usr/local/cuda/include/vector_types.h
 
 /usr/local/cuda/include/surface_indirect_functions.h
-builtin_types.h
-/usr/local/cuda/include/builtin_types.h
-host_defines.h
-/usr/local/cuda/include/host_defines.h
-vector_functions.h
-/usr/local/cuda/include/vector_functions.h
-surface_indirect_functions.hpp
-/usr/local/cuda/include/surface_indirect_functions.hpp
-
-/usr/local/cuda/include/surface_indirect_functions.hpp
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
 host_defines.h
@@ -1013,34 +1001,8 @@ vector_functions.h
 /usr/local/cuda/include/vector_functions.h
 vector_types.h
 /usr/local/cuda/include/vector_types.h
-texture_fetch_functions.hpp
-/usr/local/cuda/include/texture_fetch_functions.hpp
-
-/usr/local/cuda/include/texture_fetch_functions.hpp
-builtin_types.h
-/usr/local/cuda/include/builtin_types.h
-cuda_texture_types.h
-/usr/local/cuda/include/cuda_texture_types.h
-host_defines.h
-/usr/local/cuda/include/host_defines.h
-texture_types.h
-/usr/local/cuda/include/texture_types.h
-vector_functions.h
-/usr/local/cuda/include/vector_functions.h
-vector_types.h
-/usr/local/cuda/include/vector_types.h
 
 /usr/local/cuda/include/texture_indirect_functions.h
-builtin_types.h
-/usr/local/cuda/include/builtin_types.h
-host_defines.h
-/usr/local/cuda/include/host_defines.h
-vector_functions.h
-/usr/local/cuda/include/vector_functions.h
-texture_indirect_functions.hpp
-/usr/local/cuda/include/texture_indirect_functions.hpp
-
-/usr/local/cuda/include/texture_indirect_functions.hpp
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
 host_defines.h

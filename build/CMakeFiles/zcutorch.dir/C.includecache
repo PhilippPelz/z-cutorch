@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+..//torch/utils.h
+luaT.h
+../torch/luaT.h
+TH.h
+../torch/TH.h
+
 ../lib/THC/THZC.h
 THZCGeneral.h
 ../lib/THC/THZCGeneral.h
@@ -84,79 +90,79 @@ luaT.h
 TH.h
 ../torch/TH.h
 
-/home/philipp/projects/zcutorch/Storage.c
+/home/philipp/projects/distro/extra/z-cutorch/Storage.c
 torch/utils.h
-/home/philipp/projects/zcutorch/torch/utils.h
+/home/philipp/projects/distro/extra/z-cutorch/torch/utils.h
 THZC.h
-/home/philipp/projects/zcutorch/THZC.h
+/home/philipp/projects/distro/extra/z-cutorch/THZC.h
 THFile.h
-/home/philipp/projects/zcutorch/THFile.h
+/home/philipp/projects/distro/extra/z-cutorch/THFile.h
 luaT.h
-/home/philipp/projects/zcutorch/luaT.h
+/home/philipp/projects/distro/extra/z-cutorch/luaT.h
 generic/Storage.c
-/home/philipp/projects/zcutorch/generic/Storage.c
+/home/philipp/projects/distro/extra/z-cutorch/generic/Storage.c
 
-/home/philipp/projects/zcutorch/Tensor.c
+/home/philipp/projects/distro/extra/z-cutorch/Tensor.c
 torch/utils.h
-/home/philipp/projects/zcutorch/torch/utils.h
+/home/philipp/projects/distro/extra/z-cutorch/torch/utils.h
 THZCTensorCopy.h
-/home/philipp/projects/zcutorch/THZCTensorCopy.h
+/home/philipp/projects/distro/extra/z-cutorch/THZCTensorCopy.h
 THZTensor.h
-/home/philipp/projects/zcutorch/THZTensor.h
+/home/philipp/projects/distro/extra/z-cutorch/THZTensor.h
 THZC.h
-/home/philipp/projects/zcutorch/THZC.h
+/home/philipp/projects/distro/extra/z-cutorch/THZC.h
 THFile.h
-/home/philipp/projects/zcutorch/THFile.h
+/home/philipp/projects/distro/extra/z-cutorch/THFile.h
 luaT.h
-/home/philipp/projects/zcutorch/luaT.h
+/home/philipp/projects/distro/extra/z-cutorch/luaT.h
 stdio.h
 -
 generic/Tensor.c
-/home/philipp/projects/zcutorch/generic/Tensor.c
+/home/philipp/projects/distro/extra/z-cutorch/generic/Tensor.c
 
-/home/philipp/projects/zcutorch/TensorOperator.c
+/home/philipp/projects/distro/extra/z-cutorch/TensorOperator.c
 torch/utils.h
-/home/philipp/projects/zcutorch/torch/utils.h
+/home/philipp/projects/distro/extra/z-cutorch/torch/utils.h
 luaT.h
-/home/philipp/projects/zcutorch/luaT.h
+/home/philipp/projects/distro/extra/z-cutorch/luaT.h
 THZC.h
-/home/philipp/projects/zcutorch/THZC.h
+/home/philipp/projects/distro/extra/z-cutorch/THZC.h
 
-/home/philipp/projects/zcutorch/build/TensorMath.c
+/home/philipp/projects/distro/extra/z-cutorch/build/TensorMath.c
 THZCTensorMath.h
-/home/philipp/projects/zcutorch/build/THZCTensorMath.h
+/home/philipp/projects/distro/extra/z-cutorch/build/THZCTensorMath.h
 THZC.h
-/home/philipp/projects/zcutorch/build/THZC.h
+/home/philipp/projects/distro/extra/z-cutorch/build/THZC.h
 luaT.h
-/home/philipp/projects/zcutorch/build/luaT.h
+/home/philipp/projects/distro/extra/z-cutorch/build/luaT.h
 torch/utils.h
-/home/philipp/projects/zcutorch/build/torch/utils.h
+/home/philipp/projects/distro/extra/z-cutorch/build/torch/utils.h
 cuComplex.h
-/home/philipp/projects/zcutorch/build/cuComplex.h
+/home/philipp/projects/distro/extra/z-cutorch/build/cuComplex.h
 complex.h
-/home/philipp/projects/zcutorch/build/complex.h
+/home/philipp/projects/distro/extra/z-cutorch/build/complex.h
 string.h
-/home/philipp/projects/zcutorch/build/string.h
+/home/philipp/projects/distro/extra/z-cutorch/build/string.h
 string.h
-/home/philipp/projects/zcutorch/build/string.h
+/home/philipp/projects/distro/extra/z-cutorch/build/string.h
 
-/home/philipp/projects/zcutorch/init.c
+/home/philipp/projects/distro/extra/z-cutorch/init.c
 utils.h
-/home/philipp/projects/zcutorch/utils.h
+/home/philipp/projects/distro/extra/z-cutorch/utils.h
 luaT.h
-/home/philipp/projects/zcutorch/luaT.h
+/home/philipp/projects/distro/extra/z-cutorch/luaT.h
 THZCGeneral.h
-/home/philipp/projects/zcutorch/THZCGeneral.h
+/home/philipp/projects/distro/extra/z-cutorch/THZCGeneral.h
 
-/home/philipp/projects/zcutorch/torch/utils.c
+/home/philipp/projects/distro/extra/z-cutorch/torch/utils.c
 utils.h
-/home/philipp/projects/zcutorch/torch/utils.h
+/home/philipp/projects/distro/extra/z-cutorch/torch/utils.h
 
-/home/philipp/projects/zcutorch/torch/utils.h
+/home/philipp/projects/distro/extra/z-cutorch/torch/utils.h
 luaT.h
-/home/philipp/projects/zcutorch/torch/luaT.h
+/home/philipp/projects/distro/extra/z-cutorch/torch/luaT.h
 TH.h
-/home/philipp/projects/zcutorch/torch/TH.h
+/home/philipp/projects/distro/extra/z-cutorch/torch/TH.h
 
 /home/philipp/torch/install/include/TH/TH.h
 THGeneral.h
@@ -497,8 +503,6 @@ THCTensorConv.h
 /home/philipp/torch/install/include/THC/THCTensorConv.h
 THCTensorSort.h
 /home/philipp/torch/install/include/THC/THCTensorSort.h
-THCTensorTopK.h
-/home/philipp/torch/install/include/THC/THCTensorTopK.h
 
 /home/philipp/torch/install/include/THC/THCAllocator.h
 THCGeneral.h
@@ -527,20 +531,12 @@ THStorage.h
 /home/philipp/torch/install/include/THC/THStorage.h
 THCGeneral.h
 /home/philipp/torch/install/include/THC/THCGeneral.h
-generic/THCStorage.h
-/home/philipp/torch/install/include/THC/generic/THCStorage.h
-THCGenerateAllTypes.h
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
 
 /home/philipp/torch/install/include/THC/THCStorageCopy.h
 THCStorage.h
 /home/philipp/torch/install/include/THC/THCStorage.h
 THCGeneral.h
 /home/philipp/torch/install/include/THC/THCGeneral.h
-generic/THCStorageCopy.h
-/home/philipp/torch/install/include/THC/generic/THCStorageCopy.h
-THCGenerateAllTypes.h
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
 
 /home/philipp/torch/install/include/THC/THCTensor.h
 THTensor.h
@@ -549,10 +545,6 @@ THCStorage.h
 /home/philipp/torch/install/include/THC/THCStorage.h
 THCGeneral.h
 /home/philipp/torch/install/include/THC/THCGeneral.h
-generic/THCTensor.h
-/home/philipp/torch/install/include/THC/generic/THCTensor.h
-THCGenerateAllTypes.h
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
 
 /home/philipp/torch/install/include/THC/THCTensorConv.h
 THCTensor.h
@@ -563,10 +555,6 @@ THCTensor.h
 /home/philipp/torch/install/include/THC/THCTensor.h
 THCGeneral.h
 /home/philipp/torch/install/include/THC/THCGeneral.h
-generic/THCTensorCopy.h
-/home/philipp/torch/install/include/THC/generic/THCTensorCopy.h
-THCGenerateAllTypes.h
-/home/philipp/torch/install/include/THC/THCGenerateAllTypes.h
 
 /home/philipp/torch/install/include/THC/THCTensorMath.h
 THCTensor.h
@@ -671,6 +659,8 @@ cuComplex.h
 /usr/local/cuda/include/cuComplex.h
 cuda_fp16.h
 /usr/local/cuda/include/cuda_fp16.h
+library_types.h
+/usr/local/cuda/include/library_types.h
 
 /usr/local/cuda/include/cublas_v2.h
 cublas_api.h
@@ -695,6 +685,8 @@ host_config.h
 /usr/local/cuda/include/host_config.h
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
+library_types.h
+/usr/local/cuda/include/library_types.h
 channel_descriptor.h
 /usr/local/cuda/include/channel_descriptor.h
 cuda_runtime_api.h
@@ -729,6 +721,10 @@ device_functions.h
 /usr/local/cuda/include/device_functions.h
 device_launch_parameters.h
 /usr/local/cuda/include/device_launch_parameters.h
+functional
+-
+utility
+-
 
 /usr/local/cuda/include/cuda_runtime_api.h
 host_defines.h
@@ -767,6 +763,8 @@ cuComplex.h
 /usr/local/cuda/include/cuComplex.h
 driver_types.h
 /usr/local/cuda/include/driver_types.h
+library_types.h
+/usr/local/cuda/include/library_types.h
 
 /usr/local/cuda/include/device_atomic_functions.h
 builtin_types.h
@@ -827,6 +825,8 @@ sm_32_atomic_functions.h
 /usr/local/cuda/include/sm_32_atomic_functions.h
 sm_35_atomic_functions.h
 /usr/local/cuda/include/sm_35_atomic_functions.h
+sm_60_atomic_functions.h
+/usr/local/cuda/include/sm_60_atomic_functions.h
 sm_20_intrinsics.h
 /usr/local/cuda/include/sm_20_intrinsics.h
 sm_30_intrinsics.h
@@ -883,8 +883,14 @@ features.h
 -
 crtdefs.h
 -
+corecrt.h
+-
+cstdarg
+-
 
 /usr/local/cuda/include/host_defines.h
+
+/usr/local/cuda/include/library_types.h
 
 /usr/local/cuda/include/math_constants.h
 
@@ -1028,23 +1034,21 @@ sm_32_atomic_functions.h
 sm_32_intrinsics.h
 /usr/local/cuda/include/sm_32_intrinsics.h
 
-/usr/local/cuda/include/surface_functions.h
+/usr/local/cuda/include/sm_60_atomic_functions.h
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
-cuda_surface_types.h
-/usr/local/cuda/include/cuda_surface_types.h
 host_defines.h
 /usr/local/cuda/include/host_defines.h
-surface_types.h
-/usr/local/cuda/include/surface_types.h
-vector_functions.h
-/usr/local/cuda/include/vector_functions.h
-vector_types.h
-/usr/local/cuda/include/vector_types.h
-surface_functions.hpp
-/usr/local/cuda/include/surface_functions.hpp
+sm_60_atomic_functions.hpp
+/usr/local/cuda/include/sm_60_atomic_functions.hpp
 
-/usr/local/cuda/include/surface_functions.hpp
+/usr/local/cuda/include/sm_60_atomic_functions.hpp
+builtin_types.h
+/usr/local/cuda/include/builtin_types.h
+host_defines.h
+/usr/local/cuda/include/host_defines.h
+
+/usr/local/cuda/include/surface_functions.h
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
 cuda_surface_types.h
@@ -1059,16 +1063,6 @@ vector_types.h
 /usr/local/cuda/include/vector_types.h
 
 /usr/local/cuda/include/surface_indirect_functions.h
-builtin_types.h
-/usr/local/cuda/include/builtin_types.h
-host_defines.h
-/usr/local/cuda/include/host_defines.h
-vector_functions.h
-/usr/local/cuda/include/vector_functions.h
-surface_indirect_functions.hpp
-/usr/local/cuda/include/surface_indirect_functions.hpp
-
-/usr/local/cuda/include/surface_indirect_functions.hpp
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
 host_defines.h
@@ -1093,34 +1087,8 @@ vector_functions.h
 /usr/local/cuda/include/vector_functions.h
 vector_types.h
 /usr/local/cuda/include/vector_types.h
-texture_fetch_functions.hpp
-/usr/local/cuda/include/texture_fetch_functions.hpp
-
-/usr/local/cuda/include/texture_fetch_functions.hpp
-builtin_types.h
-/usr/local/cuda/include/builtin_types.h
-cuda_texture_types.h
-/usr/local/cuda/include/cuda_texture_types.h
-host_defines.h
-/usr/local/cuda/include/host_defines.h
-texture_types.h
-/usr/local/cuda/include/texture_types.h
-vector_functions.h
-/usr/local/cuda/include/vector_functions.h
-vector_types.h
-/usr/local/cuda/include/vector_types.h
 
 /usr/local/cuda/include/texture_indirect_functions.h
-builtin_types.h
-/usr/local/cuda/include/builtin_types.h
-host_defines.h
-/usr/local/cuda/include/host_defines.h
-vector_functions.h
-/usr/local/cuda/include/vector_functions.h
-texture_indirect_functions.hpp
-/usr/local/cuda/include/texture_indirect_functions.hpp
-
-/usr/local/cuda/include/texture_indirect_functions.hpp
 builtin_types.h
 /usr/local/cuda/include/builtin_types.h
 host_defines.h

@@ -276,6 +276,61 @@ struct TensorPolarOp {
 	}
 };
 
+// struct TensorPolarOpAbs {
+//   TensorPolarOpAbs(float arg) :
+//       arg(arg) {
+//   }
+// 	__device__ __forceinline__ void operator()(float* abs, ccx* out) {
+//     *out = ccx(*abs*cos(*arg),*abs*sin(*arg));
+// 		// *out = thrust::polar(*abs,*arg);
+// 	}
+//   float arg;
+// };
+//
+// struct TensorPolarOpArg {
+//   TensorPolarOpArg(float abs) :
+//       abs(abs) {
+//   }
+// 	__device__ __forceinline__ void operator()(float* arg, ccx* out) {
+//     *out = ccx(*abs*cos(*arg),*abs*sin(*arg));
+// 		// *out = thrust::polar(*abs,*arg);
+// 	}
+//   float abs;
+// };
+// void THZCudaTensor_polarabs(THCState *state, THZCudaTensor *self_, THCudaTensor *abs, float arg) {
+// 	THAssert(THZCudaTensor_checkGPU(state, 2, self_, src2));
+// 	THAssert(THCudaTensor_checkGPU(state, 1, src1));
+// 	THArgCheck(THCudaTensor_nElement(state, src1) == THCudaTensor_nElement(state, src2), 3, "sizes do not match");
+//
+//
+//     THLongStorage *size = THCudaTensor_newSizeOf(state, src1);
+//     THLongStorage *stride = THCudaTensor_newStrideOf(state, src1);
+//     THZCudaTensor_resize(state,self_,size,stride);
+//
+// 		// self = src1 * src2
+// 		if (!THZCudaTensor_pointwiseApply2ZF(state, self_, abs, TensorPolarOpAbs(arg))) {
+// 			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+// 		}
+//
+// 	   THZCudaCheck(cudaGetLastError());
+// }
+// void THZCudaTensor_polararg(THCState *state, THZCudaTensor *self_, float abs, THCudaTensor *arg) {
+// 	THAssert(THZCudaTensor_checkGPU(state, 2, self_, src2));
+// 	THAssert(THCudaTensor_checkGPU(state, 1, src1));
+// 	THArgCheck(THCudaTensor_nElement(state, src1) == THCudaTensor_nElement(state, src2), 3, "sizes do not match");
+//
+//
+//     THLongStorage *size = THCudaTensor_newSizeOf(state, src1);
+//     THLongStorage *stride = THCudaTensor_newStrideOf(state, src1);
+//     THZCudaTensor_resize(state,self_,size,stride);
+//
+// 		// self = src1 * src2
+// 		if (!THZCudaTensor_pointwiseApply2ZF(state, self_, arg, TensorPolarOpArg(abs))) {
+// 			THArgCheck(false, 2, CUTORCH_DIM_WARNING);
+// 		}
+//
+// 	   THZCudaCheck(cudaGetLastError());
+// }
 void THZCudaTensor_polar(THCState *state, THZCudaTensor *self_, THCudaTensor *src1, THCudaTensor *src2) {
 	THAssert(THZCudaTensor_checkGPU(state, 2, self_, src2));
 	THAssert(THCudaTensor_checkGPU(state, 1, src1));

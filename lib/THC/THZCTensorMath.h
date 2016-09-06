@@ -212,6 +212,8 @@ THZC_API void THZCudaTensor_zimag(THCState *state, THZCudaTensor *self,
 
 THZC_API void THZCudaTensor_polar(THCState *state, THZCudaTensor *self,
                                   THCudaTensor *src1, THCudaTensor *src2);
+// THZC_API void THZCudaTensor_polarabs(THCState *state, THZCudaTensor *self_, THCudaTensor *abs, float arg);
+// THZC_API void THZCudaTensor_polararg(THCState *state, THZCudaTensor *self_, float abs, THCudaTensor *arg);
 
 THZC_API void THZCudaTensor_abs(THCState *state, THCudaTensor *self,
                                 THZCudaTensor *src);

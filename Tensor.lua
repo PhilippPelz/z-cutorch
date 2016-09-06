@@ -34,7 +34,8 @@ local THZCudaTensor_fillim = C['THZCudaTensor_fillim']
 local THZCudaTensor_fillre = C['THZCudaTensor_fillre']
 
 local THZCudaTensor_polar = C['THZCudaTensor_polar']
-
+-- local THZCudaTensor_polarabs = C['THZCudaTensor_polarabs']
+-- local THZCudaTensor_polararg = C['THZCudaTensor_polararg']
 
 local THZCudaTensor_copy = C['THZCudaTensor_copy']
 local THZCudaTensor_copyByte = C['THZCudaTensor_copyByte']
@@ -497,6 +498,7 @@ ZTensor.polar = argcheck{
       return self
    end
 }
+
 ZTensor.polar = argcheck{
    nonamed=true,
    {name="self", type=typename},
@@ -594,12 +596,9 @@ ZTensor.fft = argcheck{
    {name="src1", type=typename, opt=true},
    call =
       function(dst, src1)
-        --  print('in fft')
-        --  pprint(dst)
-        --  pprint(src1)
          src1 = src1 or dst
          THZCudaTensor_fft(cutorch._state,src1:cdata(), dst:cdata())
-        --  print('end fft')
+         dst:div(math.sqrt(dst:nElement()))
          return dst
       end
 }
@@ -653,6 +652,7 @@ ZTensor.fftshift = argcheck{
         return dst
       end
 }
+
 ZTensor.ifftshift = argcheck{
    nonamed=true,
    {name="dst", type=typename},
@@ -710,6 +710,7 @@ ZTensor.fftBatched = argcheck{
       function(dst, src1)
          dst = dst or src1
          THZCudaTensor_fftBatched(cutorch._state,src1:cdata(), dst:cdata())
+         dst:div(math.sqrt(dst[1]:nElement()))
          return dst
       end
 }
@@ -722,7 +723,7 @@ ZTensor.ifft = argcheck{
       function(dst, src1)
          dst = dst or src1
          THZCudaTensor_ifftU(cutorch._state,src1:cdata(), dst:cdata())
-         THZCudaTensor_mul(cutorch._state,dst:cdata(), src1:cdata(),(1/dst:nElement(0) + 0i))
+         dst:div(math.sqrt(dst:nElement()))
          return dst
       end
 }
@@ -735,7 +736,7 @@ ZTensor.ifftBatched = argcheck{
       function(dst, src1)
          dst = dst or src1
          THZCudaTensor_ifftBatchedU(cutorch._state,src1:cdata(), dst:cdata())
-         THZCudaTensor_mul(cutorch._state,dst:cdata(), src1:cdata(),(1/dst:nElement(0) + 0i))
+         dst:div(math.sqrt(dst[1]:nElement()))
          return dst
       end
 }
